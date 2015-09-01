@@ -1,0 +1,236 @@
+---
+title: "Introduction to Validate"
+author: "Mark van der Loo and Edwin de Jonge"
+date: "August 27, 2015"
+output: 
+  html_document:
+    toc: true
+    theme: united
+---
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{Introduction to validate}
+-->
+
+
+### Introduction
+The validate package is intended to make checking your data easy, maintainable
+and reproducible. The validate package allows you to
+
+- Test your data set(s) against predefined rules, either in- or cross-data set
+- Import and export rule sets from structured or free-format files
+- Investigate and visualize the results of a data validation step
+- Do basic rule maintenance tasks
+
+There are a few nouns related to the infrastructure offered by validate,
+
+- data set: your data
+- `validator` an object representing a set of rules your data must satisfy
+- `confrontation` an object representing the results of confronting data with rules
+
+There is also a single verb, namely
+
+- `confront`: evaluate the validation rules in the context of one or more data sets.
+
+
+
+### A quick example
+Here's an example demonstrating the typical workflow. We'll use the built-in ```women``` data set (average heights and weighs for American women aged 30-39).
+```{r }
+data(women)
+summary(women)
+```
+Validating data is all about checking whether a data set meets presumptions or
+expectations you have about it, and the validate package makes it super easy
+for you to define those expectations. Let's do a quick check on variables
+in the `women` data set.
+```{r}
+library(validate)
+cf <- check_that(women, height > 0, weight > 0, height/weight > 0.5)
+summary(cf)
+```
+`check_that` returns an object containing all sorts of information on the validation results.
+The easiest way to check the results is with `summary`, which returns a `data.frame` with
+the following basic information:
+
+- How many data items were checked against each rule
+- How many items passed, failed or resulted in `NA`
+- Whether the check resulted in an error (could not be performed) or gave an error
+- The expression that was actually evaluated to perform the check.
+
+If you're a fan of the pipe-operator provided by the [magrittr](http://www.r-pkg.org/pkg/magrittr),
+the above statement can also be performed as follows.
+```{r eval=FALSE}
+women %>% check_that(height > 0, weight > 0, height/weight > 0.5) %>% summary()
+```
+
+The same information can be summarized graphically as well.
+```{r}
+barplot(cf,main="Checks on the women data set")
+```
+
+
+### Validator objects
+Validator objects are used to store, investigate and manipulate rule sets.
+```{r}
+v <- validator(height > 0, weight > 0, height/weight > 0)
+v
+```
+The validator object has stored the rule and assigned names to them for future reference.  To check this, we confront the data set with the validation rules we've just defined:
+```{r}
+cf <- confront(women,v)
+cf
+```
+The object ```cf``` contains the result of checking the data in ```women```
+against the expectations in ```v```. The fact that there are no warnings or
+errors means that indeed each rule could be evaluated successfully (an error
+would occur for example, if we'd misspell height). Now let's take a look at
+the actual results.
+```{r}
+summary(cf)
+```
+
+Now, suppose that we expect that the BMI (weight divided by height squared) of
+each item to be below 23. We need to express the weight in kg and the height
+in meters, so the equation for BMI becomes
+$$
+BMI = \frac{weight\times0.45359}{(height\times0.0254)^2}
+$$
+Moreover, assume that we suspect that the average BMI is between 22 and 22.5. 
+Let's create another validator object that first computes the BMI and next tests
+whether the BMI values conform to our suspicion.
+```{r}
+v <- validator(
+  BMI := (weight*0.45359)/(height*0.0254)^2
+  , height > 0
+  , weight > 0
+  , BMI < 23
+  , mean(BMI) > 22 & mean(BMI) < 22.5
+)
+v
+```
+Checking is easy as before:
+```{r}
+cf <- confront(women,v)
+summary(cf)
+```
+Observe that the expressions for validation are now manipulated: everywhere where `BMI` was used, it was replaced with the computation defined before.
+
+### Confrontation objects
+The outcome of confronting a validator object with a data set is an object of class
+`confrontation`. There are several ways to extract information from a `confrontation` object.
+
+- `summary`: summarize output; returns a `data.frame`
+- `aggregate`: aggregate validation in several ways
+- `sort` : aggregate and sort in several ways
+- `values`: Get the values in an array, or a list of arrays if rules have different output dimension structure
+- `errors`: Retrieve error messages caught during the confrontation
+- `warnings`: Retrieve warning messages caught during the confrontation.
+
+By default aggregates are produced by rule.
+```
+cf <- check_that(women, height>0, weight>0,height/weight < 0.5)
+aggregate(cf) 
+```
+To aggregate by record, use `by='record'`
+```
+head(aggregate(cf,by='record'))
+```
+Aggregated results can be automatically sorted, so records with the most violations or
+rules that are violated most sort higher.
+```{r}
+# rules with most violations sorting first:
+sort(cf)
+```
+
+Confrontation objects can be subsetted with single bracket operators (like vectors), to 
+obtain a sub-object pertaining only to the selected rules.
+```
+summary(cf[c(1,3)])
+```
+
+
+### Confrontation options
+By default, all errors and warnings are caught when validation rules are confronted with data. This can be switched off by setting the `raise` option to `"errors"` or `"all"`, e.g. here, the error is caught,
+```{r}
+v <- validator(hite > 0, weight>0)
+summary(confront(women, v))
+```
+while here it is raised immediately.
+
+```{r eval=FALSE}
+# this gives an error
+confront(women, v, raise='all')
+```
+
+
+Linear equalities form an important class of validation rules. To prevent equalities to be strictly tested, there is an option called `len.eq.eps` (with default value $10^{-8}$) that allows one to add some slack to these tests.
+
+
+
+### Investigating validator objects
+Validator objects store a set of rules, optionally with some metadata per rule.
+Currently, the following functions can be used to get or set metadata:
+
+- `origin` : Where was a rule defined?
+- `names` : The name per rule
+- `created` : when were the rules created?
+- `label` : Short description of the rule
+- `description`: Long description of the rule
+
+Names can be set from the command line when defining a validator object.
+```{r}
+v <- validator(rat = height/weight > 0.5, htest=height>0, wtest=weight > 0)
+names(v)
+```
+Also try
+```{r}
+names(v)[1] <- "ratio"
+v
+```
+
+
+Some general information is obtained with `summary`,
+```{r}
+summary(v)
+```
+Here, some properties per _block_ of rules is given. Two rules occur in the same
+block if when they share a variable. In this case, all rules occur in the same
+block.
+
+and the number of rules can be requested with `length`
+```
+length(v)
+```
+With `variables`, the variables occurring per rule, or over all the rules can be requested.
+```{r}
+variables(v)
+variables(v,as="matrix")
+```
+Validator objects can be subsetted as if they were lists using the single and double bracket operators.
+```{r}
+v[c(1,3)]
+v['ratio','wtest']
+```
+
+The double bracket can be used to inspect a single rule
+```{r}
+v[[1]]
+```
+
+
+### Validator objects and confrontation objects are reference objects
+As simple as that. If you do
+```
+w <- v
+```
+for a validator object `v`, then `w` just points to the same physical object as `v`.
+To make an actual copy, you can select everything.
+```
+w <- v[]
+```
+
+
+
+
+

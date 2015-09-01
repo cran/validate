@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Introduction</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{Introduction to validate}
+-->
+
+<h3>Introduction</h3>
+
+<p>The validate package is intended to make checking your data easy, maintainable
+and reproducible. The validate package allows you to</p>
+
+<ul>
+<li>Test your data set(s) against predefined rules, either in- or cross-data set</li>
+<li>Import and export rule sets from structured or free-format files</li>
+<li>Investigate and visualize the results of a data validation step</li>
+<li>Do basic rule maintenance tasks</li>
+</ul>
+
+<p>There are a few nouns related to the infrastructure offered by validate,</p>
+
+<ul>
+<li>data set: your data</li>
+<li><code>validator</code> an object representing a set of rules your data must satisfy</li>
+<li><code>confrontation</code> an object representing the results of confronting data with rules</li>
+</ul>
+
+<p>There is also a single verb, namely</p>
+
+<ul>
+<li><code>confront</code>: evaluate the validation rules in the context of one or more data sets.</li>
+</ul>
+
+<h3>A quick example</h3>
+
+<p>Here&#39;s an example demonstrating the typical workflow. We&#39;ll use the built-in <code>women</code> data set (average heights and weighs for American women aged 30-39).</p>
+
+<pre><code class="r">data(women)
+summary(women)
+</code></pre>
+
+<pre><code>##      height         weight     
+##  Min.   :58.0   Min.   :115.0  
+##  1st Qu.:61.5   1st Qu.:124.5  
+##  Median :65.0   Median :135.0  
+##  Mean   :65.0   Mean   :136.7  
+##  3rd Qu.:68.5   3rd Qu.:148.0  
+##  Max.   :72.0   Max.   :164.0
+</code></pre>
+
+<p>Validating data is all about checking whether a data set meets presumptions or
+expectations you have about it, and the validate package makes it super easy
+for you to define those expectations. Let&#39;s do a quick check on variables
+in the <code>women</code> data set.</p>
+
+<pre><code class="r">library(validate)
+cf &lt;- check_that(women, height &gt; 0, weight &gt; 0, height/weight &gt; 0.5)
+summary(cf)
+</code></pre>
+
+<pre><code>##   rule items passes fails nNA error warning          expression
+## 1   V1    15     15     0   0 FALSE   FALSE          height &gt; 0
+## 2   V2    15     15     0   0 FALSE   FALSE          weight &gt; 0
+## 3   V3    15      2    13   0 FALSE   FALSE height/weight &gt; 0.5
+</code></pre>
+
+<p><code>check_that</code> returns an object containing all sorts of information on the validation results.
+The easiest way to check the results is with <code>summary</code>, which returns a <code>data.frame</code> with
+the following basic information:</p>
+
+<ul>
+<li>How many data items were checked against each rule</li>
+<li>How many items passed, failed or resulted in <code>NA</code></li>
+<li>Whether the check resulted in an error (could not be performed) or gave an error</li>
+<li>The expression that was actually evaluated to perform the check.</li>
+</ul>
+
+<p>If you&#39;re a fan of the pipe-operator provided by the <a href="http://www.r-pkg.org/pkg/magrittr">magrittr</a>,
+the above statement can also be performed as follows.</p>
+
+<pre><code class="r">women %&gt;% check_that(height &gt; 0, weight &gt; 0, height/weight &gt; 0.5) %&gt;% summary()
+</code></pre>
+
+<p>The same information can be summarized graphically as well.</p>
+
+<pre><code class="r">barplot(cf,main=&quot;Checks on the women data set&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAIAAAApSmgoAAAACXBIWXMAAAsSAAALEgHS3X78AAAgAElEQVR4nO3deVzUdf7A8c/McJ8iw+2BIqJl4AGIaQreYlKId+lmSW7Sltvd/uzwaLfdtNa2ra2szCzRVVDUwiuPNNE8U4PEAwE5BFRABISZ7++P70bE7TEOfno9Hz16DN/5zvf7/g7Mi/E730yjKIoAAMhLa+4BAACmRegBQHKEHgAkR+gBQHKEHgAkR+gBQHKEHgAkR+gBQHKEHgAkR+gBQHKEHgAkR+gBQHKEHgAkR+gBQHKEHgAkR+gBQHKEHgAkR+gBQHKEHgAkR+gBQHKEHgAkR+gBQHKEHgAkR+h/Fy5duhQXFxcYGGhvb9+9e/cXX3zx4sWLQoiKigqNRmNhYXHzu0hLS9NoNF26dLn5Td28W3hcd4Tjx49rNJpu3bqZexC0UoRefufOnQsMDHz//fePHTvm6OiYnp7+j3/8Y+DAgVeuXDH3aLdScHCwRqNJSUkx9yCt1214ivgutE6EXn4vv/xydnZ2r169MjIy8vLyzp0717179xMnTvzzn/8092gAbgdCL7mioqIVK1YIIT7++OOOHTsKIXx8fBYuXNi/f/+ioqKa1TZv3hwUFOTk5DRu3LjLly+rC8+cORMVFaXX6318fKZNm1ZQUKAuLygoeOSRR9q3b+/s7Dxs2LDDhw/X2Wlubq6Pj4+FhcU333wjhNizZ8/AgQOdnJzc3NzGjBlz/Pjx+nOWlpbOnj3b39/f3t6+Z8+eS5YsURRFCJGXl6fRaPR6fWJiYo8ePRwdHceMGZOfn1/n4cHBwQcPHhRC9OvXLz4+/saOq0bfvn01Gs2WLVuEEC+//LJGoxkzZoz45fSUj4+PoiiNDXzq1CmNRuPn5/fOO++0a9euY8eOixcvTklJ6d27t4ODQ3h4+JkzZ5oYo4XHq64ZHR3t4uISFBRU5x301q1b+/Xr5+jo6OLiMmTIEPWZqf8UNbhaHY197xocvrHvAsxPgdT27t0rhHBzc2vw3vLycvXHwNnZuVevXlqtVgjx/PPPK4pSUlLi4eGh0+nuv//+AQMGCCF69OhRVVVlMBh69+6tftm/f38hhF6vz8/PT01NFUL4+fmVl5eHhoYKIT7++GNFUQoKCpycnDQazQMPPDBw4EAhhLe3d1lZWe0xjEZjeHi4EKJ9+/ajR4+2tbUVQixcuFBRlNzcXCGETqdzdHTs3bu3OuGMGTPqHMjGjRt9fX2FEK+99trZs2dv4Lhqb23OnDlCiLlz5yqKMnjwYCGEh4eH0Wj8/PPPhRDTp09vYuD09HR111ZWVgEBATW3/fz87O3thRDR0dFNjNHC462qqrr77rvVAWoOMCAgQFGUzMxMW1tbnU4XHh4eEhKirmM0Gus8RY2tVnsvjX3vGhu+zi6u7ycVpkToJbd69WohxN13393gvTVB3Llzp6Iob7/9thDivvvuUxRFPbHz6KOPFhQUFBQUBAcHCyESExOTk5OFEL169VLjOHHiRCHEkiVL1NB37tz54YcfFkLMmTNH3cW2bduEEP7+/nl5eYqizJ49OyYmJj09vfYY27dvV0NTUlKiKMrOnTvVRhsMBjV8QogjR44oiqKm9p577ql/LH369BFC7N2798aOq/amdu3aJYQYOXKkwWBQ38wKIc6dOzdr1iwhxIoVK5oYuCb0qampiqKofZw8ebLRaPz222/V34VNjNHC412zZo36bS0rKzMajY8//nhN6Hfs2DFixIh58+YpilJZWWljYyOEuHDhQp2nqInVajT2vWviOay9C7QenLqRnI+PjxCisLCwiXW0Wu19990nhOjbt68Q4urVq0II9Q/pn376qZubm5ub24EDB4QQJ06cUIM+ePBg9ZqW5cuXl5eXT5s2Td3UmTNnli9fLoS455571CVBQUFt27ZNT0/38vIKCwtr06bNe++9V+finGPHjgkhxowZ4+joKIQYOHCgj49PcXFxdna2uoJ6gkIIob73VCds1nUdV+0HhoWFOTg4pKSkpKWllZSUxMbGCiF++OGH/fv3azSaoUOHNjuwj4+Peg1M+/bt1adLo9Got6urq5sdo9njPXr0qBAiJibGzs5Oo9FMmTKl5q5Bgwa9++67Op0uOjra39+/oqJCCGEwGOpsoSWrNfa9a8lziFbl93L92e+Wv7+/ECI/P/+nn36666671IXJyckvvfRSYGDgRx99JITQaDQajUYIoZ4BUFVWVgohnnvuuREjRtQs7NChQ1JSkhBCURR1iYWFRZ2rGHv37n3o0KEXXnghKirKxsbG1dX19OnT//rXvxISEvbt27dv37633377wIED6mCN0el0Qojq6morK6vag6lzttB1HVft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" alt="plot of chunk unnamed-chunk-4"/> </p>
+
+<h3>Validator objects</h3>
+
+<p>Validator objects are used to store, investigate and manipulate rule sets.</p>
+
+<pre><code class="r">v &lt;- validator(height &gt; 0, weight &gt; 0, height/weight &gt; 0)
+v
+</code></pre>
+
+<pre><code>## Object of class &#39;validator&#39; with 3 elements:
+##  V1: height &gt; 0
+##  V2: weight &gt; 0
+##  V3: height/weight &gt; 0
+</code></pre>
+
+<p>The validator object has stored the rule and assigned names to them for future reference.  To check this, we confront the data set with the validation rules we&#39;ve just defined:</p>
+
+<pre><code class="r">cf &lt;- confront(women,v)
+cf
+</code></pre>
+
+<pre><code>## Object of class &#39;validation&#39;
+## Call:
+##     confront(x = women, dat = v)
+## 
+## Confrontations: 3
+## With fails    : 0
+## Warnings      : 0
+## Errors        : 0
+</code></pre>
+
+<p>The object <code>cf</code> contains the result of checking the data in <code>women</code>
+against the expectations in <code>v</code>. The fact that there are no warnings or
+errors means that indeed each rule could be evaluated successfully (an error
+would occur for example, if we&#39;d misspell height). Now let&#39;s take a look at
+the actual results.</p>
+
+<pre><code class="r">summary(cf)
+</code></pre>
+
+<pre><code>##   rule items passes fails nNA error warning        expression
+## 1   V1    15     15     0   0 FALSE   FALSE        height &gt; 0
+## 2   V2    15     15     0   0 FALSE   FALSE        weight &gt; 0
+## 3   V3    15     15     0   0 FALSE   FALSE height/weight &gt; 0
+</code></pre>
+
+<p>Now, suppose that we expect that the BMI (weight divided by height squared) of
+each item to be below 23. We need to express the weight in kg and the height
+in meters, so the equation for BMI becomes
+\[
+BMI = \frac{weight\times0.45359}{(height\times0.0254)^2}
+\]
+Moreover, assume that we suspect that the average BMI is between 22 and 22.5. 
+Let&#39;s create another validator object that first computes the BMI and next tests
+whether the BMI values conform to our suspicion.</p>
+
+<pre><code class="r">v &lt;- validator(
+  BMI := (weight*0.45359)/(height*0.0254)^2
+  , height &gt; 0
+  , weight &gt; 0
+  , BMI &lt; 23
+  , mean(BMI) &gt; 22 &amp; mean(BMI) &lt; 22.5
+)
+v
+</code></pre>
+
+<pre><code>## Object of class &#39;validator&#39; with 5 elements:
+##  V1: `:=`(BMI, (weight * 0.45359)/(height * 0.0254)^2)
+##  V2: height &gt; 0
+##  V3: weight &gt; 0
+##  V4: BMI &lt; 23
+##  V5: mean(BMI) &gt; 22 &amp; mean(BMI) &lt; 22.5
+</code></pre>
+
+<p>Checking is easy as before:</p>
+
+<pre><code class="r">cf &lt;- confront(women,v)
+summary(cf)
+</code></pre>
+
+<pre><code>##   rule items passes fails nNA error warning
+## 1   V2    15     15     0   0 FALSE   FALSE
+## 2   V3    15     15     0   0 FALSE   FALSE
+## 3   V4    15     10     5   0 FALSE   FALSE
+## 4   V5     1      0     1   0 FALSE   FALSE
+##                                                                                                    expression
+## 1                                                                                                  height &gt; 0
+## 2                                                                                                  weight &gt; 0
+## 3                                                               ((weight * 0.45359)/(height * 0.0254)^2) &lt; 23
+## 4 mean(((weight * 0.45359)/(height * 0.0254)^2)) &gt; 22 &amp; mean(((weight * 0.45359)/(height * 0.0254)^2)) &lt; 22.5
+</code></pre>
+
+<p>Observe that the expressions for validation are now manipulated: everywhere where <code>BMI</code> was used, it was replaced with the computation defined before.</p>
+
+<h3>Confrontation objects</h3>
+
+<p>The outcome of confronting a validator object with a data set is an object of class
+<code>confrontation</code>. There are several ways to extract information from a <code>confrontation</code> object.</p>
+
+<ul>
+<li><code>summary</code>: summarize output; returns a <code>data.frame</code></li>
+<li><code>aggregate</code>: aggregate validation in several ways</li>
+<li><code>sort</code> : aggregate and sort in several ways</li>
+<li><code>values</code>: Get the values in an array, or a list of arrays if rules have different output dimension structure</li>
+<li><code>errors</code>: Retrieve error messages caught during the confrontation</li>
+<li><code>warnings</code>: Retrieve warning messages caught during the confrontation.</li>
+</ul>
+
+<p>By default aggregates are produced by rule.</p>
+
+<pre><code>cf &lt;- check_that(women, height&gt;0, weight&gt;0,height/weight &lt; 0.5)
+aggregate(cf) 
+</code></pre>
+
+<p>To aggregate by record, use <code>by=&#39;record&#39;</code></p>
+
+<pre><code>head(aggregate(cf,by=&#39;record&#39;))
+</code></pre>
+
+<p>Aggregated results can be automatically sorted, so records with the most violations or
+rules that are violated most sort higher.</p>
+
+<pre><code class="r"># rules with most violations sorting first:
+sort(cf)
+</code></pre>
+
+<pre><code>##    npass nfail nNA  rel.pass  rel.fail rel.NA
+## V4    10     5   0 0.6666667 0.3333333      0
+## V2    15     0   0 1.0000000 0.0000000      0
+## V3    15     0   0 1.0000000 0.0000000      0
+## V5     0     1   0 0.0000000 1.0000000      0
+</code></pre>
+
+<p>Confrontation objects can be subsetted with single bracket operators (like vectors), to 
+obtain a sub-object pertaining only to the selected rules.</p>
+
+<pre><code>summary(cf[c(1,3)])
+</code></pre>
+
+<h3>Confrontation options</h3>
+
+<p>By default, all errors and warnings are caught when validation rules are confronted with data. This can be switched off by setting the <code>raise</code> option to <code>&quot;errors&quot;</code> or <code>&quot;all&quot;</code>, e.g. here, the error is caught,</p>
+
+<pre><code class="r">v &lt;- validator(hite &gt; 0, weight&gt;0)
+summary(confront(women, v))
+</code></pre>
+
+<pre><code>##   rule items passes fails nNA error warning expression
+## 1   V1     0      0     0   0  TRUE   FALSE   hite &gt; 0
+## 2   V2    15     15     0   0 FALSE   FALSE weight &gt; 0
+</code></pre>
+
+<p>while here it is raised immediately.</p>
+
+<pre><code class="r"># this gives an error
+confront(women, v, raise=&#39;all&#39;)
+</code></pre>
+
+<p>Linear equalities form an important class of validation rules. To prevent equalities to be strictly tested, there is an option called <code>len.eq.eps</code> (with default value \(10^{-8}\)) that allows one to add some slack to these tests.</p>
+
+<h3>Investigating validator objects</h3>
+
+<p>Validator objects store a set of rules, optionally with some metadata per rule.
+Currently, the following functions can be used to get or set metadata:</p>
+
+<ul>
+<li><code>origin</code> : Where was a rule defined?</li>
+<li><code>names</code> : The name per rule</li>
+<li><code>created</code> : when were the rules created?</li>
+<li><code>label</code> : Short description of the rule</li>
+<li><code>description</code>: Long description of the rule</li>
+</ul>
+
+<p>Names can be set from the command line when defining a validator object.</p>
+
+<pre><code class="r">v &lt;- validator(rat = height/weight &gt; 0.5, htest=height&gt;0, wtest=weight &gt; 0)
+names(v)
+</code></pre>
+
+<pre><code>## [1] &quot;rat&quot;   &quot;htest&quot; &quot;wtest&quot;
+</code></pre>
+
+<p>Also try</p>
+
+<pre><code class="r">names(v)[1] &lt;- &quot;ratio&quot;
+v
+</code></pre>
+
+<pre><code>## Object of class &#39;validator&#39; with 3 elements:
+##  ratio: height/weight &gt; 0.5
+##  htest: height &gt; 0
+##  wtest: weight &gt; 0
+</code></pre>
+
+<p>Some general information is obtained with <code>summary</code>,</p>
+
+<pre><code class="r">summary(v)
+</code></pre>
+
+<pre><code>##   block nvar rules linear
+## 1     1    2     3      2
+</code></pre>
+
+<p>Here, some properties per <em>block</em> of rules is given. Two rules occur in the same
+block if when they share a variable. In this case, all rules occur in the same
+block.</p>
+
+<p>and the number of rules can be requested with <code>length</code></p>
+
+<pre><code>length(v)
+</code></pre>
+
+<p>With <code>variables</code>, the variables occurring per rule, or over all the rules can be requested.</p>
+
+<pre><code class="r">variables(v)
+</code></pre>
+
+<pre><code>## [1] &quot;height&quot; &quot;weight&quot;
+</code></pre>
+
+<pre><code class="r">variables(v,as=&quot;matrix&quot;)
+</code></pre>
+
+<pre><code>##        variable
+## rule    height weight
+##   ratio   TRUE   TRUE
+##   htest   TRUE  FALSE
+##   wtest  FALSE   TRUE
+</code></pre>
+
+<p>Validator objects can be subsetted as if they were lists using the single and double bracket operators.</p>
+
+<pre><code class="r">v[c(1,3)]
+</code></pre>
+
+<pre><code>## Object of class &#39;validator&#39; with 2 elements:
+##  ratio: height/weight &gt; 0.5
+##  wtest: weight &gt; 0
+## Options:
+## raise: none; lin.eq.eps: 1e-08
+</code></pre>
+
+<pre><code class="r">v[&#39;ratio&#39;,&#39;wtest&#39;]
+</code></pre>
+
+<pre><code>## Object of class &#39;validator&#39; with 1 elements:
+##  ratio: height/weight &gt; 0.5
+## Options:
+## raise: none; lin.eq.eps: 1e-08
+</code></pre>
+
+<p>The double bracket can be used to inspect a single rule</p>
+
+<pre><code class="r">v[[1]]
+</code></pre>
+
+<pre><code>## 
+## Object of class rule.
+##  expr       : height/weight &gt; 0.5 
+##  name       : ratio 
+##  label      :  
+##  description:  
+##  origin     : command-line 
+##  created    : 2015-09-01 16:15:55
+</code></pre>
+
+<h3>Validator objects and confrontation objects are reference objects</h3>
+
+<p>As simple as that. If you do</p>
+
+<pre><code>w &lt;- v
+</code></pre>
+
+<p>for a validator object <code>v</code>, then <code>w</code> just points to the same physical object as <code>v</code>.
+To make an actual copy, you can select everything.</p>
+
+<pre><code>w &lt;- v[]
+</code></pre>
+
+</body>
+
+</html>
