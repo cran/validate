@@ -212,7 +212,7 @@ hr {
 <h3>Introduction</h3>
 
 <p>The validate package is intended to make checking your data easy, maintainable
-and reproducible. The validate package allows you to</p>
+and reproducible. The package allows you to</p>
 
 <ul>
 <li>Test your data set(s) against predefined rules, either in- or cross-data set</li>
@@ -253,7 +253,7 @@ summary(women)
 </code></pre>
 
 <p>Validating data is all about checking whether a data set meets presumptions or
-expectations you have about it, and the validate package makes it super easy
+expectations you have about it, and the validate package makes it easy
 for you to define those expectations. Let&#39;s do a quick check on variables
 in the <code>women</code> data set.</p>
 
@@ -401,13 +401,28 @@ summary(cf)
 
 <p>By default aggregates are produced by rule.</p>
 
-<pre><code>cf &lt;- check_that(women, height&gt;0, weight&gt;0,height/weight &lt; 0.5)
+<pre><code class="r">cf &lt;- check_that(women, height&gt;0, weight&gt;0,height/weight &lt; 0.5)
 aggregate(cf) 
+</code></pre>
+
+<pre><code>##    npass nfail nNA rel.pass rel.fail rel.NA
+## V1    15     0   0      1.0      0.0      0
+## V2    15     0   0      1.0      0.0      0
+## V3    12     3   0      0.8      0.2      0
 </code></pre>
 
 <p>To aggregate by record, use <code>by=&#39;record&#39;</code></p>
 
-<pre><code>head(aggregate(cf,by=&#39;record&#39;))
+<pre><code class="r">head(aggregate(cf,by=&#39;record&#39;))
+</code></pre>
+
+<pre><code>##   npass nfail nNA  rel.pass  rel.fail rel.NA
+## 1     2     1   0 0.6666667 0.3333333      0
+## 2     2     1   0 0.6666667 0.3333333      0
+## 3     2     1   0 0.6666667 0.3333333      0
+## 4     3     0   0 1.0000000 0.0000000      0
+## 5     3     0   0 1.0000000 0.0000000      0
+## 6     3     0   0 1.0000000 0.0000000      0
 </code></pre>
 
 <p>Aggregated results can be automatically sorted, so records with the most violations or
@@ -417,11 +432,10 @@ rules that are violated most sort higher.</p>
 sort(cf)
 </code></pre>
 
-<pre><code>##    npass nfail nNA  rel.pass  rel.fail rel.NA
-## V4    10     5   0 0.6666667 0.3333333      0
-## V2    15     0   0 1.0000000 0.0000000      0
-## V3    15     0   0 1.0000000 0.0000000      0
-## V5     0     1   0 0.0000000 1.0000000      0
+<pre><code>##    npass nfail nNA rel.pass rel.fail rel.NA
+## V3    12     3   0      0.8      0.2      0
+## V1    15     0   0      1.0      0.0      0
+## V2    15     0   0      1.0      0.0      0
 </code></pre>
 
 <p>Confrontation objects can be subsetted with single bracket operators (like vectors), to 
@@ -449,7 +463,7 @@ summary(confront(women, v))
 confront(women, v, raise=&#39;all&#39;)
 </code></pre>
 
-<p>Linear equalities form an important class of validation rules. To prevent equalities to be strictly tested, there is an option called <code>len.eq.eps</code> (with default value \(10^{-8}\)) that allows one to add some slack to these tests.</p>
+<p>Linear equalities form an important class of validation rules. To prevent equalities to be strictly tested, there is an option called <code>len.eq.eps</code> (with default value \(10^{-8}\)) that allows one to add some slack to these tests. The amount of slack is intended to prevent false negatives (unneccesary failures) caused by machine rounding. If you want to check whether a sum-rule is satisfied to within one or two units of measurement, it is cleaner to define two inequalities for that.</p>
 
 <h3>Investigating validator objects</h3>
 
@@ -554,7 +568,7 @@ block.</p>
 ##  label      :  
 ##  description:  
 ##  origin     : command-line 
-##  created    : 2015-09-01 16:15:55
+##  created    : 2015-09-09 16:08:34
 </code></pre>
 
 <h3>Validator objects and confrontation objects are reference objects</h3>

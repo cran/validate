@@ -1,0 +1,40 @@
+---
+title: "A tour of rule types"
+author: "Mark van der Loo and Edwin de Jonge"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    theme: united
+---
+
+## Introduction
+In this vignette we show how to implement a set of common types of validation
+rules with  the `validate` package. The aim is to teach you more about the
+possibilities of the syntax.
+
+### Validation rules
+
+In the `validate` package, a validation rule is any R-expression that when evaluated,
+necessarily results in a logical or `NA`. The idea is that a validation rule expresses
+a condition on a data set that you wish to check, before using the set for producing
+statistical statements. Examples may include:
+
+- All ages must be positive
+- The covariance between height and weight must exceed 0.9
+- If a company employs staff, the amount of salary payed must be positive.
+
+There are many examples thinkable. 
+
+For a more formal definition of data validation and some of the ideas that underly the 
+`validate` package, also see [this paper](http://www.markvanderloo.eu/files/statistics/WP_5_Netherlands_A_formal_typology_of_data_validation_functions.pdf) or the [presentation](http://www.unece.org/fileadmin/DAM/stats/documents/ece/ces/ge.44/2015/mtg1/PPT_5_Netherlands_A_formal_typology_of_data_validation_functions.pdf).
+
+
+### Type checks
+Any 
+
+
+
+
+
+

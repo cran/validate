@@ -1,7 +1,7 @@
-39d508585443dda39ffdd0b58acf6b80 *DESCRIPTION
+97ba533f026f71139460769127837da3 *DESCRIPTION
 8abc2c7bc77eccc60fe45ca954e82433 *NAMESPACE
 5c3147aa82e60ffc27233413fb0af462 *R/barplot.R
-a2f9dfc213c3e4a44798cf698a624ce7 *R/compare.R
+107b551f9683773e2bfaf6a9a7502fd2 *R/compare.R
 74ee45594108c71c17be7dd457b587f8 *R/confrontation.R
 4a11a9eb1e096a88358a066256cda756 *R/expressionset.R
 a0b8bea0d81b2655ab719e285c95b024 *R/factory.R
@@ -17,12 +17,12 @@ a0b8bea0d81b2655ab719e285c95b024 *R/factory.R
 baf58b7e400addc465ec2b1e51967c9b *R/yaml.R
 113ecda539a8246e6e3d22c9ca32664e *build/vignette.rds
 701f652617864bfb021839be0f493a35 *data/retailers.csv.gz
-a9be592571c1df6a86dabd28a0471f65 *inst/doc/intro.R
-743cfa9f942ce0a1d037732561c3bda4 *inst/doc/intro.Rmd
-0dab6cd8bd2711f1019e8797ea3a62d7 *inst/doc/intro.html
+e58142b2b91195986a2467c037ccf5e0 *inst/doc/intro.R
+e5e8fa4deaf2c2f42c2e35e20d838357 *inst/doc/intro.Rmd
+a30ecb04d6700ef968f4ab03f7082d61 *inst/doc/intro.html
 fd9483ff8ecb9e58088db012b655be8b *inst/doc/rule-files.R
-43f137b5a43069e07a98e3022235753c *inst/doc/rule-files.Rmd
-f0e74d4482ae065f54d24f9a33a9460f *inst/doc/rule-files.html
+cbf16debb5981eafb3e3f027a10f406f *inst/doc/rule-files.Rmd
+30d09e10eede64d4ed22c7c78c0dfe14 *inst/doc/rule-files.html
 3b64f1507a52249516deedc8f4396805 *man/aggregate-validation-method.Rd
 f9eae42f5376b7540faeabbefccba49d *man/barplot-validation-method.Rd
 ee6c66783bb79db254cbf84d99763825 *man/cells.Rd
@@ -92,5 +92,7 @@ da5dbaf2f9e0b9ef5457e630b2563a5a *tests/testthat/yamltests/freeform.yaml
 386c824e25ee69195981e790de24806f *tests/testthat/yamltests/top.yaml
 d1da5cd951122ba564fe9102b72e7b57 *tests/testthat/yamltests/yamloptions.yaml
 81b73eeaf7a2ff6ac1d380783d4e9bc5 *tests/testthat/yamltests/yamlrules.yaml
-743cfa9f942ce0a1d037732561c3bda4 *vignettes/intro.Rmd
-43f137b5a43069e07a98e3022235753c *vignettes/rule-files.Rmd
+e5e8fa4deaf2c2f42c2e35e20d838357 *vignettes/intro.Rmd
+cbf16debb5981eafb3e3f027a10f406f *vignettes/rule-files.Rmd
+78f49fb6e50ed934c9371d2e1481b7df *vignettes/rule-tour.Rmd
+770bf4cb9802bbf54e571e152b2dd134 *vignettes/rule-tour.html

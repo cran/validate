@@ -227,7 +227,7 @@ mean(height/weight) &lt; 0.5
 <pre><code class="r">v &lt;- validator(.file=&quot;ex-1.txt&quot;)
 </code></pre>
 
-<p>Note that the <code>#</code> is used to start comment-lines, just like in regular R syntax.</p>
+<p>Note that the <code>#</code> is used to start comment-lines, just like in regular R syntax. Validation rules may span several lines. The only restriction is that rules are stated in valid syntax and can be recognized by validate as validating (basically, it should result in a <code>logical</code>).</p>
 
 <h3>Importing from yaml files</h3>
 

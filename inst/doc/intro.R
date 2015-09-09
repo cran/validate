@@ -39,6 +39,13 @@ cf <- confront(women,v)
 summary(cf)
 
 ## ------------------------------------------------------------------------
+cf <- check_that(women, height>0, weight>0,height/weight < 0.5)
+aggregate(cf) 
+
+## ------------------------------------------------------------------------
+head(aggregate(cf,by='record'))
+
+## ------------------------------------------------------------------------
 # rules with most violations sorting first:
 sort(cf)
 
