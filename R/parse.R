@@ -3,13 +3,24 @@ NULL
 
 # File parsing and functions computing on the language
 
-
-
-PKGOPT <- options_manager(
+#' Services for extending 'validate'
+#'
+#' Functions exported silently to allow for cross-package inheritance 
+#' of the \code{\link{expressionset}} object. These functions are never
+#' needed in scripts or statistical production code.
+#'
+#' @rdname validate_extend
+#' @param .__defaults toggle default options
+#' @param .__reset togle reset options 
+#' @export
+#' @keywords internal
+.PKGOPT <- settings::options_manager(
   # all: warnings and errors are raised. 'errors': raise errors. 'none': warnings and errors are caught.
    raise = 'none'
    , lin.eq.eps = 1e-8
-#  , preproc_symbols = c('<-','library')
+   , na.value = NA
+   , sequential = TRUE    # option for the 'dcmodify' package
+   , na.condition = FALSE # option for the 'dcmodify' package
 )
 
 
@@ -30,18 +41,18 @@ PKGOPT <- options_manager(
 #' @section Details:
 #' There are three ways in which options can be specified.
 #' \itemize{
-#' \item{Globally. Setting \code{validate_options(option1=value1,option2=value2,...)} sets global options.
-#' \item{Per object. Setting \code{validate_options(where=<object>, option1=value1,...)}, causes all relevant functions
+#' \item{Globally. Setting \code{voptions(option1=value1,option2=value2,...)} sets global options.
+#' \item{Per object. Setting \code{voptions(where=<object>, option1=value1,...)}, causes all relevant functions
 #' that use that object (e.g. \code{\link{confront}}) to use those local settings.}
 #' \item{At execution time. Relevant functions (e.g. \code{\link{confront}}) take optional arguments allowing one
 #' to define options to be used during the current function call}
 #' }}
 #' 
-#' To set options in a file, use \code{validate_options(option1=value1,option2=value2,...)} without the \code{where}
+#' To set options in a file, use \code{voptions(option1=value1,option2=value2,...)} without the \code{where}
 #' argument. This will invoke a local setting in the object created when the file is parsed.
 #' 
-#' @return When requesting option settings: a \code{list}. When setting options, the whole options 
-#' list is returned silently.
+#' @return When requesting option settings: a \code{list}. When setting options,
+#'   the whole options list is returned silently.
 #'
 #' @param x (optional) an object inheriting from \code{expressionset} such as \code{\link{validator}} or \code{\link{indicator}}.
 #' @param ... Name of an option (character) to retrieve options or \code{option = value} pairs to set options. 
@@ -50,29 +61,39 @@ PKGOPT <- options_manager(
 #' @export
 #' @examples
 #' # the default allowed validation symbols.
-#' validate_options('validator_symbols')
+#' voptions('validator_symbols')
 #' 
 #' # set an option, local to a validator object:
 #' v <- validator(x + y > z)
-#' validate_options(v,raise='all')
+#' voptions(v,raise='all')
 #' # check that local option was set:
-#' validate_options(v,'raise')
+#' voptions(v,'raise')
 #' # check that global options have not changed:
-#' validate_options('raise')
-setGeneric('validate_options',def = function(x=NULL,...) standardGeneric('validate_options'))
+#' voptions('raise')
+setGeneric('voptions',def = function(x=NULL,...) standardGeneric('voptions'))
 
-#' @rdname validate_options
-setMethod('validate_options','ANY',function(x=NULL,...){
-  do.call(PKGOPT,c(x,list(...)))
+#' @rdname voptions
+setMethod('voptions','ANY',function(x=NULL,...){
+  do.call(.PKGOPT,c(x,list(...)))
 })
 
-#' @rdname validate_options
-#' @export
-setGeneric('validate_reset',def=function(x=NULL) standardGeneric('validate_reset'))
+#' @rdname voptions
+#' @export 
+validate_options <- function(...){ 
+  .Deprecated(new="voptions")
+    voptions(...)
+}
 
-#' @rdname validate_options
-setMethod('validate_reset','ANY',function(x=NULL){
-  settings::reset(PKGOPT)
+#' @rdname voptions
+#' @export
+setGeneric('reset',def=function(x=NULL) standardGeneric('reset'))
+
+
+
+
+#' @rdname voptions
+setMethod('reset','ANY',function(x=NULL){
+  settings::reset(.PKGOPT)
 })
 
 
@@ -121,8 +142,10 @@ var_from_call <- function(x){
 # }
 
 # find a symbol in a call. Returns a list of multi-indices.
+# occurrences of variable names in a function signature are skipped.
 which.call <- function(x, what, I=1, e=as.environment(list(n=0))){
-  if (x == what){
+  # skip signatures (=pairlist)
+  if (!is.pairlist(x) && x == what){
     e[[paste0('x',e$n)]] <- I
     e$n <- e$n + 1
   }
@@ -209,6 +232,7 @@ right <- function(x) if ( is.call(x) ) x[[min(length(x),3)]] else NULL
 
 
 linear_call <- function(x){
+  if (is.character(x)) return(FALSE)
   if ( is.null(node(x)) ) return(TRUE) 
   n <- deparse(node(x))
   if ( !n %in% c("+","-","*","<","<=","==",">=",">" ) ) return(FALSE)
@@ -220,7 +244,7 @@ linear_call <- function(x){
 
 validating_call <- function(cl){
   pure <- c("<", "<=", "==", "!=", ">=", ">", "%in%", "identical", "~" ,"%->%"
-          , "any_missing", "any_duplicated","var_group")
+          ,"grepl" ,"any_missing", "any_duplicated","var_group")
   unary <- c("!", "(", "all", "any" )
   binary <- c("|","||","&","&&","if","xor")
 

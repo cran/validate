@@ -76,7 +76,7 @@ setRefClass("confrontation"
 #' @param dat An R object carrying data
 #' @param x An R object carrying \code{\link{rule}}s.
 #' @param ref Optionally, an R object carrying reference data. See examples for usage.
-#' @param ... Options used at execution time (especially \code{'raise'}). See \code{\link{validate_options}}.
+#' @param ... Options used at execution time (especially \code{'raise'}). See \code{\link{voptions}}.
 #' 
 #' 
 #' @section Using reference data:
@@ -94,15 +94,15 @@ setRefClass("confrontation"
 #' 
 #' @seealso
 #' \itemize{
-#'  \item{\code{\link{validate_options}}}
+#'  \item{\code{\link{voptions}}}
 #'  \item{\code{\link{summary,validation-method}}, \code{\link{aggregate,validation-method}}, \code{\link{sort,validation-method}}}
 #'  \item{\code{\link{summary,indication-method}}}
 #'  \item{\code{\link{indicator}}, \code{\link{indicator-class}}}
 #'  \item{\code{\link{validator}}, \code{\link{validator-class}}}
 #' }
-#' @export 
 #' 
 #' @example ../examples/confront.R
+#' @export 
 setGeneric("confront",
   def = function(dat, x, ref, ...) standardGeneric("confront")
 )
@@ -321,13 +321,25 @@ setMethod("confront", signature("data.frame","validator"), function(dat, x, key=
 })
 
 
+namecheck <- function(x){
+  n1 <- ls(x)
+  n2 <- ls(parent.env(x))
+  i <- n1 %in% n2
+  if (any(i)){
+    n <- paste(paste0("'",n1[i],"'"),collapse=", ") 
+    w <- sprintf("Possible reference ambiguity: both current data set and reference data have variables named %s.",n)
+    warning(w)
+  }
+  x
+}
+
 #' @rdname confront
 setMethod("confront",signature("data.frame","validator","environment"), function(dat, x, ref, key=NULL, ...){
   classes <- sapply( ls(ref), function(x) class(ref[[x]]) )
   if ( !all(class(dat) == classes)  )
     stop("Class of one or more elements in 'ref' differs from 'dat'")
   if (!is.null(key)) match_rows(of=ref, against=dat, using=key)
-  dat <- list2env(dat,parent=ref)  
+  dat <- namecheck(list2env(dat,parent=ref))
   confront_work(x,dat,key,class="validation",...)
 })
 
@@ -336,7 +348,7 @@ setMethod("confront",signature("data.frame","validator","data.frame"),function(d
   env <- new.env()
   env$ref <- ref
   if (!is.null(key)) match_rows(of=env, against=dat, using=key)
-  dat <- list2env(dat, parent=env)
+  dat <- namecheck(list2env(dat, parent=env))
   confront_work(x, dat, key, class="validation", ...)
 })
 
@@ -347,7 +359,7 @@ setMethod("confront",signature("data.frame","validator","list"),function(dat, x,
     stop("Class of one or more elements in 'ref' differs from 'dat'")
   env <- list2env(ref)  
   if (!is.null(key)) match_rows(of=ref, against=dat, using=key)
-  dat <- list2env(dat,parent=env)  
+  dat <- namecheck(list2env(dat,parent=env))
   confront_work(x,dat,key,class="validation",...)  
 })
 
@@ -387,7 +399,11 @@ execute <- function(calls,env,opts){
         warning(sprintf("Locally overwriting variable '%s'",var))
         assign(var, tryCatch( eval(right(g), env), error=warning), envir=env)
     } else { 
-      factory(eval,opts)(g, env)
+      val <- factory(eval,opts)(g, env)
+      if ( !is.na(opts('na.value')) ){
+        val[[1]] <- ifelse(is.na(val[[1]]), opts('na.value'), val[[1]])
+      }
+      val
     }
   )[!is.assignment(calls)]
 }

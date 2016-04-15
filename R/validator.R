@@ -68,8 +68,8 @@ setRefClass("validator"
 ini_validator <- function(obj, ..., .file){
   check_primitives()
   if (missing(.file)){
-    ini_expressionset_cli(obj, ..., .prefix="V")
-    obj$._options <- PKGOPT
+    .ini_expressionset_cli(obj, ..., .prefix="V")
+    obj$._options <- .PKGOPT
     i <- validating(obj) | is_tran_assign(obj)
     if ( !all(i) ){
       invalid <- sapply(which(!i),function(k) deparse(expr(obj[[k]])))
@@ -81,13 +81,14 @@ ini_validator <- function(obj, ..., .file){
       obj$rules <- obj$rules[i]
     } 
   } else {
-    ini_expressionset_yml(obj, file=.file, .prefix="V")
+    .ini_expressionset_yml(obj, file=.file, .prefix="V")
   }
+  # do options check.
 }
 
 # note: for some reason this function is not testable from devtools::test('pkg')
 check_primitives <- function(){
-  # todo: extract this from validate_options()
+  # todo: extract this from voptions()
    prim <- c("<","<=","==","!=",">=",">","%in%")
    for ( p in prim )
      if (!identical(body(p),body(getFromNamespace(p,"base"))))
@@ -109,7 +110,7 @@ check_primitives <- function(){
 #
 get_linear_coefficients <- function(x, normalize=TRUE,...){
   x <- x[x$is_linear()]
-  calls <- get_exprs(x,lin_eq_eps=0)
+  calls <- .get_exprs(x,lin_eq_eps=0)
     
   cols <- unique(unlist(lapply(calls, var_from_call)))
   rows <- names(x)

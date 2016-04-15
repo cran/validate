@@ -58,17 +58,29 @@ expressionset <- setRefClass("expressionset"
       , ._options = "function"
   )
   , methods= list(
-        show = function() show_expressionset(.self)
-      , exprs      = function(...) get_exprs(.self,...)
-      , blocks     = function() blocks_expressionset(.self)
+        show = function() .show_expressionset(.self)
+      , exprs      = function(...) .get_exprs(.self,...)
+      , blocks     = function() .blocks_expressionset(.self)
       , options = function(...) .self$._options(...)
-      , clone_options = function(...) clone_and_merge(.self$._options,...)
+      , clone_options = function(...) settings::clone_and_merge(.self$._options,...)
   )
 )
 
 
-## Service for filling an expressionset from commandline
-ini_expressionset_cli <- function(obj, ..., .prefix="R"){  
+#' Service for filling an expressionset from commandline
+#'
+#' @section Details:
+#' This function is aimed at developers importing the package and 
+#' not at direct users of \pkg{validate}.
+#'
+#' @param obj An expressionset object (or an object inheriting from expressionset).
+#' @param ... Comma-separated list of expressions
+#' @param .prefix Prefix to use in default names.
+#'
+#' @export
+#' @rdname validate_extend
+#' @keywords internal
+.ini_expressionset_cli <- function(obj, ..., .prefix="R"){  
 
   L <- as.list(substitute(list(...))[-1])
   nm <- extract_names(L, prefix = .prefix)
@@ -85,14 +97,21 @@ ini_expressionset_cli <- function(obj, ..., .prefix="R"){
   obj$rules <- R
 }
 
-## TODO: Service for creating child objects of expressionset from file
-ini_expressionset_yml <- function(obj, file, .prefix="R"){
+
+#' @param obj An expressionset object (or an object inheriting from expressionset).
+#' @param file a filename
+#' @param .prefix Prefix to use in default names.
+#'
+#' @export
+#' @rdname validate_extend
+#' @keywords internal
+.ini_expressionset_yml <- function(obj, file, .prefix="R"){
   S <- get_filestack_yml(file)
   R <- list()
   for ( fl in S )
     R <- c(R, rules_from_yrf_file(fl))
   obj$rules <- R
-  obj$._options <- PKGOPT
+  obj$._options <- .PKGOPT
   # options only from the 'including' file (not from included)
   local_opt <- options_from_yml(file)
   if ( length(local_opt) > 0 )
@@ -138,7 +157,7 @@ rules_from_block <- function(block, origin){
 
 rules_from_yrf_file <- function(file,prefix="V"){
 
-  lines <- readlines_utf8(file)
+  lines <- .readlines_utf8(file)
   blocks <- yaml_blocks(lines)
   rules <- unlist(lapply(blocks, rules_from_block, origin=file))
   
@@ -157,8 +176,8 @@ rules_from_yrf_file <- function(file,prefix="V"){
 }
 
 options_from_yml <- function(file){
-  lines <- readlines_utf8(file)
-  parse_yrf_options(lines)
+  lines <- .readlines_utf8(file)
+  .parse_yrf_options(lines)
 }
 
 # Get sequence of files to be processed from include statements.
@@ -190,8 +209,11 @@ get_filestack_yml <- function(file){
 
 
 
-
-show_expressionset <- function(obj){
+#' @param obj an expressionset object
+#' @rdname validate_extend
+#' @export
+#' @keywords internal
+.show_expressionset <- function(obj){
   nr <- length(obj)
   cat(sprintf(
     "Object of class '%s' with %s elements:\n",class(obj)[1], nr
@@ -205,7 +227,7 @@ show_expressionset <- function(obj){
                                                 , lin_eq_eps=0), call2text))
   cat(noquote(paste(lab,collapse="\n")))
   opt <- ""
-  if (!identical(obj$._options,PKGOPT)){
+  if (!identical(obj$._options,.PKGOPT)){
     opt <- unlist(obj$options())
     opt <- paste0(sprintf("%s: %s",names(opt),paste0(opt)),collapse="; ")
     opt <- paste0("\nOptions:\n",opt)
@@ -235,16 +257,16 @@ extract_names <- function(L,prefix="V"){
   make.names(given, unique=T)
 }
 
-
-# @param expand_assignments Substitute assignments?
-# @param expand_groups Expand groups?
-# @param varlist: a character vector of variables to search through 
-#    when groups are defined with regexps.
-# @param vectorize Vectorize if-statements?
-# @param replace_dollar Replace dollar with bracket index?
-# 
-#
-get_exprs <- function(x, ...
+#' @rdname validate_extend
+#' @param expand_assignments Substitute assignments?
+#' @param expand_groups Expand groups?
+#' @param varlist: a character vector of variables to search through 
+#'    when groups are defined with regexps.
+#' @param vectorize Vectorize if-statements?
+#' @param replace_dollar Replace dollar with bracket index?
+#' @export
+#' @keywords internal
+.get_exprs <- function(x, ...
     , expand_assignments=FALSE
     , expand_groups=TRUE
     , vectorize=TRUE
@@ -260,7 +282,11 @@ get_exprs <- function(x, ...
   exprs
 }
 
-blocks_expressionset <- function(x){
+#' @rdname validate_extend
+#' @param x An expressionset object
+#' @export
+#' @keywords internal
+.blocks_expressionset <- function(x){
   varblock <- function(v,vlist){
     sapply(vlist, function(x) any(v %in% x) | identical(v,character(0)) )
   }
@@ -268,7 +294,7 @@ blocks_expressionset <- function(x){
   V <- variables(x,as="matrix")
   # all connections 
   A <- V %*% t(V) > 0
-  L <- apply(A,2,which)
+  L <- lapply(1:nrow(A),function(i) which(A[i,]))
   
   blocks <- new.env()
   b <- 0
@@ -311,10 +337,10 @@ setGeneric("length")
 #' @param file A file location or connection (passed to \code{base::\link[base]{write}}).
 #' @param ... Options passed to \code{yaml::\link[yaml]{as.yaml}}
 #' 
-#' @export
 #' 
 #' @example ../examples/export_yaml.R
 #' 
+#' @export
 setGeneric("export_yaml",function(x,file,...) standardGeneric("export_yaml"))
 
 #' @rdname export_yaml
@@ -351,8 +377,8 @@ setMethod("variables", "expressionset",  function(x, as=c('vector','matrix','lis
 
 
 
-#' @rdname validate_options
-setMethod('validate_options','expressionset',function(x=NULL,...){
+#' @rdname voptions
+setMethod('voptions','expressionset',function(x=NULL,...){
   if (settings::is_setting(...)){
     x$._options <- clone_and_merge(x$._options,...)
   } else {
@@ -360,8 +386,8 @@ setMethod('validate_options','expressionset',function(x=NULL,...){
   }
 })
 
-#' @rdname validate_options
-setMethod('validate_reset','expressionset',function(x=NULL){
+#' @rdname voptions
+setMethod('reset','expressionset',function(x=NULL){
   settings::reset(x$._options)
 })
 
@@ -553,7 +579,7 @@ setMethod("export_yaml","expressionset", function(x, file,...){
 #' @rdname export_yaml
 setMethod("as_yaml","expressionset",function(x,...){
   option_string <- ""
-  if (!identical(x$._options,PKGOPT)){ # export options when set.
+  if (!identical(x$._options,.PKGOPT)){ # export options when set.
     option_string <- paste0("---\n",yaml::as.yaml(list(options=x$options()),...),"---\n")
   }
   rule_string <- yaml::as.yaml(rapply(as.list.expressionset(x), f=function(y) paste0("",y),how="replace"),...)

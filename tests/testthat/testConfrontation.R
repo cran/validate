@@ -48,6 +48,16 @@ test_that("indication object contents",{
 })
 
 
+test_that("confrontation method with custom na.values",{
+  
+  v <- validator(x > 0)
+  d <- data.frame(x=c(1,-1,NA))
+  expect_equivalent(values(confront(d,v)), matrix(c(TRUE,FALSE,NA)) )
+  expect_equivalent(values(confront(d,v,na.value=FALSE)), matrix(c(TRUE,FALSE,FALSE)) )
+  expect_equivalent(values(confront(d,v,na.value=TRUE)), matrix(c(TRUE,FALSE,TRUE)) )
+  
+})
+
 test_that("Confrontation methods with reference data",{
   v1 <- validator(height > 0, weight / height > 0, height == ref$height)
   cf1 <- confront(women,v1,ref = women)
@@ -58,6 +68,15 @@ test_that("Confrontation methods with reference data",{
   cf3 <- confront(women, v2, ref=e)
   expect_equal(summary(cf1)[1:7],summary(cf2)[1:7])
   expect_equal(summary(cf2)[1:7],summary(cf3)[1:7])
+  
+  # warning when the data-carrying environment has variables with the
+  # same name as the parent.
+  
+     expect_warning(confront(
+      dat   = data.frame(test=10)
+      , x   = validator(test==test$aap)
+      , ref = list(test=data.frame(aap=7)))
+     )
 })
 
 

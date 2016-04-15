@@ -35,7 +35,7 @@ test_that("Parsing yrf format", {
 
 test_that("Parsing options",{
   v <- validator(.file="yamltests/yamloptions.yaml") 
-  expect_equal(validate_options(v,"raise"),"all")
+  expect_equal(voptions(v,"raise"),"all")
   expect_equal(length(v),1)
 })
 
@@ -97,9 +97,11 @@ test_that("validating_call",{
   expect_true(validating_call(expression(!(x > y))[[1]]))
   expect_true(validating_call(expression(all(x > y))[[1]]))
   expect_true(validating_call(expression(any(x > y))[[1]]))
-  
+  expect_true(validating_call(expression(grepl('hello',x))[[1]]))
+
   expect_true(validating_call(expression(if(x == 1) y == 1)[[1]]))
   expect_true(validating_call(expression(xor(x == 1, y == 1))[[1]]))
   expect_false(validating_call(expression(x)[[1]]))
+  
 })
 
