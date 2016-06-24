@@ -32,8 +32,8 @@ attributes:
 \item{Number of validations that evaluate to a logical (verifiable)}
 \item{Number of validations that evaluate to \code{TRUE}}
 \item{Number of validations that evaluate to \code{FALSE}}
-\item{Number of extra validations that evaluate to \code{NA} (new, unverifiable)}
-\item{Number of validations that still evaluate to \code{NA}}
+\item{Number of extra validations that evaluate to \code{NA} (new unverifiable)}
+\item{Number of validations that still evaluate to \code{NA} (still unverifialble)}
 \item{Number of validations that still evaluate to \code{TRUE}}
 \item{Number of extra validations that evaluate to \code{TRUE} }
 \item{Number of validations that still evaluate to \code{FALSE}}

@@ -238,8 +238,9 @@ setRefClass("indication", contains = "confrontation")
 
 #' @rdname confront
 setMethod("confront", signature("data.frame","indicator"), function(dat, x, key=NULL,...){
-  dat <- list2env(dat)
-  confront_work(x,dat,key,'indication',...)
+  data_env <- list2env(dat)
+  data_env$. <- dat
+  confront_work(x,data_env,key,'indication',...)
 })
 
 
@@ -316,8 +317,9 @@ setRefClass("validation", contains = "confrontation")
 #' @rdname confront
 #' @param key (optional) name of identifying variable in x.
 setMethod("confront", signature("data.frame","validator"), function(dat, x, key=NULL, ...){
-  dat <- list2env(dat)
-  confront_work(x,dat,key,'validation',...)
+  data_env <- list2env(dat)
+  data_env$. <- dat
+  confront_work(x,data_env,key,'validation',...)
 })
 
 
@@ -339,8 +341,9 @@ setMethod("confront",signature("data.frame","validator","environment"), function
   if ( !all(class(dat) == classes)  )
     stop("Class of one or more elements in 'ref' differs from 'dat'")
   if (!is.null(key)) match_rows(of=ref, against=dat, using=key)
-  dat <- namecheck(list2env(dat,parent=ref))
-  confront_work(x,dat,key,class="validation",...)
+  data_env <- namecheck(list2env(dat,parent=ref))
+  data_env$. <- dat
+  confront_work(x,data_env,key,class="validation",...)
 })
 
 #' @rdname confront
@@ -348,8 +351,9 @@ setMethod("confront",signature("data.frame","validator","data.frame"),function(d
   env <- new.env()
   env$ref <- ref
   if (!is.null(key)) match_rows(of=env, against=dat, using=key)
-  dat <- namecheck(list2env(dat, parent=env))
-  confront_work(x, dat, key, class="validation", ...)
+  data_env <- namecheck(list2env(dat, parent=env))
+  data_env$. <- dat
+  confront_work(x, data_env, key, class="validation", ...)
 })
 
 #' @rdname confront
@@ -359,8 +363,9 @@ setMethod("confront",signature("data.frame","validator","list"),function(dat, x,
     stop("Class of one or more elements in 'ref' differs from 'dat'")
   env <- list2env(ref)  
   if (!is.null(key)) match_rows(of=ref, against=dat, using=key)
-  dat <- namecheck(list2env(dat,parent=env))
-  confront_work(x,dat,key,class="validation",...)  
+  data_env <- namecheck(list2env(dat,parent=env))
+  data_env$. <- dat
+  confront_work(x,data_env,key,class="validation",...)  
 })
 
 

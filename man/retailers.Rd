@@ -3,10 +3,11 @@
 \docType{data}
 \name{retailers}
 \alias{retailers}
-\title{data on Dutch retailers}
+\title{data on retailers}
 \format{A csv file, one retailer per row.}
 \description{
-Data on revenue and cost structure for 60 retailers. All currency is in thousands of guilders.
+Anonymized and distorted data on revenue and cost structure for 60 retailers. 
+Currency is in thousands (of dollars or euros or guilders, ...)
 
 \itemize{
  \item size: Size class
