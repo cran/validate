@@ -19,7 +19,7 @@
 
 .get_exprs(x, ..., expand_assignments = FALSE, expand_groups = TRUE,
   vectorize = TRUE, replace_dollar = TRUE,
-  lin_eq_eps = x$options("lin.eq.eps"))
+  lin_eq_eps = x$options("lin.eq.eps"), dat = NULL)
 
 .blocks_expressionset(x)
 }
@@ -45,6 +45,11 @@
 \item{vectorize}{Vectorize if-statements?}
 
 \item{replace_dollar}{Replace dollar with bracket index?}
+
+\item{dat}{Optionally, a \code{data.frame} containing the data to which the
+expressions will be applied. When provided, the only equalities \code{A==B}
+that will be translated to \code{abs(A-B)<lin.eq.eps} are those where all 
+occurring variables are numeric in \code{dat}.}
 
 \item{obj}{An expressionset object (or an object inheriting from expressionset).}
 

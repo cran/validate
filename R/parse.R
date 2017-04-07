@@ -30,11 +30,15 @@ NULL
 #' Currently the following options are supported.
 #' 
 #' \itemize{
-#'  \item{raise ('none','error','all'; 'none') Control if the \code{\link{confront}} methods catch or raise exceptions. 
+#'  \item{\code{na.value} (\code{NA},\code{TRUE},\code{FALSE}; \code{NA}) Value
+#'  to return when a validating statement results in \code{NA}.}
+#'  \item{\code{raise} (\code{"none"},\code{"error"},\code{"all"};
+#'  \code{"none"}) Control if the \code{\link{confront}} methods catch or raise
+#'  exceptions.
 #'  The 'all' setting is useful when debugging validation scripts.}
-#'  \item{lin.eq.eps ('numeric'; 1e-8) The precision used when evaluating linear equalities. 
-#'     To be used to control for machine rounding.}
-#'  \item{'reset'} Reset to factory settings.
+#'  \item{\code{lin.eq.eps} ('numeric'; 1e-8) The precision used when evaluating
+#'  linear equalities. To be used to control for machine rounding.}
+#'  \item{\code{"reset"} Reset to factory settings.}
 #' }
 #'
 #'
@@ -159,7 +163,7 @@ which.call <- function(x, what, I=1, e=as.environment(list(n=0))){
 
 
 # 
-replace_linear_equality <- function(x,eps){
+replace_linear_equality <- function(x,eps,dat){
     repl <- function(x,eps){
       # by replacing nodes in the call tree
       # we need not conern about brackets
@@ -175,16 +179,22 @@ replace_linear_equality <- function(x,eps){
       lt
     }
 
-    if (length(x) == 3 && linear_call(x)){
+    if (length(x) == 3 && linear_call(x) && all_numeric(x,dat)){
       return(repl(x,eps))
     } else if (length(x) > 1) {
       for ( i in 2:length(x) ){
-        x[[i]] <- replace_linear_equality(x[[i]],eps)
+        x[[i]] <- replace_linear_equality(x[[i]],eps,dat)
       }
     } 
     x
 }
   
+all_numeric <- function(x,dat){
+  if (is.null(dat)) return(TRUE)
+  vr <- var_from_call(x)
+  vr <- vr[vr %in% variables(dat)]
+  all(sapply(vr,function(u) is.numeric(dat[[u]])))
+}
 # e <- expression(if (x + y == 3) z>0)[[1]]  
 #  e <- expression(aap / noot > z)[[1]]
 #  replace_linear_equality(e,1e-8)

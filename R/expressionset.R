@@ -264,6 +264,10 @@ extract_names <- function(L,prefix="V"){
 #'    when groups are defined with regexps.
 #' @param vectorize Vectorize if-statements?
 #' @param replace_dollar Replace dollar with bracket index?
+#' @param dat Optionally, a \code{data.frame} containing the data to which the
+#'    expressions will be applied. When provided, the only equalities \code{A==B}
+#'    that will be translated to \code{abs(A-B)<lin.eq.eps} are those where all 
+#'    occurring variables are numeric in \code{dat}.
 #' @export
 #' @keywords internal
 .get_exprs <- function(x, ...
@@ -272,15 +276,17 @@ extract_names <- function(L,prefix="V"){
     , vectorize=TRUE
     , replace_dollar=TRUE
     , lin_eq_eps = x$options('lin.eq.eps')
+    , dat=NULL
 ){
   exprs <- setNames(lapply(x$rules, expr ),names(x))
   if ( expand_assignments )  exprs <- expand_assignments(exprs)
   if ( expand_groups ) exprs <- expand_groups(exprs)
   if ( vectorize ) exprs <- lapply(exprs, vectorize)
   if ( replace_dollar ) exprs <- lapply(exprs, replace_dollar)
-  if (lin_eq_eps > 0) exprs <- lapply(exprs, replace_linear_equality, lin_eq_eps)
+  if (lin_eq_eps > 0) exprs <- lapply(exprs, replace_linear_equality, eps=lin_eq_eps, dat=dat)
   exprs
 }
+
 
 #' @rdname validate_extend
 #' @param x An expressionset object
@@ -318,6 +324,8 @@ extract_names <- function(L,prefix="V"){
 #' @example ../examples/summary.R
 setGeneric('summary')
 
+
+
 #' Get object lenght
 #' 
 #' @aliases validate-length
@@ -327,6 +335,7 @@ setGeneric('summary')
 #'  \item{\code{\link{confrontation}}}
 #' }
 #' @example ../examples/properties.R
+#' @export
 setGeneric("length")
 
 #' Export to yaml file
@@ -522,9 +531,11 @@ setMethod('summary',signature('expressionset'),function(object,...){
   )
 })
 
+
 #' @param x An R object
 #' @rdname length 
 #' @aliases length,expressionset-method 
+#' @export
 setMethod("length","expressionset",function(x) length(x$rules))
 
 
