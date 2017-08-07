@@ -2,9 +2,9 @@
 % Please edit documentation in R/expressionset.R, R/confrontation.R
 \docType{methods}
 \name{[,expressionset-method}
-\alias{[,confrontation-method}
 \alias{[,expressionset-method}
 \alias{[[,expressionset-method}
+\alias{[,confrontation-method}
 \title{Select a subset}
 \usage{
 \S4method{[}{expressionset}(x, i, j, ..., drop = TRUE)

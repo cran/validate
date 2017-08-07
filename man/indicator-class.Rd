@@ -7,6 +7,7 @@
 \description{
 \bold{This feature is currently experimental and may change in future versions}
 }
+
 \section{Details}{
 
 An indicator stores a set of indicators. It is a child class of \code{\link{expressionset}} and
@@ -28,5 +29,5 @@ can be constructed with  \code{\link{indicator}}.
  \item{\code{\link{expressionset}}}
 }
 }
-\keyword{internal}
 
+\keyword{internal}

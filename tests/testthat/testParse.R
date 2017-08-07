@@ -18,6 +18,8 @@ test_that("file paths are interpreted correctly",{
 #setwd("pkg/tests/testthat/")
 test_that("Parsing freeform", {
   expect_equal( length( validator(.file="yamltests/freeform.yaml") ) , 2,info="freeform")
+  expect_equal( length( indicator(.file="yamltests/indicator.yaml") ) , 2,info="freeform")
+  expect_equal( length( indicator(.file="yamltests/indicator2.yaml") ) , 2,info="freeform")
 })
 
 test_that("Parsing yrf format", {
@@ -25,9 +27,9 @@ test_that("Parsing yrf format", {
   v <- validator(.file="yamltests/yamlrules.yaml")
   expect_equal(length(v),2)
   expect_equal(names(v),c("sumrule","conditional"))
-  expect_equal(origin(v),c("yamltests/yamlrules.yaml","yamltests/yamlrules.yaml"))
-  expect_equal(label(v),c("sum of x and y","if x positive then y also"))
-  expect_equal(description(v),c("a looong description here","a looong description here\n"))
+  expect_equivalent(origin(v),c("yamltests/yamlrules.yaml","yamltests/yamlrules.yaml"))
+  expect_equivalent(label(v),c("sum of x and y","if x positive then y also"))
+  expect_equivalent(description(v),c("a looong description here","a looong description here\n"))
   expect_true(all(created(v)-now < 10))
   expect_warning(validator(.file="yamltests/invalid.yaml"))
   out <- capture.output(expect_warning(validator(.file="yamltests/invalidR.yaml")))
@@ -42,7 +44,7 @@ test_that("Parsing options",{
 test_that("Parsing included files",{
   v <- validator(.file="yamltests/top.yaml")
   expect_equal(length(v),6)
-  expect_equal(origin(v)
+  expect_equivalent(origin(v)
     , c(  "yamltests/child1.yaml"
         , "yamltests/child1.yaml"
         , "yamltests/child3.yaml"
@@ -53,10 +55,24 @@ test_that("Parsing included files",{
     )
 })
 
+test_that("validation from data.frames",{
+  
+  d <- data.frame(
+  rule = c("x>0", "a + b == c")
+    , name = c("foo", "bar")
+    , description = c("hello world","Ola, mundo")
+    , stringsAsFactors=FALSE
+  )
+  expect_equal(length(validator(.data=d)),2)
+  expect_equal(length( validator(.data=d[-3]) ),2)
+  expect_error(validator(.data=d[-1]))
+  d$rule[2] <- "a+b"
+  expect_warning(validator(.data=d))
+  
+})
+
 
 context("Computing on language")
-
-
 # 
 test_that("var_from_call",{
   
@@ -104,4 +120,49 @@ test_that("validating_call",{
   expect_false(validating_call(expression(x)[[1]]))
   
 })
+
+test_that("vectorizing if-statmentes",{
+
+  a <- vectorize( expression( if (P) Q )[[1]]  )
+  b <- expression(!(P) |(Q))[[1]]
+  expect_identical(a,b)
+
+  a <- vectorize( expression( (if (P) Q) )[[1]]  )
+  b <- expression( (!(P)|(Q)) )[[1]]  
+  expect_identical(a,b)
+
+  a <- vectorize( expression( (if (P) Q) | Z   )[[1]]  )
+  b <- expression((!(P)|(Q)) | Z)[[1]]
+  expect_identical(a,b)
+
+  a <- expression(sapply(x,function(y) 2*y))[[1]]
+  b <- a
+  expect_identical(vectorize(a),b)
+
+  a <- vectorize( expression( (if (P) Q) | (if(A) B)   )[[1]]  )
+  b <- expression((!(P)|(Q))|(!(A)|(B)))[[1]]
+  expect_identical(a,b)
+
+  # nested if's. For some reasons, identical gives FALSE
+  a <- vectorize(expression( if (P) Q | if(A) B )[[1]])
+  b <- expression( !(P) | (Q | (!(A) | (B))) )[[1]]
+  expect_true(a == b)
+  
+  e <- expression( if (P) Q else R)[[1]]
+  a <- vectorize(e)
+  b <- expression(
+    (!(P)|(Q)) & ((P)|(R))
+  )[[1]]
+  expect_identical(a,b)
+})
+
+
+test_that("translation of rules to data.frame",{
+  v <- validator(x > y, 2*y-1==z)
+  expect_equal(nrow(as.data.frame(v)),2)
+  i <- indicator(mean(x), sd(y))
+  expect_equal(nrow(as.data.frame(i)),2)
+})
+
+
 

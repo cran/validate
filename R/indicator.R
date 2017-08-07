@@ -19,7 +19,7 @@ NULL
 #' @export
 #' @keywords internal
 #' @example ../examples/indicator.R
-indicator <- function(..., .file) new('indicator',..., .file=.file)
+indicator <- function(..., .file, .data) new('indicator',..., .file=.file, .data=.data)
 
 
 
@@ -51,22 +51,45 @@ indicator <- function(..., .file) new('indicator',..., .file=.file)
 #' 
 setRefClass("indicator", contains='expressionset',
   methods = list(
-    initialize = function(..., .file) ini_indicator(.self, ..., .file = .file)
+    initialize = function(..., .file, .data) ini_indicator(.self
+      , ..., .file = .file, .data=.data)
   )                       
 )
 
-ini_indicator <- function(obj, ..., .file){
+ini_indicator <- function(obj, ..., .file, .data){
   
-  if (missing(.file)){
+  if (missing(.file) && missing(.data)){
     .ini_expressionset_cli(obj, ..., .prefix="I")
     obj$._options <- .PKGOPT
-  } else {
-    .ini_expressionset_yml(obj, file, .prefix="V")
+  } else if (!missing(.file)) {
+    .ini_expressionset_yml(obj, .file, .prefix="I")
+  } else if (!missing(.data)){
+    .ini_expressionset_df(obj, dat=.data, .prefix="I")
+    obj$._options <- .PKGOPT
   }
-  obj
 }
 
 
+#' Combine two indicator objects
+#'
+#' Combine two \code{\link{indicator}} objects by addition. A new \code{indicator} 
+#' object is created with default (global) option values. Previously set options
+#' are ignored.
+#'
+#' @param e1 a \code{\link{validator}}
+#' @param e2 a \code{\link{validator}}
+#'
+#'
+#' @examples
+#' indicator(mean(x)) + indicator(x/median(x))
+#'
+#' @export
+setMethod("+", c("indicator","indicator"), function(e1, e2){
+  ii <- indicator()
+  ii$rules <- c(e1$rules, e2$rules)
+  names(ii) <- make.names(names(ii),unique=TRUE)
+  ii
+})
 
 
 

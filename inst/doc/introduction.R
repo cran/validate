@@ -1,3 +1,6 @@
+## ----echo=FALSE----------------------------------------------------------
+library(validate)
+
 ## ------------------------------------------------------------------------
 data(women)
 summary(women)
@@ -37,6 +40,23 @@ v
 ## ------------------------------------------------------------------------
 cf <- confront(women,v)
 summary(cf)
+
+## ------------------------------------------------------------------------
+df <- data.frame(
+  rule = c("height>0","weight>0","height/weight>0.5")
+  , label = c("height positive","weight positive","ratio limit")
+)
+v <- validator(.data=df)
+v
+
+## ------------------------------------------------------------------------
+cf <- confront(women, v)
+quality <- as.data.frame(cf)
+measure <- as.data.frame(v)
+head( merge(quality, measure) )
+
+## ------------------------------------------------------------------------
+merge(summary(cf),measure)
 
 ## ------------------------------------------------------------------------
 cf <- check_that(women, height>0, weight>0,height/weight < 0.5)

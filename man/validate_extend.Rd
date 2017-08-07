@@ -2,16 +2,19 @@
 % Please edit documentation in R/parse.R, R/expressionset.R
 \name{.PKGOPT}
 \alias{.PKGOPT}
-\alias{.blocks_expressionset}
-\alias{.get_exprs}
 \alias{.ini_expressionset_cli}
+\alias{.ini_expressionset_df}
 \alias{.ini_expressionset_yml}
 \alias{.show_expressionset}
+\alias{.get_exprs}
+\alias{.blocks_expressionset}
 \title{Services for extending 'validate'}
 \usage{
 .PKGOPT(..., .__defaults = FALSE, .__reset = FALSE)
 
 .ini_expressionset_cli(obj, ..., .prefix = "R")
+
+.ini_expressionset_df(obj, dat, .prefix = "R")
 
 .ini_expressionset_yml(obj, file, .prefix = "R")
 
@@ -19,7 +22,8 @@
 
 .get_exprs(x, ..., expand_assignments = FALSE, expand_groups = TRUE,
   vectorize = TRUE, replace_dollar = TRUE,
-  lin_eq_eps = x$options("lin.eq.eps"), dat = NULL)
+  lin_eq_eps = x$options("lin.eq.eps"),
+  lin_ineq_eps = x$options("lin.ineq.eps"), dat = NULL)
 
 .blocks_expressionset(x)
 }
@@ -34,6 +38,8 @@
 
 \item{.prefix}{Prefix to use in default names.}
 
+\item{dat}{a data.frame}
+
 \item{file}{a filename}
 
 \item{x}{An expressionset object}
@@ -46,10 +52,7 @@
 
 \item{replace_dollar}{Replace dollar with bracket index?}
 
-\item{dat}{Optionally, a \code{data.frame} containing the data to which the
-expressions will be applied. When provided, the only equalities \code{A==B}
-that will be translated to \code{abs(A-B)<lin.eq.eps} are those where all 
-occurring variables are numeric in \code{dat}.}
+\item{obj}{An expressionset object (or an object inheriting from expressionset).}
 
 \item{obj}{An expressionset object (or an object inheriting from expressionset).}
 
@@ -59,6 +62,11 @@ occurring variables are numeric in \code{dat}.}
 
 \item{varlist:}{a character vector of variables to search through 
 when groups are defined with regexps.}
+
+\item{dat}{Optionally, a \code{data.frame} containing the data to which the
+expressions will be applied. When provided, the only equalities \code{A==B}
+that will be translated to \code{abs(A-B)<lin.eq.eps} are those where all 
+occurring variables are numeric in \code{dat}.}
 }
 \description{
 Functions exported silently to allow for cross-package inheritance 
@@ -72,5 +80,5 @@ Service for filling an expressionset from commandline
 This function is aimed at developers importing the package and 
 not at direct users of \pkg{validate}.
 }
-\keyword{internal}
 
+\keyword{internal}

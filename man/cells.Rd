@@ -27,6 +27,7 @@ Cell counts and differences for a series of datasets
 This function assumes that the datasets have the same dimensions and that both
 rows and columns are ordered similarly.
 }
+
 \examples{
 data(retailers)
 
@@ -54,4 +55,3 @@ cells(raw = step0, imputed = step1, flipped = step2, compare="sequential")
  \item{\code{\link{match_cells}}}
 }
 }
-

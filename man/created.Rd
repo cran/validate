@@ -3,8 +3,8 @@
 \docType{methods}
 \name{created}
 \alias{created}
-\alias{created,expressionset-method}
 \alias{created,rule-method}
+\alias{created,expressionset-method}
 \title{Creation timestamp}
 \usage{
 created(x, ...)
@@ -28,6 +28,7 @@ Creation timestamp
 \itemize{
 \item \code{expressionset}: Creation time of every rule in \code{x}
 }}
+
 \examples{
 
 # retrieve properties
@@ -65,4 +66,3 @@ v[[1]]
 \item{\code{\link{description}}, \code{\link{label}}, \code{\link{origin}} \code{\link{variables}}}
 }
 }
-

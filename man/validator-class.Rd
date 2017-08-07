@@ -7,6 +7,7 @@
 \description{
 Store a set of rich validating rules.
 }
+
 \section{Details}{
 
 A validator stores a set of validatin rules. It is a child class of \code{\link{expressionset}} and
@@ -28,5 +29,5 @@ can be constructed with  \code{\link{validator}}.
  \item{\code{\link{expressionset}}}
 }
 }
-\keyword{internal}
 
+\keyword{internal}

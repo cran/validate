@@ -35,4 +35,3 @@ errors(cf)
  \item{\code{\link{confront}}}
 }
 }
-

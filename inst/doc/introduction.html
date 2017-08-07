@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Mark van der Loo and Edwin de Jonge" />
+
+<meta name="date" content="2017-08-07" />
+
+<title>Introduction to Validate</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to Validate</h1>
+<h4 class="author"><em>Mark van der Loo and Edwin de Jonge</em></h4>
+<h4 class="date"><em>2017-08-07</em></h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#a-quick-example">A quick example</a></li>
+<li><a href="#validator-objects">Validator objects</a></li>
+<li><a href="#conversion-from-and-to-data.frames">Conversion from and to <code>data.frames</code></a></li>
+<li><a href="#confrontation-objects">Confrontation objects</a></li>
+<li><a href="#confrontation-options">Confrontation options</a></li>
+<li><a href="#investigating-validator-objects">Investigating validator objects</a></li>
+<li><a href="#validator-objects-and-confrontation-objects-are-reference-objects">Validator objects and confrontation objects are reference objects</a></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level3">
+<h3>Introduction</h3>
+<p>The validate package is intended to make checking your data easy, maintainable and reproducible. The package allows you to</p>
+<ul>
+<li>Test your data set(s) against predefined rules, either in- or cross-data set</li>
+<li>Import and export rule sets from structured or free-format files</li>
+<li>Investigate and visualize the results of a data validation step</li>
+<li>Perform basic rule maintenance tasks</li>
+<li>Define and maintain data quality indicators separately from the data</li>
+</ul>
+<p>There are a few nouns related to the infrastructure offered by validate,</p>
+<ul>
+<li>data set: your data</li>
+<li><code>validator</code> an object representing a set of rules your data must satisfy</li>
+<li><code>indicator</code> an object representing a set of numerical quality indicators</li>
+<li><code>confrontation</code> an object representing the results of confronting data with rules or quality indicators.</li>
+</ul>
+<p>There is also a single verb, namely</p>
+<ul>
+<li><code>confront</code>: evaluate the validation rules or quality indicator in the context of one or more data sets.</li>
+</ul>
+<p>This vignette demonstrates how to apply validation rules. A <a href="indicators.html">second vignette</a> introduces quality indicator rules.</p>
+</div>
+<div id="a-quick-example" class="section level3">
+<h3>A quick example</h3>
+<p>Here’s an example demonstrating the typical workflow. We’ll use the built-in <code>women</code> data set (average heights and weights for American women aged 30-39).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(women)
+<span class="kw">summary</span>(women)</code></pre></div>
+<pre><code>##      height         weight     
+##  Min.   :58.0   Min.   :115.0  
+##  1st Qu.:61.5   1st Qu.:124.5  
+##  Median :65.0   Median :135.0  
+##  Mean   :65.0   Mean   :136.7  
+##  3rd Qu.:68.5   3rd Qu.:148.0  
+##  Max.   :72.0   Max.   :164.0</code></pre>
+<p>Validating data is all about checking whether a data set meets presumptions or expectations you have about it, and the validate package makes it easy for you to define those expectations. Let’s do a quick check on variables in the <code>women</code> data set.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(validate)
+cf &lt;-<span class="st"> </span><span class="kw">check_that</span>(women, height &gt;<span class="st"> </span><span class="dv">0</span>, weight &gt;<span class="st"> </span><span class="dv">0</span>, height/weight &gt;<span class="st"> </span><span class="fl">0.5</span>)
+<span class="kw">summary</span>(cf)</code></pre></div>
+<pre><code>##   name items passes fails nNA error warning          expression
+## 1   V1    15     15     0   0 FALSE   FALSE          height &gt; 0
+## 2   V2    15     15     0   0 FALSE   FALSE          weight &gt; 0
+## 3   V3    15      2    13   0 FALSE   FALSE height/weight &gt; 0.5</code></pre>
+<p><code>check_that</code> returns an object containing all sorts of information on the validation results. The easiest way to check the results is with <code>summary</code>, which returns a <code>data.frame</code> with the following basic information:</p>
+<ul>
+<li>How many data items were checked against each rule</li>
+<li>How many items passed, failed or resulted in <code>NA</code></li>
+<li>Whether the check resulted in an error (could not be performed) or gave an error</li>
+<li>The expression that was actually evaluated to perform the check.</li>
+</ul>
+<p>If you’re a fan of the pipe-operator provided by the <a href="http://www.r-pkg.org/pkg/magrittr">magrittr</a>, the above statement can also be performed as follows.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">women %&gt;%<span class="st"> </span><span class="kw">check_that</span>(height &gt;<span class="st"> </span><span class="dv">0</span>, weight &gt;<span class="st"> </span><span class="dv">0</span>, height/weight &gt;<span class="st"> </span><span class="fl">0.5</span>) %&gt;%<span class="st"> </span><span class="kw">summary</span>()</code></pre></div>
+<p>The same information can be summarized graphically as well.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(cf,<span class="dt">main=</span><span class="st">&quot;Checks on the women data set&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="validator-objects" class="section level3">
+<h3>Validator objects</h3>
+<p>Validator objects are used to store, investigate and manipulate rule sets.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v &lt;-<span class="st"> </span><span class="kw">validator</span>(height &gt;<span class="st"> </span><span class="dv">0</span>, weight &gt;<span class="st"> </span><span class="dv">0</span>, height/weight &gt;<span class="st"> </span><span class="dv">0</span>)
+v</code></pre></div>
+<pre><code>## Object of class 'validator' with 3 elements:
+##  V1: height &gt; 0
+##  V2: weight &gt; 0
+##  V3: height/weight &gt; 0</code></pre>
+<p>The validator object has stored the rule and assigned names to them for future reference. To check this, we confront the data set with the validation rules we’ve just defined:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cf &lt;-<span class="st"> </span><span class="kw">confront</span>(women,v)
+cf</code></pre></div>
+<pre><code>## Object of class 'validation'
+## Call:
+##     confront(x = women, dat = v)
+## 
+## Confrontations: 3
+## With fails    : 0
+## Warnings      : 0
+## Errors        : 0</code></pre>
+<p>The object <code>cf</code> contains the result of checking the data in <code>women</code> against the expectations in <code>v</code>. The fact that there are no warnings or errors means that indeed each rule could be evaluated successfully (an error would occur for example, if we’d misspell height). Now let’s take a look at the actual results.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(cf)</code></pre></div>
+<pre><code>##   name items passes fails nNA error warning        expression
+## 1   V1    15     15     0   0 FALSE   FALSE        height &gt; 0
+## 2   V2    15     15     0   0 FALSE   FALSE        weight &gt; 0
+## 3   V3    15     15     0   0 FALSE   FALSE height/weight &gt; 0</code></pre>
+<p>Now, suppose that we expect that the BMI (weight divided by height squared) of each item to be below 23. We need to express the weight in kg and the height in meters, so the equation for BMI becomes <span class="math display">\[
+BMI = \frac{weight\times0.45359}{(height\times0.0254)^2}
+\]</span> Moreover, assume that we suspect that the average BMI is between 22 and 22.5. Let’s create another validator object that first computes the BMI and next tests whether the BMI values conform to our suspicion.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v &lt;-<span class="st"> </span><span class="kw">validator</span>(
+  BMI :<span class="er">=</span><span class="st"> </span>(weight*<span class="fl">0.45359</span>)/(height*<span class="fl">0.0254</span>)^<span class="dv">2</span>
+  , height &gt;<span class="st"> </span><span class="dv">0</span>
+  , weight &gt;<span class="st"> </span><span class="dv">0</span>
+  , BMI &lt;<span class="st"> </span><span class="dv">23</span>
+  , <span class="kw">mean</span>(BMI) &gt;<span class="st"> </span><span class="dv">22</span> &amp;<span class="st"> </span><span class="kw">mean</span>(BMI) &lt;<span class="st"> </span><span class="fl">22.5</span>
+)
+v</code></pre></div>
+<pre><code>## Object of class 'validator' with 5 elements:
+##  V1: `:=`(BMI, (weight * 0.45359)/(height * 0.0254)^2)
+##  V2: height &gt; 0
+##  V3: weight &gt; 0
+##  V4: BMI &lt; 23
+##  V5: mean(BMI) &gt; 22 &amp; mean(BMI) &lt; 22.5</code></pre>
+<p>Checking is easy as before:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cf &lt;-<span class="st"> </span><span class="kw">confront</span>(women,v)
+<span class="kw">summary</span>(cf)</code></pre></div>
+<pre><code>##   name items passes fails nNA error warning
+## 1   V2    15     15     0   0 FALSE   FALSE
+## 2   V3    15     15     0   0 FALSE   FALSE
+## 3   V4    15     10     5   0 FALSE   FALSE
+## 4   V5     1      0     1   0 FALSE   FALSE
+##                                                                                                expression
+## 1                                                                                              height &gt; 0
+## 2                                                                                              weight &gt; 0
+## 3                                                             (weight * 0.45359)/(height * 0.0254)^2 &lt; 23
+## 4 mean((weight * 0.45359)/(height * 0.0254)^2) &gt; 22 &amp; mean((weight * 0.45359)/(height * 0.0254)^2) &lt; 22.5</code></pre>
+<p>Observe that the expressions for validation are now manipulated: everywhere where <code>BMI</code> was used, it was replaced with the computation defined before.</p>
+</div>
+<div id="conversion-from-and-to-data.frames" class="section level3">
+<h3>Conversion from and to <code>data.frames</code></h3>
+<p>Validator objects can be read from and converted to <code>data.frames</code>. To create a validator object, at least a character column named <code>rule</code> is necessary.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">rule =</span> <span class="kw">c</span>(<span class="st">&quot;height&gt;0&quot;</span>,<span class="st">&quot;weight&gt;0&quot;</span>,<span class="st">&quot;height/weight&gt;0.5&quot;</span>)
+  , <span class="dt">label =</span> <span class="kw">c</span>(<span class="st">&quot;height positive&quot;</span>,<span class="st">&quot;weight positive&quot;</span>,<span class="st">&quot;ratio limit&quot;</span>)
+)
+v &lt;-<span class="st"> </span><span class="kw">validator</span>(<span class="dt">.data=</span>df)
+v</code></pre></div>
+<pre><code>## Object of class 'validator' with 3 elements:
+##  V1 [height positive]: height &gt; 0
+##  V2 [weight positive]: weight &gt; 0
+##  V3 [ratio limit]    : height/weight &gt; 0.5</code></pre>
+<p>Now confront with the data and merge back with rule metadata.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cf &lt;-<span class="st"> </span><span class="kw">confront</span>(women, v)
+quality &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(cf)
+measure &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(v)
+<span class="kw">head</span>( <span class="kw">merge</span>(quality, measure) )</code></pre></div>
+<pre><code>##   name value expression       rule           label origin description
+## 1   V1  TRUE height &gt; 0 height &gt; 0 height positive                   
+## 2   V1  TRUE height &gt; 0 height &gt; 0 height positive                   
+## 3   V1  TRUE height &gt; 0 height &gt; 0 height positive                   
+## 4   V1  TRUE height &gt; 0 height &gt; 0 height positive                   
+## 5   V1  TRUE height &gt; 0 height &gt; 0 height positive                   
+## 6   V1  TRUE height &gt; 0 height &gt; 0 height positive                   
+##               created
+## 1 2017-08-07 15:25:40
+## 2 2017-08-07 15:25:40
+## 3 2017-08-07 15:25:40
+## 4 2017-08-07 15:25:40
+## 5 2017-08-07 15:25:40
+## 6 2017-08-07 15:25:40</code></pre>
+<p>Or, merge with the summarized results. The result of <code>summary</code> is just a <code>data.frame</code> (tidy, isn’t it?).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">merge</span>(<span class="kw">summary</span>(cf),measure)</code></pre></div>
+<pre><code>##   name items passes fails nNA error warning          expression
+## 1   V1    15     15     0   0 FALSE   FALSE          height &gt; 0
+## 2   V2    15     15     0   0 FALSE   FALSE          weight &gt; 0
+## 3   V3    15      2    13   0 FALSE   FALSE height/weight &gt; 0.5
+##                  rule           label origin description
+## 1          height &gt; 0 height positive                   
+## 2          weight &gt; 0 weight positive                   
+## 3 height/weight &gt; 0.5     ratio limit                   
+##               created
+## 1 2017-08-07 15:25:40
+## 2 2017-08-07 15:25:40
+## 3 2017-08-07 15:25:40</code></pre>
+</div>
+<div id="confrontation-objects" class="section level3">
+<h3>Confrontation objects</h3>
+<p>The outcome of confronting a validator object with a data set is an object of class <code>confrontation</code>. There are several ways to extract information from a <code>confrontation</code> object.</p>
+<ul>
+<li><code>summary</code>: summarize output; returns a <code>data.frame</code></li>
+<li><code>aggregate</code>: aggregate validation in several ways</li>
+<li><code>sort</code> : aggregate and sort in several ways</li>
+<li><code>values</code>: Get the values in an array, or a list of arrays if rules have different output dimension structure</li>
+<li><code>errors</code>: Retrieve error messages caught during the confrontation</li>
+<li><code>warnings</code>: Retrieve warning messages caught during the confrontation.</li>
+</ul>
+<p>By default aggregates are produced by rule.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cf &lt;-<span class="st"> </span><span class="kw">check_that</span>(women, height&gt;<span class="dv">0</span>, weight&gt;<span class="dv">0</span>,height/weight &lt;<span class="st"> </span><span class="fl">0.5</span>)
+<span class="kw">aggregate</span>(cf) </code></pre></div>
+<pre><code>##    npass nfail nNA rel.pass rel.fail rel.NA
+## V1    15     0   0      1.0      0.0      0
+## V2    15     0   0      1.0      0.0      0
+## V3    12     3   0      0.8      0.2      0</code></pre>
+<p>To aggregate by record, use <code>by='record'</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">aggregate</span>(cf,<span class="dt">by=</span><span class="st">'record'</span>))</code></pre></div>
+<pre><code>##   npass nfail nNA  rel.pass  rel.fail rel.NA
+## 1     2     1   0 0.6666667 0.3333333      0
+## 2     2     1   0 0.6666667 0.3333333      0
+## 3     2     1   0 0.6666667 0.3333333      0
+## 4     3     0   0 1.0000000 0.0000000      0
+## 5     3     0   0 1.0000000 0.0000000      0
+## 6     3     0   0 1.0000000 0.0000000      0</code></pre>
+<p>Aggregated results can be automatically sorted, so records with the most violations or rules that are violated most sort higher.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># rules with most violations sorting first:</span>
+<span class="kw">sort</span>(cf)</code></pre></div>
+<pre><code>##    npass nfail nNA rel.pass rel.fail rel.NA
+## V3    12     3   0      0.8      0.2      0
+## V1    15     0   0      1.0      0.0      0
+## V2    15     0   0      1.0      0.0      0</code></pre>
+<p>Confrontation objects can be subsetted with single bracket operators (like vectors), to obtain a sub-object pertaining only to the selected rules.</p>
+<pre><code>summary(cf[c(1,3)])</code></pre>
+</div>
+<div id="confrontation-options" class="section level3">
+<h3>Confrontation options</h3>
+<p>By default, all errors and warnings are caught when validation rules are confronted with data. This can be switched off by setting the <code>raise</code> option to <code>&quot;errors&quot;</code> or <code>&quot;all&quot;</code>, e.g. here, the error is caught,</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v &lt;-<span class="st"> </span><span class="kw">validator</span>(hite &gt;<span class="st"> </span><span class="dv">0</span>, weight&gt;<span class="dv">0</span>)
+<span class="kw">summary</span>(<span class="kw">confront</span>(women, v))</code></pre></div>
+<pre><code>##   name items passes fails nNA error warning expression
+## 1   V1     0      0     0   0  TRUE   FALSE   hite &gt; 0
+## 2   V2    15     15     0   0 FALSE   FALSE weight &gt; 0</code></pre>
+<p>while here it is raised immediately.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this gives an error</span>
+<span class="kw">confront</span>(women, v, <span class="dt">raise=</span><span class="st">'all'</span>)</code></pre></div>
+<p>Linear equalities form an important class of validation rules. To prevent equalities to be strictly tested, there is an option called <code>len.eq.eps</code> (with default value <span class="math inline">\(10^{-8}\)</span>) that allows one to add some slack to these tests. The amount of slack is intended to prevent false negatives (unneccesary failures) caused by machine rounding. If you want to check whether a sum-rule is satisfied to within one or two units of measurement, it is cleaner to define two inequalities for that.</p>
+</div>
+<div id="investigating-validator-objects" class="section level3">
+<h3>Investigating validator objects</h3>
+<p>Validator objects store a set of rules, optionally with some metadata per rule. Currently, the following functions can be used to get or set metadata:</p>
+<ul>
+<li><code>origin</code> : Where was a rule defined?</li>
+<li><code>names</code> : The name per rule</li>
+<li><code>created</code> : when were the rules created?</li>
+<li><code>label</code> : Short description of the rule</li>
+<li><code>description</code>: Long description of the rule</li>
+</ul>
+<p>Names can be set from the command line when defining a validator object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v &lt;-<span class="st"> </span><span class="kw">validator</span>(<span class="dt">rat =</span> height/weight &gt;<span class="st"> </span><span class="fl">0.5</span>, <span class="dt">htest=</span>height&gt;<span class="dv">0</span>, <span class="dt">wtest=</span>weight &gt;<span class="st"> </span><span class="dv">0</span>)
+<span class="kw">names</span>(v)</code></pre></div>
+<pre><code>## [1] &quot;rat&quot;   &quot;htest&quot; &quot;wtest&quot;</code></pre>
+<p>Also try</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(v)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;ratio&quot;</span>
+v</code></pre></div>
+<pre><code>## Object of class 'validator' with 3 elements:
+##  ratio: height/weight &gt; 0.5
+##  htest: height &gt; 0
+##  wtest: weight &gt; 0</code></pre>
+<p>Some general information is obtained with <code>summary</code>,</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(v)</code></pre></div>
+<pre><code>##   block nvar rules linear
+## 1     1    2     3      2</code></pre>
+<p>Here, some properties per <em>block</em> of rules is given. Two rules occur in the same block if when they share a variable. In this case, all rules occur in the same block.</p>
+<p>and the number of rules can be requested with <code>length</code></p>
+<pre><code>length(v)</code></pre>
+<p>With <code>variables</code>, the variables occurring per rule, or over all the rules can be requested.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">variables</span>(v)</code></pre></div>
+<pre><code>## [1] &quot;height&quot; &quot;weight&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">variables</span>(v,<span class="dt">as=</span><span class="st">&quot;matrix&quot;</span>)</code></pre></div>
+<pre><code>##        variable
+## rule    height weight
+##   ratio   TRUE   TRUE
+##   htest   TRUE  FALSE
+##   wtest  FALSE   TRUE</code></pre>
+<p>Validator objects can be subsetted as if they were lists using the single and double bracket operators.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</code></pre></div>
+<pre><code>## Object of class 'validator' with 2 elements:
+##  ratio: height/weight &gt; 0.5
+##  wtest: weight &gt; 0
+## Rules are evaluated using locally defined options</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v[<span class="st">'ratio'</span>,<span class="st">'wtest'</span>]</code></pre></div>
+<pre><code>## Object of class 'validator' with 1 elements:
+##  ratio: height/weight &gt; 0.5
+## Rules are evaluated using locally defined options</code></pre>
+<p>The double bracket can be used to inspect a single rule</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v[[<span class="dv">1</span>]]</code></pre></div>
+<pre><code>## 
+## Object of class rule.
+##  expr       : height/weight &gt; 0.5 
+##  name       : ratio 
+##  label      :  
+##  description:  
+##  origin     : command-line 
+##  created    : 2017-08-07 15:25:40</code></pre>
+</div>
+<div id="validator-objects-and-confrontation-objects-are-reference-objects" class="section level3">
+<h3>Validator objects and confrontation objects are reference objects</h3>
+<p>As simple as that. If you do</p>
+<pre><code>w &lt;- v</code></pre>
+<p>for a validator object <code>v</code>, then <code>w</code> just points to the same physical object as <code>v</code>. To make an actual copy, you can select everything.</p>
+<pre><code>w &lt;- v[]</code></pre>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

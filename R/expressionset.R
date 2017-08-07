@@ -58,10 +58,10 @@ expressionset <- setRefClass("expressionset"
       , ._options = "function"
   )
   , methods= list(
-        show = function() .show_expressionset(.self)
-      , exprs      = function(...) .get_exprs(.self,...)
-      , blocks     = function() .blocks_expressionset(.self)
-      , options = function(...) .self$._options(...)
+        show          = function() .show_expressionset(.self)
+      , exprs         = function(...) .get_exprs(.self,...)
+      , blocks        = function() .blocks_expressionset(.self)
+      , options       = function(...) .self$._options(...)
       , clone_options = function(...) settings::clone_and_merge(.self$._options,...)
   )
 )
@@ -80,12 +80,13 @@ expressionset <- setRefClass("expressionset"
 #' @export
 #' @rdname validate_extend
 #' @keywords internal
-.ini_expressionset_cli <- function(obj, ..., .prefix="R"){  
-
+.ini_expressionset_cli <- function(obj, ..., .prefix="R"){
   L <- as.list(substitute(list(...))[-1])
   nm <- extract_names(L, prefix = .prefix)
   cr <- Sys.time()
-  R <- vector(length(L), mode='list')
+  R <- vector(length(L), mode="list")
+  # note: we cannot set the description or the label when constructing
+  # from the commandline.
   for ( i in seq_along(L) ){
     R[[i]] <- rule(
         expr = L[[i]]
@@ -93,6 +94,49 @@ expressionset <- setRefClass("expressionset"
       , origin="command-line"
       , created = cr
       )
+  }
+  obj$rules <- R
+}
+
+#' @param obj An expressionset object (or an object inheriting from expressionset).
+#' @param dat a data.frame 
+#' 
+#' @rdname validate_extend
+#' @keywords internal
+.ini_expressionset_df <- function(obj, dat, .prefix="R"){
+  n <- nrow(dat)
+  R <- vector(n, mode="list")
+  cr = Sys.time()
+  if ( is.null(dat[["name"]]) ){
+    npos <- npos(nrow(dat))
+    fmt <- paste0("%s%",npos,"d")
+    dat$name <- sprintf(fmt, .prefix, seq_len(nrow(dat)))
+  }
+  if (is.null(dat[["description"]])){
+    dat$description <- ""
+  }
+  if (is.null(dat[["label"]])){
+    dat$label <- ""
+  }
+  if (is.null(dat[["origin"]])){
+    dat$origin <- ""
+  }
+  if (is.null(dat[["rule"]])){
+    stop("No column called 'rule' found")
+  }
+  dat$name <- as.character(dat$name)
+  dat$label <- as.character(dat$label)
+  dat$rule <- as.character(dat$rule)
+  dat$description <- as.character(dat$description)
+  for ( i in seq_len(n)){
+    R[[i]] <- rule(
+      expr = parse(text=dat$rule[i])[[1]]
+      , name = dat$name[i]
+      , origin = dat$origin[i]
+      , label = dat$label[i]
+      , description = dat$description[i]
+      , created = cr
+    )
   }
   obj$rules <- R
 }
@@ -109,7 +153,7 @@ expressionset <- setRefClass("expressionset"
   S <- get_filestack_yml(file)
   R <- list()
   for ( fl in S )
-    R <- c(R, rules_from_yrf_file(fl))
+    R <- c(R, rules_from_yrf_file(fl,prefix=.prefix))
   obj$rules <- R
   obj$._options <- .PKGOPT
   # options only from the 'including' file (not from included)
@@ -117,7 +161,6 @@ expressionset <- setRefClass("expressionset"
   if ( length(local_opt) > 0 )
     do.call(obj$options, local_opt)
 }
-
 
 
 rules_from_block <- function(block, origin){
@@ -224,15 +267,11 @@ get_filestack_yml <- function(file){
   lab <- paste0(nam,ifelse(nchar(lab)>0,paste0(" [",lab,"]"),lab))
   n <- max(nchar(lab))
   lab <- paste0(" ",format(lab,width=n),": ",sapply(obj$exprs(expand_groups=FALSE
-                                                , lin_eq_eps=0), call2text))
+                                                , lin_eq_eps=0, lin_ineq_eps=0), call2text))
   cat(noquote(paste(lab,collapse="\n")))
-  opt <- ""
-  if (!identical(obj$._options,.PKGOPT)){
-    opt <- unlist(obj$options())
-    opt <- paste0(sprintf("%s: %s",names(opt),paste0(opt)),collapse="; ")
-    opt <- paste0("\nOptions:\n",opt)
-  }
-  cat(sprintf("%s\n",opt))
+  cat("\n")
+  optstr <- "Rules are evaluated using locally defined options\n"
+  cat(optstr[!identical(obj$._options,.PKGOPT)])
 }
 
 
@@ -245,9 +284,11 @@ call2text <- function(x){
   gsub("[[:blank:]]+"," ",paste(deparse(x),collapse=" "))
 }
 
+npos <- function(n) max(1,ceiling(log10(n+1)))
+
 # get names from a list, replacing empty names values with numbers
 extract_names <- function(L,prefix="V"){
-  npos <- max(1,ceiling(log10(length(L)+1)))
+  npos <- npos(length(L)) 
   fmt <- paste0("%s%0",npos,"d")
   generic <- sprintf(fmt,prefix,seq_along(L))
   given <- names(L)
@@ -276,6 +317,7 @@ extract_names <- function(L,prefix="V"){
     , vectorize=TRUE
     , replace_dollar=TRUE
     , lin_eq_eps = x$options('lin.eq.eps')
+    , lin_ineq_eps = x$options('lin.ineq.eps')
     , dat=NULL
 ){
   exprs <- setNames(lapply(x$rules, expr ),names(x))
@@ -283,7 +325,9 @@ extract_names <- function(L,prefix="V"){
   if ( expand_groups ) exprs <- expand_groups(exprs)
   if ( vectorize ) exprs <- lapply(exprs, vectorize)
   if ( replace_dollar ) exprs <- lapply(exprs, replace_dollar)
-  if (lin_eq_eps > 0) exprs <- lapply(exprs, replace_linear_equality, eps=lin_eq_eps, dat=dat)
+  if (lin_eq_eps > 0) exprs <- lapply(exprs, replace_linear_restriction, eps=lin_eq_eps, dat=dat, op="==")
+  if (lin_ineq_eps > 0) exprs <- lapply(exprs, replace_linear_restriction, eps=lin_eq_eps, dat=dat, op="<=")
+  if (lin_ineq_eps > 0) exprs <- lapply(exprs, replace_linear_restriction, eps=lin_eq_eps, dat=dat, op=">=")
   exprs
 }
 
@@ -325,22 +369,12 @@ extract_names <- function(L,prefix="V"){
 setGeneric('summary')
 
 
-
-#' Get object lenght
-#' 
-#' @aliases validate-length
-#' @seealso 
-#' \itemize{
-#'  \item{\code{\link{expressionset}}}
-#'  \item{\code{\link{confrontation}}}
-#' }
-#' @example ../examples/properties.R
-#' @export
-setGeneric("length")
-
 #' Export to yaml file
 #'
-#' Translate a \pkg{validate} object to yaml format and write to file.
+#' Translate an object to yaml format and write to file.
+#'
+#' Both \code{\link{validator}} and \code{\link{indicator}} objects can be
+#' exported.
 #'
 #' @param x An R object
 #' @param file A file location or connection (passed to \code{base::\link[base]{write}}).
@@ -434,13 +468,30 @@ setMethod("names","expressionset",function(x){
   sapply(x$rules, function(rule) rule@name)
 })
 
+# recycle x over y
+recycle <- function(x,y){
+  m <- length(x)
+  n <- length(y)
+  remainder <- n %% m
+  times <- n %/% m
+  if (remainder > 0){
+    warning(gettext("longer object length is not a multiple of shorter object length"))
+    times <- times + 1
+  }
+  rep(x,times=times)[seq_len(n)]
+}
+
+
 #' Set names
+#'
+#' Names are recycled and made unique with \code{\link{make.names}}
 #'
 #' @param x Object
 #' @param value Value to set
 #' @example ../examples/properties.R
 #' @export 
 setReplaceMethod("names",c("expressionset","character"),function(x,value){
+  value <- make.names(recycle(value,x),unique=TRUE)
   for ( i in seq_len(length(x))){
     names(x$rules[[i]]) <- value[i]
   }
@@ -454,6 +505,7 @@ setReplaceMethod("names",c("expressionset","character"),function(x,value){
 #' @example ../examples/properties.R
 #' @export 
 setReplaceMethod("origin",c("expressionset","character"), function(x,value){
+  value <- recycle(value, x)
   for ( i in seq_len(length(x))){
     origin(x$rules[[i]]) <- value[i]
   }
@@ -467,6 +519,7 @@ setReplaceMethod("origin",c("expressionset","character"), function(x,value){
 #' @example ../examples/properties.R
 #' @export 
 setReplaceMethod("label",c("expressionset","character"),function(x,value){
+  value <- recycle(value,x)
   for ( i in seq_len(length(x))){
     label(x$rules[[i]]) <- value[i]
   }
@@ -481,6 +534,7 @@ setReplaceMethod("label",c("expressionset","character"),function(x,value){
 #' @example ../examples/properties.R
 #' @export 
 setReplaceMethod("description",c("expressionset","character"),function(x,value){
+  value <- recycle(value,x)
   for ( i in seq_len(length(x))){
     description(x$rules[[i]]) <- value[i]
   }
@@ -494,6 +548,7 @@ setReplaceMethod("description",c("expressionset","character"),function(x,value){
 #' @example ../examples/properties.R
 #' @export 
 setReplaceMethod("created",c("expressionset","POSIXct"),function(x,value){
+  value <- recycle(value, x)
   for ( i in seq_len(length(x))){
     created(x$rules[[i]]) <- value[i]
   }
@@ -531,7 +586,8 @@ setMethod('summary',signature('expressionset'),function(object,...){
   )
 })
 
-
+#' Determine the number of elements in an object.
+#' 
 #' @param x An R object
 #' @rdname length 
 #' @aliases length,expressionset-method 
@@ -557,7 +613,7 @@ setMethod("length","expressionset",function(x) length(x$rules))
 #' @export
 setMethod("[",signature("expressionset"), function(x,i,j,...,drop=TRUE){
   if (is.character(i)){
-    i <- i == names(x)
+    i <- match(i,names(x))
   }
   out <- new(class(x))
   out$rules <- x$rules[i]
@@ -605,14 +661,48 @@ as.list.expressionset <- function(x, expr_as_text=TRUE, ...){
     rules = lapply(x$rules, as.list.rule, expr_as_text = expr_as_text, ...)
   )
 }
-# demonstruction
-# L <- list(
-#   rule(expr = expression(x + y == z)[[1]],  name="aap")
-#  , rule(expr = expression(p + q == z)[[1]], name="noot")
-#  , rule(expr = expression(a*b == c)[[1]],   name="mies")
-# )
-# # 
-# r <- expressionset(rules=L,._options=options_manager())
+
+
+
+#' Coerce to \code{data.frame}
+#'
+#' @param x Object to coerce
+#' @param ... arguments passed to other methods
+#' @param optional ignored
+#' @param row.names ignored
+#'
+#' @export
+setGeneric("as.data.frame")
+
+
+#' Translate an expressionset to data.frame
+#' 
+#' Expressions are deparsed and combined in a \code{data.frame} with (some
+#' of) their metadata. Observe that some information may be lost (e.g. options
+#' local to the object).
+#'
+#'
+#' @inheritParams as.data.frame
+#' @param expand_assignments Toggle substitution of `:=` assignments.
+#' 
+#' 
+#' @return A \code{data.frame} with elements \code{rule}, \code{name},
+#'  \code{label}, \code{origin}, \code{description}, and \code{created}.
+#' @export
+setMethod("as.data.frame","expressionset", function(x, expand_assignments=TRUE, ...){
+  rules <- sapply(x$exprs(expand_assignments=expand_assignments,...),call2text)
+  x <- x[names(rules)]
+  data.frame(
+   rule = rules
+   , name = names(x)
+   , label = label(x)
+   , origin = origin(x)
+   , description = description(x)
+   , created = created(x)
+   , row.names=NULL
+   , stringsAsFactors=FALSE
+  )
+})
 
 
 

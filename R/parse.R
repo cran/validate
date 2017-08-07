@@ -18,6 +18,7 @@ NULL
   # all: warnings and errors are raised. 'errors': raise errors. 'none': warnings and errors are caught.
    raise = 'none'
    , lin.eq.eps = 1e-8
+   , lin.ineq.eps= 1e-8
    , na.value = NA
    , sequential = TRUE    # option for the 'dcmodify' package
    , na.condition = FALSE # option for the 'dcmodify' package
@@ -162,15 +163,24 @@ which.call <- function(x, what, I=1, e=as.environment(list(n=0))){
 }
 
 
-# 
-replace_linear_equality <- function(x,eps,dat){
-    repl <- function(x,eps){
+  # 
+replace_linear_restriction <- function(x,eps,dat, op="=="){
+    repl <- function(x,eps,op){
       # by replacing nodes in the call tree
-      # we need not conern about brackets
-      if (x[[1]] != '==' ) return(x)
+      # we need not concern about brackets
+      if (x[[1]] != op ) return(x)
       m <- expression(e1-e2)[[1]]
-      a <- expression(abs(x))[[1]]
-      lt <- expression(e1 < e2)[[1]]
+      a <- switch(op
+        , "==" = expression(abs(x))[[1]]
+        , "<=" = expression((x))[[1]]
+        , ">=" = expression((x))[[1]] 
+      )
+      lt <- switch(op
+        , "==" =  expression(e1 < e2)[[1]]
+        , "<=" = expression(e1 <= e2)[[1]]
+        , ">=" = expression(e1 >= e2)[[1]]
+      )
+      if (op == ">=") eps <- -eps 
       m[[2]] <- left(x)
       m[[3]] <- right(x)
       a[[2]] <- m
@@ -180,10 +190,10 @@ replace_linear_equality <- function(x,eps,dat){
     }
 
     if (length(x) == 3 && linear_call(x) && all_numeric(x,dat)){
-      return(repl(x,eps))
+      return(repl(x,eps,op))
     } else if (length(x) > 1) {
       for ( i in 2:length(x) ){
-        x[[i]] <- replace_linear_equality(x[[i]],eps,dat)
+        x[[i]] <- replace_linear_restriction(x[[i]],eps,dat)
       }
     } 
     x
@@ -224,14 +234,72 @@ defines_var_group <- function(x){
 
 
 # functions to vectorize validation calls ----
-not <- function(x) parse(text=paste0("!(",deparse(x),")"))[[1]]
-
-`%or%` <- function(x,y){
-  parse(text=paste(call2text(x),'|',call2text(y)))[[1]]
+not <- function(x){ 
+  f <- expression(!(dummy))[[1]]
+  f[[2]][[2]] <- x
+  f
 }
 
+`%or%` <- function(x,y){
+  f <- expression((A)|(B))[[1]]
+  f[[2]][[2]] <- x
+  f[[3]][[2]] <- y
+  f
+}
+ 
+# replace_if  <- function(x){
+#   f <- expression(!(P) | (Q) )[[1]]
+#   f[[c(2,2,2)]] <- x[[2]]
+#   f[[c(3,2)]] <- x[[3]]
+#   f
+# }
+
+
+# logical implication if (P) Q 
+# P -> Q ==> !(P) | (Q)
+# 
+# if-then-else (length 4)
+# if (P) Q else R
+# (P -> Q) & (!P -> R)
+# 
+replace_if  <- function(x){
+  if ( length(x) == 3 ){
+    f <- expression(!(P) | (Q) )[[1]]
+    f[[c(2,2,2)]] <- x[[2]]
+    f[[c(3,2)]] <- x[[3]]
+    f
+  } else { # length (x) == 4 (there is an 'else')
+    f <- expression( (!(P) | (Q)) & ((P) | (R)) )[[1]]
+    P <- which.call(f,"P")
+    f[[P[[1]]]] <- x[[2]]
+    f[[P[[2]]]] <- x[[2]]
+    Q <- which.call(f,"Q")
+    f[[Q[[1]]]] <- x[[3]]
+    R <- which.call(f,"R")
+    f[[R[[1]]]] <- x[[4]]
+    f
+  }
+}
+
+
+vectorize <- function(x){
+  # we are at an end, or we enter a function, which we will not
+  # modify.
+  if ( length(x) == 1 || x[[1]] == "function") return(x)
+  for ( i in seq_along(x) ){
+    if ( x[[i]] == "if" ){
+      return(vectorize(replace_if(x)))
+    } else {
+      x[[i]] <- vectorize(x[[i]])
+    }
+  }
+  x
+}
+
+
+
 # x: a validation call
-vectorize <- function(x) if ( x[[1]] == 'if' ) not(x[[2]]) %or% x[[3]] else  x
+#vectorize <- function(x) if ( x[[1]] == 'if' ) not(x[[2]]) %or% x[[3]] else  x
 
 
 # Determine wether a call object represents a linear operation. ----

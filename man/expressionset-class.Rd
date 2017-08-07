@@ -2,12 +2,13 @@
 % Please edit documentation in R/expressionset.R
 \docType{class}
 \name{expressionset-class}
-\alias{expressionset}
 \alias{expressionset-class}
+\alias{expressionset}
 \title{Superclass for storing a set of rich expressions.}
 \description{
 Superclass for storing a set of rich expressions.
 }
+
 \section{Details}{
 
 This class is aimed at developers of this package or packages depending on
@@ -54,5 +55,5 @@ to use the exported S4 generics to set or extract variables
  \item{\code{\link{indicator}}}
 }
 }
-\keyword{internal}
 
+\keyword{internal}

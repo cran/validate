@@ -22,6 +22,7 @@ Simple data validation interface
 Creates an object of class \code{\link{validator}} and \code{\link{confront}}s it with the data.
 This function is easy to use in combination with the \pkg{magrittr} pipe operator.
 }
+
 \examples{
 
 cf <- check_that(women, height>0, height/weight < 0.5)
@@ -38,4 +39,3 @@ women \%>\%
 }
 
 }
-

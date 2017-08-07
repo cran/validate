@@ -1,3 +1,22 @@
+version 0.2.0
+- new object of class 'indicator'
+- validation rules now support if-then-else syntax.
+- validaton rules can now contain embedded if-statements, e.g. A | (if (B) C)
+- expressionset objects (validator, indicator) can be combined using '+'
+- results of getter functions (e.g. 'labels') are now named.
+- less verbose printng of options for expressionset objects (validator, indicator)
+- expressionset objects (validator, indicator) can now be coerced to as.data.frame.
+- confrontation objects (validation, indication) can now be coerced to data.frame.
+- safer expression manipulation under the hood.
+- breaking: 'rule' column now called 'name' in summary of 'confrontation' objects.
+- bugfix: character indexing with multiple elements of expressionset objects would crash.
+- bugfix: proper recycling for replace methods in expressionset.
+
+version 0.1.8
+- Added loggers for the 'lumberjack' package: lbj_cells and lbj_rules
+- Tolerance for checking (non-strict) linear inequalities is now controlled by voptions(lin.ineq.opts).
+- Macro assignments through `:=` are no longer put in brackets.
+
 version 0.1.7
 - The missingess counters are now only internally documented and will be deprecated (the
   introduction of the '.' made them more or less obsolete).

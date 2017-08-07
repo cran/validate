@@ -4,7 +4,7 @@
 \alias{indicator}
 \title{Define indicators for data}
 \usage{
-indicator(..., .file)
+indicator(..., .file, .data)
 }
 \arguments{
 \item{...}{A comma-separated list of indicator definitions}
@@ -36,4 +36,3 @@ values(C)
 \code{\link{syntax}}
 }
 \keyword{internal}
-

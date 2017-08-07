@@ -3,8 +3,8 @@
 \docType{methods}
 \name{origin}
 \alias{origin}
-\alias{origin,expressionset-method}
 \alias{origin,rule-method}
+\alias{origin,expressionset-method}
 \title{Origin of rules}
 \usage{
 origin(x, ...)
@@ -28,6 +28,7 @@ Origin of rules
 \itemize{
 \item \code{expressionset}: Origin of every rule in \code{x}
 }}
+
 \examples{
 
 # retrieve properties
@@ -65,4 +66,3 @@ v[[1]]
 \item{\code{\link{description}}, \code{\link{label}}, \code{\link{created}}, \code{\link{variables}}}
 }
 }
-

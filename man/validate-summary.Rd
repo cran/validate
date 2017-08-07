@@ -5,8 +5,8 @@
 \alias{summary}
 \alias{summary,expressionset-method}
 \alias{summary,indication-method}
-\alias{summary,validation-method}
 \alias{validate-summary}
+\alias{summary,validation-method}
 \title{Create a summary}
 \usage{
 summary(object, ...)
@@ -48,6 +48,7 @@ Some basic information per evaluated validation rule is reported: the number of 
 rule was applied, the output \code{class}, some statistics (passes, fails, number of NA)
 and wether an exception occurred (warnings or errors). The evaluated expression is reported as well.
 }
+
 \examples{
 data(retailers)
 v <- validator(staff > 0, staff.costs/staff < 20, turnover+other.revenue == total.revenue)
@@ -58,4 +59,3 @@ summary(cf)
 
 
 }
-

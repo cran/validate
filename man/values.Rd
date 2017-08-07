@@ -4,8 +4,8 @@
 \name{values}
 \alias{values}
 \alias{values,confrontation-method}
-\alias{values,indication-method}
 \alias{values,validation-method}
+\alias{values,indication-method}
 \title{Get values from object}
 \usage{
 values(x, ...)
@@ -28,4 +28,3 @@ values(x, ...)
 \description{
 Get values from object
 }
-

@@ -6,7 +6,7 @@ context("confrontation")
 test_that("validation object contents",{
   cf <- check_that(women, height > 0, ape > 0,weight / height > 2 )  
   expect_equal(length(cf),3)
-  expect_equal(names(summary(cf)),c("rule","items","passes","fails","nNA","error","warning","expression"))
+  expect_equal(names(summary(cf)),c("name","items","passes","fails","nNA","error","warning","expression"))
   vl <- rep(TRUE,30)
   vl[16:18] <- FALSE
   expect_equivalent(values(cf), array(vl,dim=c(15,2)))
@@ -33,9 +33,8 @@ test_that("indication object contents",{
   expect_equivalent(round(values(cf),3),array(c(65,15.499),dim=c(1,2)))  
   expect_equal(errors(cf)[[1]],"object 'foo' not found")
   expect_equal(names(summary(cf)),
-    c("indicator"  
+    c("name"  
       ,"items"
-      ,"class"      
       ,"min"
       ,"mean" 
       ,"max"
@@ -44,7 +43,9 @@ test_that("indication object contents",{
       ,"warning"
       ,"expression")
   )  
-  expect_equal(dim(summary(cf)),c(3,10))
+  expect_equal(dim(summary(cf)),c(3,9))
+  ind <- indicator(x={"A"}) # returns character value
+  expect_true(has_warning(confront(women,ind)))
 })
 
 
@@ -80,7 +81,21 @@ test_that("Confrontation methods with reference data",{
      
   # self-reference on data set.
   expect_true(values(check_that(women,nrow(.)==15))[1,1])
-     
+
+  # indicators with reference data
+  ref <- mean(women$height)/mean(iris$Sepal.Length)
+  e <- new.env()
+  e$ir <- iris
+  i <- indicator( mean(height)/mean(ir$Sepal.Length) )
+  expect_equivalent(values(confront(women,i,ref=e))[1],ref)
+
+  L <- as.list(e)
+  expect_equivalent(values(confront(women,i,ref=L))[1],ref)
+  
+  i <- indicator( mean(height)/mean(ref$Sepal.Length) )
+  expect_equivalent(values(confront(women,i, ref=iris))[1], ref)
+  
+  
 })
 
 
@@ -111,6 +126,36 @@ test_that("Confrontations with slack on linear equalities",{
   expect_true(values(confront(d,u)))
   expect_false(values(confront(d,u,lin.eq.eps=2)))
 })
+
+test_that("Confrontations with slack on linear inequalities",{
+  v <- validator(x >= 0)
+  d <- data.frame(x = -1e-14)
+  expect_true( all(values(confront(d,v))) )
+  v <- validator(x <= 0)
+  d <- data.frame(x=1e-14)
+  expect_true( all(values(confront(d,v))) )
+})
+
+test_that("coerce confrontations to data.frame",{
+  i <- indicator(mean(height),sd(weight))
+  v <- validator(height > 0, sd(weight)>0)
+  women$id <- letters[1:15]
+  expect_equal(nrow(as.data.frame(confront(women,i))),2)
+  expect_equal(ncol(as.data.frame(confront(women,i))),3)
+  expect_equal(ncol(as.data.frame(confront(women,i,key="id"))),4)
+
+  expect_equal(nrow(as.data.frame(confront(women,v))),16)
+  expect_equal(ncol(as.data.frame(confront(women,v))),3)
+  expect_equal(ncol(as.data.frame(confront(women,v,key="id"))),4)
+  
+  v <- validator(hite>0,weight>0)
+  d <- confront(women,v)
+  expect_warning(as.data.frame(d))
+  i <- indicator(mean(hite))
+  expect_warning(as.data.frame(confront(women,i)))
+})
+
+
 
 
 

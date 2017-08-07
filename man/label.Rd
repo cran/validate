@@ -3,8 +3,8 @@
 \docType{methods}
 \name{label}
 \alias{label}
-\alias{label,expressionset-method}
 \alias{label,rule-method}
+\alias{label,expressionset-method}
 \title{label description of rules}
 \usage{
 label(x, ...)
@@ -28,6 +28,7 @@ label description of rules
 \itemize{
 \item \code{expressionset}: label description of every rule in \code{x}
 }}
+
 \examples{
 
 # retrieve properties
@@ -65,4 +66,3 @@ v[[1]]
 \item{\code{\link{description}}, \code{\link{created}}, \code{\link{origin}}, \code{\link{variables}}}
 }
 }
-

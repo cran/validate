@@ -24,4 +24,3 @@ Create matching subsets of a sequence of data
  \item{\code{\link{cells}}}
 }
 }
-

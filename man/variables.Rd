@@ -3,11 +3,11 @@
 \docType{methods}
 \name{variables}
 \alias{variables}
+\alias{variables,rule-method}
+\alias{variables,list-method}
 \alias{variables,data.frame-method}
 \alias{variables,environment-method}
 \alias{variables,expressionset-method}
-\alias{variables,list-method}
-\alias{variables,rule-method}
 \title{Extract variable names}
 \usage{
 variables(x, ...)
@@ -52,6 +52,7 @@ Extract variable names
 
 \item \code{expressionset}: Variables occuring in \code{x} either as a single list, or per rule.
 }}
+
 \examples{
 
 v <- validator(
@@ -72,4 +73,3 @@ variables(v,matrix=TRUE,dummy=TRUE)
 \item{\code{\link{description}}, \code{\link{label}}, \code{\link{created}}, \code{\link{origin}}}
 }
 }
-

@@ -3,8 +3,8 @@
 \docType{methods}
 \name{description}
 \alias{description}
-\alias{description,expressionset-method}
 \alias{description,rule-method}
+\alias{description,expressionset-method}
 \title{description description}
 \usage{
 description(x, ...)
@@ -28,6 +28,7 @@ description description
 \itemize{
 \item \code{expressionset}: description description of every rule in \code{x}
 }}
+
 \examples{
 
 # retrieve properties
@@ -65,4 +66,3 @@ v[[1]]
 \item{\code{\link{label}}, \code{\link{created}}, \code{\link{origin}}, \code{\link{variables}}}
 }
 }
-

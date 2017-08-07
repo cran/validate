@@ -3,8 +3,8 @@
 \docType{methods}
 \name{compare}
 \alias{compare}
-\alias{compare,indicator-method}
 \alias{compare,validator-method}
+\alias{compare,indicator-method}
 \title{Compare similar data sets}
 \usage{
 compare(x, ...)
@@ -58,4 +58,3 @@ indicators. Results are simplified in a sensible way.
  \item{\code{\link{indicator}}, \code{\link{indicator-class}}}
 }
 }
-

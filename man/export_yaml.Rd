@@ -2,10 +2,10 @@
 % Please edit documentation in R/expressionset.R
 \docType{methods}
 \name{export_yaml}
-\alias{as_yaml}
-\alias{as_yaml,expressionset-method}
 \alias{export_yaml}
+\alias{as_yaml}
 \alias{export_yaml,expressionset-method}
+\alias{as_yaml,expressionset-method}
 \title{Export to yaml file}
 \usage{
 export_yaml(x, file, ...)
@@ -24,7 +24,11 @@ as_yaml(x, ...)
 \item{...}{Options passed to \code{yaml::\link[yaml]{as.yaml}}}
 }
 \description{
-Translate a \pkg{validate} object to yaml format and write to file.
+Translate an object to yaml format and write to file.
+}
+\details{
+Both \code{\link{validator}} and \code{\link{indicator}} objects can be
+exported.
 }
 \examples{
 
@@ -40,4 +44,3 @@ export_yaml(v, file="my_rules.txt")
 }
 
 }
-

@@ -66,4 +66,3 @@ head(s)
  \item{\code{\link{validation}}}
 }
 }
-

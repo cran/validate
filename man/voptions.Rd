@@ -2,13 +2,13 @@
 % Please edit documentation in R/parse.R, R/expressionset.R
 \docType{methods}
 \name{voptions}
-\alias{reset}
-\alias{reset,ANY-method}
-\alias{reset,expressionset-method}
-\alias{validate_options}
 \alias{voptions}
 \alias{voptions,ANY-method}
+\alias{validate_options}
+\alias{reset}
+\alias{reset,ANY-method}
 \alias{voptions,expressionset-method}
+\alias{reset,expressionset-method}
 \title{Set or get options globally or per object.}
 \usage{
 voptions(x = NULL, ...)
@@ -68,6 +68,7 @@ to define options to be used during the current function call}
 To set options in a file, use \code{voptions(option1=value1,option2=value2,...)} without the \code{where}
 argument. This will invoke a local setting in the object created when the file is parsed.
 }
+
 \examples{
 # the default allowed validation symbols.
 voptions('validator_symbols')
@@ -80,4 +81,3 @@ voptions(v,'raise')
 # check that global options have not changed:
 voptions('raise')
 }
-

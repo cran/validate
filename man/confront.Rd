@@ -4,25 +4,40 @@
 \name{confront}
 \alias{confront}
 \alias{confront,data.frame,indicator,ANY-method}
+\alias{confront,data.frame,indicator,environment-method}
+\alias{confront,data.frame,indicator,data.frame-method}
+\alias{confront,data.frame,indicator,list-method}
 \alias{confront,data.frame,validator,ANY-method}
-\alias{confront,data.frame,validator,data.frame-method}
 \alias{confront,data.frame,validator,environment-method}
+\alias{confront,data.frame,validator,data.frame-method}
 \alias{confront,data.frame,validator,list-method}
 \title{Confront data with a (set of) expressionset(s)}
 \usage{
 confront(dat, x, ref, ...)
 
-\S4method{confront}{data.frame,indicator,ANY}(dat, x, key = NULL, ...)
-
-\S4method{confront}{data.frame,validator,ANY}(dat, x, key = NULL, ...)
-
-\S4method{confront}{data.frame,validator,environment}(dat, x, ref, key = NULL,
+\S4method{confront}{data.frame,indicator,ANY}(dat, x, key = NA_character_,
   ...)
 
-\S4method{confront}{data.frame,validator,data.frame}(dat, x, ref, key = NULL,
+\S4method{confront}{data.frame,indicator,environment}(dat, x, ref,
+  key = NA_character_, ...)
+
+\S4method{confront}{data.frame,indicator,data.frame}(dat, x, ref,
+  key = NA_character_, ...)
+
+\S4method{confront}{data.frame,indicator,list}(dat, x, ref,
+  key = NA_character_, ...)
+
+\S4method{confront}{data.frame,validator,ANY}(dat, x, key = NA_character_,
   ...)
 
-\S4method{confront}{data.frame,validator,list}(dat, x, ref, key = NULL, ...)
+\S4method{confront}{data.frame,validator,environment}(dat, x, ref,
+  key = NA_character_, ...)
+
+\S4method{confront}{data.frame,validator,data.frame}(dat, x, ref,
+  key = NA_character_, ...)
+
+\S4method{confront}{data.frame,validator,list}(dat, x, ref,
+  key = NA_character_, ...)
 }
 \arguments{
 \item{dat}{An R object carrying data}
@@ -51,6 +66,7 @@ may altered by the call to \code{confront}.
 Technically, reference data will be stored in an environment that is the parent of a (created) environment that
 contains the columns of \code{dat}.
 }
+
 \examples{
 
 # an example checking metadata
@@ -97,4 +113,3 @@ values(confront(w, v, w[1:10,],key='id'))
  \item{\code{\link{validator}}, \code{\link{validator-class}}}
 }
 }
-

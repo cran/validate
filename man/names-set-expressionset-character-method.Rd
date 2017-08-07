@@ -13,7 +13,7 @@
 \item{value}{Value to set}
 }
 \description{
-Set names
+Names are recycled and made unique with \code{\link{make.names}}
 }
 \examples{
 
@@ -46,4 +46,3 @@ v[[1]]
 
 
 }
-

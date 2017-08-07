@@ -22,4 +22,3 @@ Currency is in thousands (of dollars or euros or guilders, ...)
  \item vat: Turnover reported for Value Added Tax
 }
 }
-

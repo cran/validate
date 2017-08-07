@@ -2,8 +2,8 @@
 % Please edit documentation in R/rule.R
 \docType{class}
 \name{rule-class}
-\alias{rule}
 \alias{rule-class}
+\alias{rule}
 \title{A rich expression}
 \description{
 A rich expression
@@ -43,5 +43,5 @@ developers of this package, or packages depending on it.
  \item{\code{\link{expressionset-class}}}
 }
 }
-\keyword{internal}
 
+\keyword{internal}

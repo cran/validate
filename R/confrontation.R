@@ -48,11 +48,12 @@ NULL
 #' @keywords internal
 setRefClass("confrontation"
   ,fields = list(
-      ._call  = "call"  # (user's) call that generated the object
-    , ._value = "list"  # results of confrontation 
-    , ._calls = "list"  # calls executed during confrontation
-    , ._warn  = "list"  # list of 'warning' objects
-    , ._error = "list"  # list of 'error' objects
+      ._call  = "call"      # (user's) call that generated the object
+    , ._value = "list"      # results of confrontation 
+    , ._calls = "list"      # calls executed during confrontation
+    , ._warn  = "list"      # list of 'warning' objects
+    , ._error = "list"      # list of 'error' objects
+    , ._key   = "character" # identifying variable in confronted dataset.
   )
   , methods=list(
     show = function() .show_confrontation(.self)
@@ -63,7 +64,6 @@ setRefClass("confrontation"
   cat(sprintf("Object of class '%s'\n",class(.self)))
   cat(sprintf("Call:\n    ")); print(.self$._call); cat('\n')
   cat(sprintf('Confrontations: %d\n', length(.self$._calls)))
-  cat(sprintf('With fails    : %d\n', failed_confrontations(.self)))
   cat(sprintf('Warnings      : %d\n',sum(sapply(.self$._warn,function(w)!is.null(w)))))
   cat(sprintf('Errors        : %d\n',sum(sapply(.self$._error,function(w)!is.null(w)))))
 }
@@ -173,20 +173,22 @@ setGeneric('sort')
 ## dat an environment
 ## key a character indicating a key.
 ##
-confront_work <- function(x,dat,key=NULL,class='confrontation',...){
+confront_work <- function(x, dat, key=NA_character_, class='confrontation', ...){
   opts <- x$clone_options(...)
   lin_eq_eps <- opts('lin.eq.eps')
   calls <- x$exprs(expand_assignments=TRUE,lin_eq_eps=lin_eq_eps,dat=dat)
   L <- execute(calls,dat,opts)
-  if (!is.null(key)) L <- add_names(L,x,dat,key)
+  if (!is.na(key)) L <- add_names(L,x,dat,key)
   new(class,
-      ._call = match.call(call=sys.call(sys.parent(2)))
+      ._call    = match.call(call=sys.call(sys.parent(2)))
       , ._calls = calls
       , ._value = lapply(L,"[[",1)
-      , ._warn =  lapply(L,"[[",2)
+      , ._warn  =  lapply(L,"[[",2)
       , ._error = lapply(L,"[[",3)
+      , ._key   = key
   )
 }
+
 
 #' @rdname select
 #' @aliases [,confrontation-method
@@ -198,6 +200,7 @@ setMethod("[","confrontation",function(x,i,j,...,drop=TRUE){
     , ._value = x$._value[i]
     , ._warn = x$._warn[i]
     , ._error  = x$._error[i]
+    , ._key = x$._key
   )
 })
 
@@ -238,11 +241,47 @@ setMethod("length","confrontation",function(x) length(x$._value))
 setRefClass("indication", contains = "confrontation")
 
 #' @rdname confront
-setMethod("confront", signature("data.frame","indicator"), function(dat, x, key=NULL,...){
+setMethod("confront", signature("data.frame","indicator"), function(dat, x, key=NA_character_,...){
   data_env <- list2env(dat)
   data_env$. <- dat
-  confront_work(x,data_env,key,'indication',...)
+  confront_work(x, data_env, key, class = "indication",...)
 })
+
+#' @rdname confront
+setMethod("confront",signature("data.frame","indicator","environment"), function(dat, x, ref, key=NA_character_, ...){
+  classes <- sapply( ls(ref), function(x) class(ref[[x]]) )
+  if ( !all(class(dat) == classes)  )
+    stop("Class of one or more elements in 'ref' differs from 'dat'")
+  if (!is.na(key)) match_rows(of=ref, against=dat, using=key)
+  data_env <- namecheck(list2env(dat,parent=ref))
+  data_env$. <- dat
+  confront_work(x,data_env,key,class="indication",...)
+})
+
+#' @rdname confront
+setMethod("confront",signature("data.frame","indicator","data.frame"),function(dat, x,ref, key=NA_character_,...){
+  env <- new.env()
+  env$ref <- ref
+  if (!is.na(key)) match_rows(of=env, against=dat, using=key)
+  data_env <- namecheck(list2env(dat, parent=env))
+  data_env$. <- dat
+  confront_work(x, data_env, key, class="indication", ...)
+})
+
+#' @rdname confront
+setMethod("confront",signature("data.frame","indicator","list"),function(dat, x,ref,key=NA_character_,...){
+  classes <- sapply(ref,class)
+  if ( !all(class(dat) == classes)  )
+    stop("Class of one or more elements in 'ref' differs from 'dat'")
+  env <- list2env(ref)
+  if (!is.na(key)) match_rows(of=ref, against=dat, using=key)
+  data_env <- namecheck(list2env(dat,parent=env))
+  data_env$. <- dat
+  confront_work(x,data_env,key,class="indication",...)
+})
+
+
+
 
 
 #' @rdname validate-summary
@@ -259,9 +298,8 @@ setMethod("confront", signature("data.frame","indicator"), function(dat, x, key=
 #' @export 
 setMethod('summary',signature('indication'), function(object,...){
   data.frame(
-    indicator = names(object$._value)
+    name = names(object$._value)
     , items = sapply(object$._value,length)
-    , class = get_stat(object,class)
     , min = get_stat(object,min,na.rm=TRUE)
     , mean  = get_stat(object,mean,na.rm=TRUE)
     , max = get_stat(object,max,na.rm=TRUE)
@@ -277,7 +315,7 @@ setMethod('summary',signature('indication'), function(object,...){
 # helper function: x is a confrontation object
 get_stat <- function(x,what,...){
   out <- rep(NA,length(x$._value))
-  i <- !has_error(x)
+  i <- !is_null(x)
   out[i] <- tryCatch(
     sapply(x$._value[i],what,...)
     , error = function(e) NA
@@ -315,9 +353,22 @@ get_stat <- function(x,what,...){
 #' @aliases validation  
 setRefClass("validation", contains = "confrontation")
 
+
+setMethod("show","validation",function(object){
+   cat(sprintf("Object of class '%s'\n",class(object)))
+   cat(sprintf("Call:\n    ")); print(object$._call); cat('\n')
+   cat(sprintf('Confrontations: %d\n', length(object$._calls)))
+   cat(sprintf('With fails    : %d\n', failed_confrontations(object)))
+   cat(sprintf('Warnings      : %d\n',sum(sapply(object$._warn,function(w)!is.null(w)))))
+   cat(sprintf('Errors        : %d\n',sum(sapply(object$._error,function(w)!is.null(w)))))
+})
+
+
+
+
 #' @rdname confront
 #' @param key (optional) name of identifying variable in x.
-setMethod("confront", signature("data.frame","validator"), function(dat, x, key=NULL, ...){
+setMethod("confront", signature("data.frame","validator"), function(dat, x, key=NA_character_, ...){
   data_env <- list2env(dat)
   data_env$. <- dat
   confront_work(x,data_env,key,'validation',...)
@@ -337,33 +388,33 @@ namecheck <- function(x){
 }
 
 #' @rdname confront
-setMethod("confront",signature("data.frame","validator","environment"), function(dat, x, ref, key=NULL, ...){
+setMethod("confront",signature("data.frame","validator","environment"), function(dat, x, ref, key=NA_character_, ...){
   classes <- sapply( ls(ref), function(x) class(ref[[x]]) )
   if ( !all(class(dat) == classes)  )
     stop("Class of one or more elements in 'ref' differs from 'dat'")
-  if (!is.null(key)) match_rows(of=ref, against=dat, using=key)
+  if (!is.na(key)) match_rows(of=ref, against=dat, using=key)
   data_env <- namecheck(list2env(dat,parent=ref))
   data_env$. <- dat
   confront_work(x,data_env,key,class="validation",...)
 })
 
 #' @rdname confront
-setMethod("confront",signature("data.frame","validator","data.frame"),function(dat, x,ref, key=NULL,...){
+setMethod("confront",signature("data.frame","validator","data.frame"),function(dat, x,ref, key=NA_character_,...){
   env <- new.env()
   env$ref <- ref
-  if (!is.null(key)) match_rows(of=env, against=dat, using=key)
+  if (!is.na(key)) match_rows(of=env, against=dat, using=key)
   data_env <- namecheck(list2env(dat, parent=env))
   data_env$. <- dat
   confront_work(x, data_env, key, class="validation", ...)
 })
 
 #' @rdname confront
-setMethod("confront",signature("data.frame","validator","list"),function(dat, x,ref,key=NULL,...){
+setMethod("confront",signature("data.frame","validator","list"),function(dat, x,ref,key=NA_character_,...){
   classes <- sapply(ref,class)
   if ( !all(class(dat) == classes)  )
     stop("Class of one or more elements in 'ref' differs from 'dat'")
   env <- list2env(ref)  
-  if (!is.null(key)) match_rows(of=ref, against=dat, using=key)
+  if (!is.na(key)) match_rows(of=ref, against=dat, using=key)
   data_env <- namecheck(list2env(dat,parent=env))
   data_env$. <- dat
   confront_work(x,data_env,key,class="validation",...)  
@@ -398,18 +449,19 @@ add_names <- function(L,x,y,key){
 # - Assignments are stored in a separate environment and forgotten afterwards.
 # - Failed assignments yield a warning.
 execute <- function(calls,env,opts){
-  lapply(calls, function(g) 
-    if ( g[[1]] == ":=" ){ 
-      var <- as.character(left(g))
-      if ( var %in% variables(env) ) 
-        warning(sprintf("Locally overwriting variable '%s'",var))
-        assign(var, tryCatch( eval(right(g), env), error=warning), envir=env)
-    } else { 
-      val <- factory(eval,opts)(g, env)
-      if ( !is.na(opts('na.value')) ){
-        val[[1]] <- ifelse(is.na(val[[1]]), opts('na.value'), val[[1]])
+  lapply(calls, function(g){
+      if ( g[[1]] == ":=" ){ 
+        var <- as.character(left(g))
+        if ( var %in% variables(env) ) 
+          warning(sprintf("Locally overwriting variable '%s'",var))
+          assign(var, tryCatch( eval(right(g), env), error=warning), envir=env)
+      } else { 
+        val <- factory(eval,opts)(g, env)
+        if ( !is.na(opts('na.value')) ){
+          val[[1]] <- ifelse(is.na(val[[1]]), opts('na.value'), val[[1]])
+        }
+        val
       }
-      val
     }
   )[!is.assignment(calls)]
 }
@@ -418,6 +470,7 @@ execute <- function(calls,env,opts){
 has_error <- function(x) !sapply(x$._error,is.null)
 has_warning <- function(x) !sapply(x$._warn, is.null)
 has_value <- function(x) sapply(x$._value, function(a) !is.null(a))
+is_null <- function(x) sapply(x$._value, is.null)
 
 passes <- function(x){
   sapply(x$._value, function(a) 
@@ -451,7 +504,7 @@ nas <- function(x){
 #' 
 setMethod('summary',signature('validation'),function(object,...){
   data.frame(
-    rule = names(object$._value)
+    name = names(object$._value)
     , items = sapply(object$._value,length)
     , passes = passes(object)
     , fails  = fails(object)
@@ -487,7 +540,7 @@ setMethod('values',signature('indication'),function(x,simplify=TRUE,drop=TRUE,..
 
 int_values <- function(x,simplify,drop,...){
   out <- if ( simplify ){
-    simplify_list(x$._value[!has_error(x)])
+    simplify_list(x$._value[!is_null(x)])
   } else {
     getMethod(values,signature='confrontation')(x,...)
   }
@@ -644,5 +697,47 @@ setMethod('sort',signature('validation'),function(x, decreasing=FALSE, by=c('rul
   L
 })
 
+#' Confrontation object to data frame
+#'
+#' 
+#' @inheritParams as.data.frame
+#'
+#' @return A \code{data.frame} with columns
+#' \itemize{
+#'   \item{\code{key} Where relevant, and only if \code{key} was specified in the call to \code{\link{confront}}}
+#'   \item{\code{name} Name of the rule}
+#'   \item{\code{value} Value after evaluation}
+#'   \item{\code{expression} evaluated expression}
+#' }
+#'
+#' @example ../examples/as.data.frame.R
+#'
+#' @export
+setMethod("as.data.frame","confrontation", function(x,...){
+  ew <- has_error(x) | has_warning(x)
+  if (any(ew)){
+    warning(paste(
+      "Encountered warnings and/or erors in confrontation object: " 
+      ,"skipped at coercion"))
+    x <- x[!ew]
+  }
+  v <- values(x, simplify=FALSE, drop=FALSE)
+  expr <- sapply(x$._calls, call2text)
+  nam  <- names(v)
+  do.call("rbind",
+    lapply(seq_along(v), function(i){
+      d <- data.frame(key=getkey(v[[i]])
+          , name = nam[i], value=v[[i]], expression=expr[i]
+        , row.names=NULL, stringsAsFactors=FALSE )
+      if ( is.na(x$._key)) d$key <- NULL else names(d)[1] <- x$._key
+      d
+    })
+  )
+})
+
+getkey <- function(x){
+  k <- names(x)
+  if (is.null(k)) NA_character_ else k
+}
 
 

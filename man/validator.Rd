@@ -4,12 +4,16 @@
 \alias{validator}
 \title{Define validation rules for data}
 \usage{
-validator(..., .file)
+validator(..., .file, .data)
 }
 \arguments{
 \item{...}{A comma-separated list of validating expressions}
 
-\item{.file}{A character vector of file locations (see also the section on file parsing in the 
+\item{.file}{(optional) A character vector of file locations (see also the
+section on file parsing in the}
+
+\item{.data}{(optional) A \code{data.frame} with columns \code{"rule"},
+  \code{"name"}, and \code{"description"}
 \code{\link{syntax}} help file).}
 }
 \value{
@@ -27,6 +31,7 @@ the expression is described in \code{\link{syntax}}.
 A \emph{validating expression} is an expression whose evaluation results in \code{TRUE}, \code{FALSE}
 or \code{NA}.
 }
+
 \examples{
 
 v <- validator(
@@ -46,4 +51,3 @@ summary(cf)
  \item{\code{\link{validator-class}}}
 }
 }
-

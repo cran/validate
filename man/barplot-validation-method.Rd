@@ -39,6 +39,7 @@ Plot number of violations
 
 The default colors were generated with the \code{RColorBrewer} package of Erich Neuwirth.
 }
+
 \examples{
 data(retailers)
 cf <- check_that(retailers
@@ -57,4 +58,3 @@ barplot(cf)
  \item{\code{\link{validation}}}
 }
 }
-

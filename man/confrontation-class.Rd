@@ -2,12 +2,13 @@
 % Please edit documentation in R/confrontation.R
 \docType{class}
 \name{confrontation-class}
-\alias{confrontation}
 \alias{confrontation-class}
+\alias{confrontation}
 \title{Superclass storing results of confronting data with rules}
 \description{
 Superclass storing results of confronting data with rules
 }
+
 \section{Details}{
 
 This class is aimed at developers of this package or packages depending on 
@@ -52,5 +53,5 @@ Currently N/A
  \item{\code{\link{expressionset}}}
 }
 }
-\keyword{internal}
 
+\keyword{internal}
