@@ -12,7 +12,7 @@
 
 <meta name="author" content="Mark van der Loo and Edwin de Jonge" />
 
-<meta name="date" content="2017-08-07" />
+<meta name="date" content="2018-03-28" />
 
 <title>Introduction to Validate</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction to Validate</h1>
 <h4 class="author"><em>Mark van der Loo and Edwin de Jonge</em></h4>
-<h4 class="date"><em>2017-08-07</em></h4>
+<h4 class="date"><em>2018-03-28</em></h4>
 
 
 <div id="TOC">
@@ -81,7 +81,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#conversion-from-and-to-data.frames">Conversion from and to <code>data.frames</code></a></li>
 <li><a href="#confrontation-objects">Confrontation objects</a></li>
 <li><a href="#confrontation-options">Confrontation options</a></li>
-<li><a href="#investigating-validator-objects">Investigating validator objects</a></li>
+<li><a href="#metadata-and-investigating-validator-objects">Metadata and investigating validator objects</a></li>
 <li><a href="#validator-objects-and-confrontation-objects-are-reference-objects">Validator objects and confrontation objects are reference objects</a></li>
 </ul>
 </div>
@@ -218,34 +218,34 @@ v</code></pre></div>
 quality &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(cf)
 measure &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(v)
 <span class="kw">head</span>( <span class="kw">merge</span>(quality, measure) )</code></pre></div>
-<pre><code>##   name value expression       rule           label origin description
-## 1   V1  TRUE height &gt; 0 height &gt; 0 height positive                   
-## 2   V1  TRUE height &gt; 0 height &gt; 0 height positive                   
-## 3   V1  TRUE height &gt; 0 height &gt; 0 height positive                   
-## 4   V1  TRUE height &gt; 0 height &gt; 0 height positive                   
-## 5   V1  TRUE height &gt; 0 height &gt; 0 height positive                   
-## 6   V1  TRUE height &gt; 0 height &gt; 0 height positive                   
-##               created
-## 1 2017-08-07 15:25:40
-## 2 2017-08-07 15:25:40
-## 3 2017-08-07 15:25:40
-## 4 2017-08-07 15:25:40
-## 5 2017-08-07 15:25:40
-## 6 2017-08-07 15:25:40</code></pre>
+<pre><code>##   name value expression           label description origin
+## 1   V1  TRUE height &gt; 0 height positive                   
+## 2   V1  TRUE height &gt; 0 height positive                   
+## 3   V1  TRUE height &gt; 0 height positive                   
+## 4   V1  TRUE height &gt; 0 height positive                   
+## 5   V1  TRUE height &gt; 0 height positive                   
+## 6   V1  TRUE height &gt; 0 height positive                   
+##               created       rule
+## 1 2018-03-28 16:41:20 height &gt; 0
+## 2 2018-03-28 16:41:20 height &gt; 0
+## 3 2018-03-28 16:41:20 height &gt; 0
+## 4 2018-03-28 16:41:20 height &gt; 0
+## 5 2018-03-28 16:41:20 height &gt; 0
+## 6 2018-03-28 16:41:20 height &gt; 0</code></pre>
 <p>Or, merge with the summarized results. The result of <code>summary</code> is just a <code>data.frame</code> (tidy, isn’t it?).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">merge</span>(<span class="kw">summary</span>(cf),measure)</code></pre></div>
 <pre><code>##   name items passes fails nNA error warning          expression
 ## 1   V1    15     15     0   0 FALSE   FALSE          height &gt; 0
 ## 2   V2    15     15     0   0 FALSE   FALSE          weight &gt; 0
 ## 3   V3    15      2    13   0 FALSE   FALSE height/weight &gt; 0.5
-##                  rule           label origin description
-## 1          height &gt; 0 height positive                   
-## 2          weight &gt; 0 weight positive                   
-## 3 height/weight &gt; 0.5     ratio limit                   
-##               created
-## 1 2017-08-07 15:25:40
-## 2 2017-08-07 15:25:40
-## 3 2017-08-07 15:25:40</code></pre>
+##             label description origin             created
+## 1 height positive                    2018-03-28 16:41:20
+## 2 weight positive                    2018-03-28 16:41:20
+## 3     ratio limit                    2018-03-28 16:41:20
+##                  rule
+## 1          height &gt; 0
+## 2          weight &gt; 0
+## 3 height/weight &gt; 0.5</code></pre>
 </div>
 <div id="confrontation-objects" class="section level3">
 <h3>Confrontation objects</h3>
@@ -297,8 +297,8 @@ measure &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(v)
 <span class="kw">confront</span>(women, v, <span class="dt">raise=</span><span class="st">'all'</span>)</code></pre></div>
 <p>Linear equalities form an important class of validation rules. To prevent equalities to be strictly tested, there is an option called <code>len.eq.eps</code> (with default value <span class="math inline">\(10^{-8}\)</span>) that allows one to add some slack to these tests. The amount of slack is intended to prevent false negatives (unneccesary failures) caused by machine rounding. If you want to check whether a sum-rule is satisfied to within one or two units of measurement, it is cleaner to define two inequalities for that.</p>
 </div>
-<div id="investigating-validator-objects" class="section level3">
-<h3>Investigating validator objects</h3>
+<div id="metadata-and-investigating-validator-objects" class="section level3">
+<h3>Metadata and investigating validator objects</h3>
 <p>Validator objects store a set of rules, optionally with some metadata per rule. Currently, the following functions can be used to get or set metadata:</p>
 <ul>
 <li><code>origin</code> : Where was a rule defined?</li>
@@ -306,8 +306,9 @@ measure &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(v)
 <li><code>created</code> : when were the rules created?</li>
 <li><code>label</code> : Short description of the rule</li>
 <li><code>description</code>: Long description of the rule</li>
+<li><code>meta</code>: Set or get generic metadata</li>
 </ul>
-<p>Names can be set from the command line when defining a validator object.</p>
+<p>For example, names can be set from the command line when defining a validator object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v &lt;-<span class="st"> </span><span class="kw">validator</span>(<span class="dt">rat =</span> height/weight &gt;<span class="st"> </span><span class="fl">0.5</span>, <span class="dt">htest=</span>height&gt;<span class="dv">0</span>, <span class="dt">wtest=</span>weight &gt;<span class="st"> </span><span class="dv">0</span>)
 <span class="kw">names</span>(v)</code></pre></div>
 <pre><code>## [1] &quot;rat&quot;   &quot;htest&quot; &quot;wtest&quot;</code></pre>
@@ -318,6 +319,28 @@ v</code></pre></div>
 ##  ratio: height/weight &gt; 0.5
 ##  htest: height &gt; 0
 ##  wtest: weight &gt; 0</code></pre>
+<p>It is also possible to add generic key-value pairs as metadata. Getting and setting follows the usual recycling rules of R.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add 'foo' to the first rule:</span>
+<span class="kw">meta</span>(v[<span class="dv">1</span>],<span class="st">&quot;foo&quot;</span>) &lt;-<span class="st"> </span><span class="dv">1</span>
+<span class="co"># Add 'bar' to all rules</span>
+<span class="kw">meta</span>(v,<span class="st">&quot;bar&quot;</span>) &lt;-<span class="st"> &quot;baz&quot;</span></code></pre></div>
+<p>Metadata can be made visible by selecting a single rule:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v[[<span class="dv">1</span>]]</code></pre></div>
+<pre><code>## 
+## Object of class rule.
+##  expr       : height/weight &gt; 0.5 
+##  name       : ratio 
+##  label      :  
+##  description:  
+##  origin     : command-line 
+##  created    : 2018-03-28 16:41:20
+##  meta       : foo&lt;nmr&gt;, bar&lt;chr&gt;</code></pre>
+<p>Or by extracting it to a <code>data.frame</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">meta</span>(v)</code></pre></div>
+<pre><code>##    name label description       origin             created foo bar
+## 1 ratio                   command-line 2018-03-28 16:41:20   1 baz
+## 2 htest                   command-line 2018-03-28 16:41:20  NA baz
+## 3 wtest                   command-line 2018-03-28 16:41:20  NA baz</code></pre>
 <p>Some general information is obtained with <code>summary</code>,</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(v)</code></pre></div>
 <pre><code>##   block nvar rules linear
@@ -353,7 +376,8 @@ v</code></pre></div>
 ##  label      :  
 ##  description:  
 ##  origin     : command-line 
-##  created    : 2017-08-07 15:25:40</code></pre>
+##  created    : 2018-03-28 16:41:20
+##  meta       : foo&lt;nmr&gt;, bar&lt;chr&gt;</code></pre>
 </div>
 <div id="validator-objects-and-confrontation-objects-are-reference-objects" class="section level3">
 <h3>Validator objects and confrontation objects are reference objects</h3>

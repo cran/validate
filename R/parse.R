@@ -149,8 +149,8 @@ var_from_call <- function(x){
 # find a symbol in a call. Returns a list of multi-indices.
 # occurrences of variable names in a function signature are skipped.
 which.call <- function(x, what, I=1, e=as.environment(list(n=0))){
-  # skip signatures (=pairlist)
-  if (!is.pairlist(x) && x == what){
+  # is.symbol filters constants such as NA 
+  if ( is.symbol(x) && x == what ){
     e[[paste0('x',e$n)]] <- I
     e$n <- e$n + 1
   }
@@ -225,6 +225,30 @@ replace_dollar <- function(x){
   x
 }
 
+# replace occurrences of  'x %in% y' with match(x,y,nomatch=NA,incomparables=NA)
+replace_in <- function(x){
+  L <- which.call(x,"%in%")
+   for ( k in L ){
+    m <- expression(e1 %vin% e2)[[1]]
+    if (length(k) == 1){
+      m[[2]] <- left(x)
+      m[[3]] <- right(x)
+      x <- m
+    } else {
+      i <- k[-length(k)]
+      e <- x[[i]]
+      m[[2]] <- left(e)
+      m[[3]] <- right(e)
+      x[[i]] <- m
+    }
+  }
+  x
+}
+
+
+
+
+
 
 # test if a call defines a variable group
 defines_var_group <- function(x){
@@ -287,7 +311,7 @@ vectorize <- function(x){
   # modify.
   if ( length(x) == 1 || x[[1]] == "function") return(x)
   for ( i in seq_along(x) ){
-    if ( x[[i]] == "if" ){
+    if ( is.symbol(x[[i]]) && x[[i]] == "if" ){
       return(vectorize(replace_if(x)))
     } else {
       x[[i]] <- vectorize(x[[i]])
@@ -321,7 +345,7 @@ linear_call <- function(x){
 
 
 validating_call <- function(cl){
-  pure <- c("<", "<=", "==", "!=", ">=", ">", "%in%", "identical", "~" ,"%->%"
+  pure <- c("<", "<=", "==", "!=", ">=", ">", "%in%", "%vin%", "identical", "~" ,"%->%"
           ,"grepl" ,"any_missing", "any_duplicated","var_group")
   unary <- c("!", "(", "all", "any" )
   binary <- c("|","||","&","&&","if","xor")

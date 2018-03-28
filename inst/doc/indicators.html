@@ -12,7 +12,7 @@
 
 <meta name="author" content="Mark van der Loo and Edwin de Jonge" />
 
-<meta name="date" content="2017-08-07" />
+<meta name="date" content="2018-03-28" />
 
 <title>Data quality indicators with the validate package</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Data quality indicators with the validate package</h1>
 <h4 class="author"><em>Mark van der Loo and Edwin de Jonge</em></h4>
-<h4 class="date"><em>2017-08-07</em></h4>
+<h4 class="date"><em>2018-03-28</em></h4>
 
 
 <div id="TOC">
@@ -172,12 +172,12 @@ i</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">quality &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">confront</span>(women, i))
 measures &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(i)
 <span class="kw">merge</span>(quality, measures)</code></pre></div>
-<pre><code>##   name     value   expression         rule          label origin
-## 1   I1 65.000000 mean(height) mean(height) average height       
-## 2   I2  4.472136   sd(height)   sd(height) std.dev height       
-##       description             created
-## 1 basic statistic 2017-08-07 15:25:39
-## 2 fancy statistic 2017-08-07 15:25:39</code></pre>
+<pre><code>##   name     value   expression          label     description origin
+## 1   I1 65.000000 mean(height) average height basic statistic       
+## 2   I2  4.472136   sd(height) std.dev height fancy statistic       
+##               created         rule
+## 1 2018-03-28 16:41:19 mean(height)
+## 2 2018-03-28 16:41:19   sd(height)</code></pre>
 </div>
 
 

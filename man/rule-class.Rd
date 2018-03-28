@@ -10,10 +10,11 @@ A rich expression
 }
 \section{Details}{
 
-Technically, \code{rule} is a \code{call} object endowed with extra attributes such
-as a name, a label and a description description, creation time and a reference to its origin.
-Rule objects are not for direct use by users of the package, but may be of interest for
-developers of this package, or packages depending on it.
+Technically, \code{rule} is a \code{call} object endowed with extra
+attributes such as a name, a label and a description description, creation
+time and a reference to its origin. Rule objects are not for direct use by
+users of the package, but may be of interest for developers of this package,
+or packages depending on it.
 }
 
 \section{Exported S4 methods for \code{rule}}{

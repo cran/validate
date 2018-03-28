@@ -12,7 +12,13 @@ This document only provides a short reference. Please refer to the vignette
 for worked examples: \href{../doc/03_Rule_files.html}{Rules in text files}
 }
 
-\section{Refernce the dataset as a whole}{
+\section{The \code{\%in\%} operator}{
+
+When executing a validating statement, the \code{\%in\%} operator is 
+replaced with \code{\link[validate:vin]{\%vin\%}}.
+}
+
+\section{Reference the dataset as a whole}{
 
 
 Metadata such as numer of rows, columns, column names and so on can be 

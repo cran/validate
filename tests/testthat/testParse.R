@@ -41,6 +41,12 @@ test_that("Parsing options",{
   expect_equal(length(v),1)
 })
 
+test_that("Parsing metadata",{
+  v <- validator(.file="yamltests/yaml_with_meta.yaml")
+  expect_equal(meta(v)$foo,c("1",NA))
+  expect_equal(meta(v)$bar,c(NA,"2"))
+})
+
 test_that("Parsing included files",{
   v <- validator(.file="yamltests/top.yaml")
   expect_equal(length(v),6)
@@ -165,4 +171,14 @@ test_that("translation of rules to data.frame",{
 })
 
 
-
+test_that("replacing %in% operator",{
+  e <- expression( x %in% y)[[1]]
+  expect_identical(replace_in(e)
+    , expression(x %vin% y)[[1]])
+  
+  e <- expression( x %in% y | x %in% z)[[1]]
+  expect_identical(replace_in(e)
+    , expression(x %vin% y | x %vin% z)[[1]])
+                   
+  
+})

@@ -37,3 +37,4 @@ Select a subset
 The \code{options} attribute will be cloned
 }
 
+\keyword{internal}

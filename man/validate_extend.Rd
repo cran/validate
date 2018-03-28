@@ -21,7 +21,7 @@
 .show_expressionset(obj)
 
 .get_exprs(x, ..., expand_assignments = FALSE, expand_groups = TRUE,
-  vectorize = TRUE, replace_dollar = TRUE,
+  vectorize = TRUE, replace_dollar = TRUE, replace_in = TRUE,
   lin_eq_eps = x$options("lin.eq.eps"),
   lin_ineq_eps = x$options("lin.ineq.eps"), dat = NULL)
 
