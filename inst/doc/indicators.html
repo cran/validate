@@ -12,7 +12,7 @@
 
 <meta name="author" content="Mark van der Loo and Edwin de Jonge" />
 
-<meta name="date" content="2018-03-28" />
+<meta name="date" content="2018-06-22" />
 
 <title>Data quality indicators with the validate package</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Data quality indicators with the validate package</h1>
 <h4 class="author"><em>Mark van der Loo and Edwin de Jonge</em></h4>
-<h4 class="date"><em>2018-03-28</em></h4>
+<h4 class="date"><em>2018-06-22</em></h4>
 
 
 <div id="TOC">
@@ -95,7 +95,7 @@ ind &lt;-<span class="st"> </span><span class="kw">confront</span>(women, i)</co
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ind</code></pre></div>
 <pre><code>## Object of class 'indication'
 ## Call:
-##     confront(x = women, dat = i)
+##     confront(dat = women, x = i)
 ## 
 ## Confrontations: 3
 ## Warnings      : 0
@@ -118,7 +118,7 @@ ind &lt;-<span class="st"> </span><span class="kw">confront</span>(women, i)</co
 cf</code></pre></div>
 <pre><code>## Object of class 'indication'
 ## Call:
-##     confront(x = women, dat = jj)
+##     confront(dat = women, x = jj)
 ## 
 ## Confrontations: 2
 ## Warnings      : 1
@@ -176,8 +176,8 @@ measures &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(i)
 ## 1   I1 65.000000 mean(height) average height basic statistic       
 ## 2   I2  4.472136   sd(height) std.dev height fancy statistic       
 ##               created         rule
-## 1 2018-03-28 16:41:19 mean(height)
-## 2 2018-03-28 16:41:19   sd(height)</code></pre>
+## 1 2018-06-22 16:07:51 mean(height)
+## 2 2018-06-22 16:07:51   sd(height)</code></pre>
 </div>
 
 

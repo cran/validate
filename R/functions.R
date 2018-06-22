@@ -2,17 +2,46 @@
 #'
 #' A concise overview of the \code{validate} syntax.
 #' 
-#'
-#' @section Note:
-#' This document only provides a short reference. Please refer to the vignette
-#' for worked examples: \href{../doc/03_Rule_files.html}{Rules in text files}
-#'
 #' @name syntax
 #'
-#' @section The \code{\%in\%} operator:
-#' When executing a validating statement, the \code{\%in\%} operator is 
-#' replaced with \code{\link[validate:vin]{\%vin\%}}.
-#'
+#' @section Basic syntax:
+#' 
+#' The basic rule is that an R-statement that evaluates to a \code{logical} is a
+#' validating statement. This is established by static code inspection when
+#' \code{validator} reads a (set of) user-defined validation rule(s).
+#' 
+#' @section Comparisons:
+#' 
+#' All basic comparisons, including \code{>, >=, ==, !=, <=, <}, \code{\%in\%}
+#' are validating statements. When executing a validating statement, the
+#' \code{\%in\%} operator is replaced with \code{\link[validate:vin]{\%vin\%}}.
+#' 
+#' @section Logical operations:
+#' 
+#' Unary logical operators `\code{!}', \code{all()} and \code{any} define
+#' validating statements. Binary logical operations including \code{&, &&, |,
+#' ||}, are validating when \code{P} and \code{Q} in e.g. \code{P & Q} are
+#' validating. (note that the short-circuits \code{&&} and \code{&} onnly return
+#' the first logical value, in cases where for \code{P && Q}, \code{P} and/or
+#' \code{Q} are vectors. Binary logical implication \eqn{P\Rightarrow Q} (P
+#' implies Q) is implemented as \code{if ( P ) Q}. The latter is interpreted as
+#' \code{!(P) | Q}.
+#' 
+#' @section Type checking:
+#' 
+#' Any function starting with \code{is.} (e.g. \code{is.numeric}) is a validating expression.
+#' 
+#' @section Text search:
+#' 
+#' \code{grepl} is a validating expression.
+#' 
+#' @section Functional dependencies:
+#' 
+#' Armstrong's functional dependencies, of the form \eqn{A + B \to C + D} are
+#' represented using the \code{~}, e.g. \code{A + B ~ C + D}. For example
+#' \code{postcode ~ city} means, that when two records have the same value for
+#' \code{postcode}, they must have the same value for \code{city}.
+#' 
 #' 
 #' @section Reference the dataset as a whole:
 #' 
@@ -62,118 +91,6 @@
 NULL
 
 
-#### MISSINGNES COUNTERS (DEPRECATED) ------------------------------------------
-#
-# These are currently hidden in documentation and will be deleted eventually since
-# we now have the "." to reference the dataset. Other convenience functions might take
-# their place later.
-
-#' Missingness counters (DEPRECATED)
-#'
-#' @param ... comma-separated list of variable names (not character). If no
-#'  variables are specified, the number of missings over all data is counted.
-#'  
-#' @return For \code{number_missing}, the total number of missings over all specified variables.
-#' @rdname nofun
-#' @keywords internal
-#' @export 
-number_missing <- function(...){
-  L <- as.list(substitute(list(...))[-1])
-  vars <- matchvars(L,parent.frame())
-  sum(sapply(
-    eapply(
-      env=parent.frame()
-      , FUN = function(x) sum(is.na(x)) 
-    )[vars]
-  ,Id))
-}
-
-
-#' @rdname nofun
-#' @return For \code{fraction_missing}, the fraction of missings over all specified variables
-fraction_missing <- function(...){
-  L <- as.list(substitute(list(...))[-1])
-  vars <- matchvars(L,parent.frame())
-  v <- sapply(
-    eapply(
-      env=parent.frame()
-      , FUN = function(x) c(sum(is.na(x)),length(x))
-    )[vars]
-    ,Id)
-  sum(v[1,])/sum(v[2,])
-}
-
-#' @rdname nofun
-#' @return For \code{row_missing} a vector with the number of missings per (sub)record defined by \code{...}.
-row_missing <- function(...){
-  L <- as.list(substitute(list(...))[-1])
-  vars <- matchvars(L,parent.frame())
-  rowSums(sapply(eapply(
-    env=parent.frame()
-    , FUN = is.na
-    )[vars]
-    ,Id))
-}
-
-#' @rdname nofun
-#' @return For \code{col_missing} a vector with the number of missings per column 
-#'    defined by \code{...}.
-col_missing <- function(...){
-  L <- as.list(substitute(list(...))[-1])
-  vars <- matchvars(L,parent.frame())
-  colSums(sapply(eapply(
-    env=parent.frame()
-    , FUN = is.na
-  )[vars]
-  ,Id))  
-}
-
-#' @rdname nofun
-#' @return For \code{number_unique} the number of records, unique for 
-#'   the columns specified in \code{...}.
-number_unique <- function(...){
-  L <- as.list(substitute(list(...))[-1])
-  vars <- matchvars(L,parent.frame())
-  if ( identical(vars,TRUE)) vars <- ls(parent.frame())
-  length(unique(do.call(paste0,mget(vars,parent.frame()))))
-}
-
-#' @rdname nofun
-#' @return For \code{any_missing}, \code{TRUE} if any \code{NA} occur in the columns
-#'   specified in \code{...}.
-any_missing <- function(...){
-  L <- as.list(substitute(list(...))[-1])
-  vars <- matchvars(L,parent.frame())
-  e <- parent.frame()
-  a <- FALSE
-  if (identical(vars,TRUE)) vars <- ls(e)
-  for ( v in vars ) a <- a | anyNA(e[[v]])
-  a
-}
-
-#' @rdname nofun
-#' @return For \code{any_duplicated}, \code{TRUE} if any (sub)records specified by
-#'  \code{...} are duplicated, \code{FALSE} otherwise. Note that \code{NA} is matched with \code{NA}.
-any_duplicated <- function(...){
-  L <- as.list(substitute(list(...))[-1])
-  vars <- matchvars(L,parent.frame())
-  if (identical(vars,TRUE)) vars <- ls(parent.frame())
-  anyDuplicated( do.call(paste0,mget(vars,parent.frame())) ) > 0
-}
-
-# variational functions act on a chosen set of variables. If no variables are
-# chosen they act on all variables. This function detect if such a funtion is
-# present in a call.
-
-VARFUN <- c(
-  "number_missing"
-  , "fraction_missing" 
-  , "row_missing"
-  , "col_missing"
-  , "number_unique"
-  , "any_missing"
-  , "any_duplicated"
-)
 
 ### CONSISTENT SET MEMBERSHIP --------------------------------------------------
 

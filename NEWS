@@ -1,3 +1,11 @@
+version 0.2.5
+- Documentation updates (Thanks to Matthias Gomolka)
+- Removed deprecated functions 'number_missing', 'fraction_missing', 
+  'row_missing', 'number_unique', 'any_dunplicated', 'any_missing'.
+- Bugfix: the 'call' object in a 'confrontation' object was created incorrectly.
+  This only affects printing.
+
+
 version 0.2.4
 - New set membership operator "%vin%", behaving consistently with "=="
 - Set membership operator %in% is now replaced with %vin% (#80).

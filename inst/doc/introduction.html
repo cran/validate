@@ -12,7 +12,7 @@
 
 <meta name="author" content="Mark van der Loo and Edwin de Jonge" />
 
-<meta name="date" content="2018-03-28" />
+<meta name="date" content="2018-06-22" />
 
 <title>Introduction to Validate</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction to Validate</h1>
 <h4 class="author"><em>Mark van der Loo and Edwin de Jonge</em></h4>
-<h4 class="date"><em>2018-03-28</em></h4>
+<h4 class="date"><em>2018-06-22</em></h4>
 
 
 <div id="TOC">
@@ -79,6 +79,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#a-quick-example">A quick example</a></li>
 <li><a href="#validator-objects">Validator objects</a></li>
 <li><a href="#conversion-from-and-to-data.frames">Conversion from and to <code>data.frames</code></a></li>
+<li><a href="#validation-rule-syntax">Validation rule syntax</a></li>
 <li><a href="#confrontation-objects">Confrontation objects</a></li>
 <li><a href="#confrontation-options">Confrontation options</a></li>
 <li><a href="#metadata-and-investigating-validator-objects">Metadata and investigating validator objects</a></li>
@@ -156,7 +157,7 @@ v</code></pre></div>
 cf</code></pre></div>
 <pre><code>## Object of class 'validation'
 ## Call:
-##     confront(x = women, dat = v)
+##     confront(dat = women, x = v)
 ## 
 ## Confrontations: 3
 ## With fails    : 0
@@ -226,12 +227,12 @@ measure &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(v)
 ## 5   V1  TRUE height &gt; 0 height positive                   
 ## 6   V1  TRUE height &gt; 0 height positive                   
 ##               created       rule
-## 1 2018-03-28 16:41:20 height &gt; 0
-## 2 2018-03-28 16:41:20 height &gt; 0
-## 3 2018-03-28 16:41:20 height &gt; 0
-## 4 2018-03-28 16:41:20 height &gt; 0
-## 5 2018-03-28 16:41:20 height &gt; 0
-## 6 2018-03-28 16:41:20 height &gt; 0</code></pre>
+## 1 2018-06-22 16:07:51 height &gt; 0
+## 2 2018-06-22 16:07:51 height &gt; 0
+## 3 2018-06-22 16:07:51 height &gt; 0
+## 4 2018-06-22 16:07:51 height &gt; 0
+## 5 2018-06-22 16:07:51 height &gt; 0
+## 6 2018-06-22 16:07:51 height &gt; 0</code></pre>
 <p>Or, merge with the summarized results. The result of <code>summary</code> is just a <code>data.frame</code> (tidy, isn’t it?).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">merge</span>(<span class="kw">summary</span>(cf),measure)</code></pre></div>
 <pre><code>##   name items passes fails nNA error warning          expression
@@ -239,13 +240,35 @@ measure &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(v)
 ## 2   V2    15     15     0   0 FALSE   FALSE          weight &gt; 0
 ## 3   V3    15      2    13   0 FALSE   FALSE height/weight &gt; 0.5
 ##             label description origin             created
-## 1 height positive                    2018-03-28 16:41:20
-## 2 weight positive                    2018-03-28 16:41:20
-## 3     ratio limit                    2018-03-28 16:41:20
+## 1 height positive                    2018-06-22 16:07:51
+## 2 weight positive                    2018-06-22 16:07:51
+## 3     ratio limit                    2018-06-22 16:07:51
 ##                  rule
 ## 1          height &gt; 0
 ## 2          weight &gt; 0
 ## 3 height/weight &gt; 0.5</code></pre>
+</div>
+<div id="validation-rule-syntax" class="section level3">
+<h3>Validation rule syntax</h3>
+<p>Conceptually, any R statement that will evaluate to a <code>logical</code> is considered a validating statement. The validate package checks this when the user defines a rule set, so for example calling <code>validator( mean(height) )</code> will result in a warning since just computing <code>mean(x)</code> does not validate anything.</p>
+<p>You will find a concise description of the syntax in the <code>syntax</code> help file.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?syntax</code></pre></div>
+<p>Examples of various types of rules can also be found <a href="https://github.com/data-cleaning/ValidatPoC">here</a>.</p>
+<p>In short, you can use</p>
+<ul>
+<li>Type checks: any function starting with <code>is.</code>.</li>
+<li>Binary comparisons: <code>&lt;, &lt;=, ==, !=, &gt;=, &gt;</code> and <code>%in%</code>.</li>
+<li>Unary logical operators: <code>!, all(), any()</code>.</li>
+<li>Binary logical operators: <code>&amp;, &amp;&amp;, |, ||</code> and logical implication, e.g. <code>if (staff &gt; 0) staff.costs &gt; 0</code>.</li>
+<li>Text search: <code>grepl</code></li>
+<li><a href="https://en.wikipedia.org/wiki/Functional_dependency">Functional dependency</a>: <span class="math inline">\(X\to Y + Z\)</span> is represented by <code>X ~ Y + Z</code>.</li>
+</ul>
+<p>There are some convenience functions.</p>
+<ul>
+<li>Inspect the whole data set using <code>.</code>, e.g. <code>validator( nrow(.) &gt; 10)</code>.</li>
+<li>Reuse a variable using <code>:=</code>, e.g. <code>validator(m := mean(x), x &lt; 2*mean(x) )</code>.</li>
+<li>Apply the same rule to multiple groups with <code>var_group</code>, e.g. <code>validator(G:=var_group(x,y), G &gt; 0)</code>.</li>
+</ul>
 </div>
 <div id="confrontation-objects" class="section level3">
 <h3>Confrontation objects</h3>
@@ -333,14 +356,14 @@ v</code></pre></div>
 ##  label      :  
 ##  description:  
 ##  origin     : command-line 
-##  created    : 2018-03-28 16:41:20
+##  created    : 2018-06-22 16:07:51
 ##  meta       : foo&lt;nmr&gt;, bar&lt;chr&gt;</code></pre>
 <p>Or by extracting it to a <code>data.frame</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">meta</span>(v)</code></pre></div>
 <pre><code>##    name label description       origin             created foo bar
-## 1 ratio                   command-line 2018-03-28 16:41:20   1 baz
-## 2 htest                   command-line 2018-03-28 16:41:20  NA baz
-## 3 wtest                   command-line 2018-03-28 16:41:20  NA baz</code></pre>
+## 1 ratio                   command-line 2018-06-22 16:07:51   1 baz
+## 2 htest                   command-line 2018-06-22 16:07:51  NA baz
+## 3 wtest                   command-line 2018-06-22 16:07:51  NA baz</code></pre>
 <p>Some general information is obtained with <code>summary</code>,</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(v)</code></pre></div>
 <pre><code>##   block nvar rules linear
@@ -376,7 +399,7 @@ v</code></pre></div>
 ##  label      :  
 ##  description:  
 ##  origin     : command-line 
-##  created    : 2018-03-28 16:41:20
+##  created    : 2018-06-22 16:07:51
 ##  meta       : foo&lt;nmr&gt;, bar&lt;chr&gt;</code></pre>
 </div>
 <div id="validator-objects-and-confrontation-objects-are-reference-objects" class="section level3">
