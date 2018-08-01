@@ -28,3 +28,20 @@ values(x, ...)
 \description{
 Get values from object
 }
+\seealso{
+Other confrontation-methods: \code{\link{[,expressionset-method}},
+  \code{\link{as.data.frame,confrontation-method}},
+  \code{\link{confrontation-class}},
+  \code{\link{confront}}, \code{\link{errors}},
+  \code{\link{length,expressionset-method}}
+
+Other validation-methods: \code{\link{aggregate,validation-method}},
+  \code{\link{all,validation-method}},
+  \code{\link{any,validation-method}},
+  \code{\link{barplot,validation-method}},
+  \code{\link{check_that}}, \code{\link{compare}},
+  \code{\link{confront}},
+  \code{\link{plot,validation-method}},
+  \code{\link{sort,validation-method}},
+  \code{\link{summary}}, \code{\link{validation-class}}
+}

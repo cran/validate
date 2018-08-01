@@ -3,33 +3,68 @@
 \docType{methods}
 \name{label}
 \alias{label}
+\alias{label<-}
 \alias{label,rule-method}
+\alias{label<-,rule,character-method}
 \alias{label,expressionset-method}
-\title{label description of rules}
+\alias{label<-,expressionset,character-method}
+\title{Rule label}
 \usage{
 label(x, ...)
 
+label(x) <- value
+
 \S4method{label}{rule}(x, ...)
 
+\S4method{label}{rule,character}(x) <- value
+
 \S4method{label}{expressionset}(x, ...)
+
+\S4method{label}{expressionset,character}(x) <- value
 }
 \arguments{
 \item{x}{and R object}
 
 \item{...}{Arguments to be passed to other methods}
+
+\item{value}{Value to set}
 }
 \value{
 A \code{character} vector.
 }
 \description{
-label description of rules
+A short (typically two or three word) description of a rule.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{expressionset}: label description of every rule in \code{x}
-}}
-
 \examples{
+
+# retrieve properties
+v <- validator(turnover > 0, staff.costs>0)
+
+# number of rules in v:
+length(v)
+
+# per-rule
+created(v)
+origin(v)
+names(v)
+
+# set properties
+names(v)[1] <- "p1"
+
+label(v)[1] <- "turnover positive"
+description(v)[1] <- "
+According to the official definition,
+only positive values can be considered
+valid turnovers.
+"
+
+# short description is also printed:
+v
+
+# print all info for first rule
+v[[1]]
+
+
 
 # retrieve properties
 v <- validator(turnover > 0, staff.costs>0)
@@ -61,8 +96,12 @@ v[[1]]
 
 }
 \seealso{
-\itemize{
-\item{\code{\link{names,expressionset-method}}, \code{\link{length,expressionset-method}}}
-\item{\code{\link{description}}, \code{\link{created}}, \code{\link{origin}}, \code{\link{variables}}}
-}
+Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
+  \code{\link{as.data.frame}}, \code{\link{created}},
+  \code{\link{description}}, \code{\link{meta}},
+  \code{\link{names<-,rule,character-method}},
+  \code{\link{origin}},
+  \code{\link{plot,validator-method}},
+  \code{\link{summary}}, \code{\link{variables}},
+  \code{\link{voptions}}
 }

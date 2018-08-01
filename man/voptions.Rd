@@ -35,7 +35,17 @@ When requesting option settings: a \code{list}. When setting options,
   the whole options list is returned silently.
 }
 \description{
-Set or get options globally or per object.
+There are three ways to specify options for this package.
+\itemize{
+\item{Globally. Setting \code{voptions(option1=value1,option2=value2,...)}
+  sets global options.}
+\item{Per object. Setting \code{voptions(x=<object>, option1=value1,...)},
+  causes all relevant functions that use that object (e.g. 
+  \code{\link{confront}}) to use those local settings.}
+\item{At execution time. Relevant functions (e.g. \code{\link{confront}}) take
+  optional arguments allowing one
+   to define options to be used during the current function call}
+ }
 }
 \section{Options for the validate package}{
 
@@ -54,21 +64,6 @@ Currently the following options are supported.
 }
 }
 
-\section{Details}{
-
-There are three ways in which options can be specified.
-\itemize{
-\item{Globally. Setting \code{voptions(option1=value1,option2=value2,...)} sets global options.
-\item{Per object. Setting \code{voptions(where=<object>, option1=value1,...)}, causes all relevant functions
-that use that object (e.g. \code{\link{confront}}) to use those local settings.}
-\item{At execution time. Relevant functions (e.g. \code{\link{confront}}) take optional arguments allowing one
-to define options to be used during the current function call}
-}}
-
-To set options in a file, use \code{voptions(option1=value1,option2=value2,...)} without the \code{where}
-argument. This will invoke a local setting in the object created when the file is parsed.
-}
-
 \examples{
 # the default allowed validation symbols.
 voptions('validator_symbols')
@@ -80,4 +75,23 @@ voptions(v,raise='all')
 voptions(v,'raise')
 # check that global options have not changed:
 voptions('raise')
+}
+\seealso{
+Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
+  \code{\link{as.data.frame}}, \code{\link{created}},
+  \code{\link{description}}, \code{\link{label}},
+  \code{\link{meta}},
+  \code{\link{names<-,rule,character-method}},
+  \code{\link{origin}},
+  \code{\link{plot,validator-method}},
+  \code{\link{summary}}, \code{\link{variables}}
+
+Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
+  \code{\link{as.data.frame}}, \code{\link{created}},
+  \code{\link{description}}, \code{\link{label}},
+  \code{\link{meta}},
+  \code{\link{names<-,rule,character-method}},
+  \code{\link{origin}},
+  \code{\link{plot,validator-method}},
+  \code{\link{summary}}, \code{\link{variables}}
 }

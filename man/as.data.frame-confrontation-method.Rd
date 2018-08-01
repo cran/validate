@@ -3,7 +3,7 @@
 \docType{methods}
 \name{as.data.frame,confrontation-method}
 \alias{as.data.frame,confrontation-method}
-\title{Confrontation object to data frame}
+\title{Coerce a confrontation object to data frame}
 \usage{
 \S4method{as.data.frame}{confrontation}(x, row.names = NULL,
   optional = FALSE, ...)
@@ -20,14 +20,17 @@
 \value{
 A \code{data.frame} with columns
 \itemize{
-  \item{\code{key} Where relevant, and only if \code{key} was specified in the call to \code{\link{confront}}}
+  \item{\code{key} Where relevant, and only if \code{key} was specified 
+   in the call to \code{\link{confront}}}
   \item{\code{name} Name of the rule}
   \item{\code{value} Value after evaluation}
   \item{\code{expression} evaluated expression}
 }
 }
 \description{
-Confrontation object to data frame
+Results of confronting data with validation rules or indicators
+are created by a \code{\link{confront}}ation. The result is an
+object (inheriting from) \code{confrontation}.
 }
 \examples{
 cf <- check_that(women, height > 0, sd(weight) > 0)
@@ -38,4 +41,11 @@ women$id <- letters[1:15]
 i <- indicator(mw = mean(weight), ratio = weight/height)
 as.data.frame(confront(women, i, key="id"))
 
+}
+\seealso{
+Other confrontation-methods: \code{\link{[,expressionset-method}},
+  \code{\link{confrontation-class}},
+  \code{\link{confront}}, \code{\link{errors}},
+  \code{\link{length,expressionset-method}},
+  \code{\link{values}}
 }

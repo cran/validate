@@ -31,7 +31,10 @@ errors(cf)
 
 }
 \seealso{
-\itemize{
- \item{\code{\link{confront}}}
-}
+Other confrontation-methods: \code{\link{[,expressionset-method}},
+  \code{\link{as.data.frame,confrontation-method}},
+  \code{\link{confrontation-class}},
+  \code{\link{confront}},
+  \code{\link{length,expressionset-method}},
+  \code{\link{values}}
 }

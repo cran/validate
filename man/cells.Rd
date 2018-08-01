@@ -7,21 +7,38 @@
 cells(..., .list = NULL, compare = c("to_first", "sequential"))
 }
 \arguments{
-\item{...}{A (named) sequence of R objects carrying data (\emph{e.g.} \code{data.frame}s)}
+\item{...}{For \code{cells}: data frames, comma separated. Names will become
+column names in the output. For \code{plot} or \code{barplot}: graphical parameters
+(see \code{\link[graphics]{par}}).}
 
-\item{.list}{A list of R objects carrying data; will be concatenated with objects in \code{...}}
+\item{.list}{A \code{list} of data frames; will be concatenated with 
+objects in \code{...}}
 
 \item{compare}{How to compare the datasets.}
 }
 \value{
 An object of class \code{cellComparison}, which is really an array 
-  with a few attributes. It counts the total number of cells, the number of 
+  with a few extra attributes. It counts the total number of cells, the number of 
   missings, the number of altered values and changes therein as compared to 
   the reference defined in \code{how}.
 }
 \description{
 Cell counts and differences for a series of datasets
 }
+\section{Comparing datasets cell by cell}{
+
+
+When comparing the contents of two data sets, the total number of cells
+in the current data set can be partitioned as in the following figure.
+
+\if{html}{\figure{cellsplit.png}{options: width=80\% alt="rulewise splitting"}}
+\if{latex}{\figure{cellsplit.pdf}{options: width=13cm}}
+
+This function computes the partition for two or more
+datasets, comparing the current set to the first (default) or to the 
+previous (by setting \code{compare='sequential'}).
+}
+
 \section{Details}{
 
 This function assumes that the datasets have the same dimensions and that both
@@ -42,16 +59,33 @@ step1$turnover[is.na(step1$turnover)] <- mean(step1$turnover,na.rm=TRUE)
 step2 <- step1
 step2$other.rev <- abs(step2$other.rev)
   
-# create an overview of differences compared to raw data
-cells(raw = step0, imputed = step1, flipped = step2)
 
 # create an overview of differences, comparing to the previous step
 cells(raw = step0, imputed = step1, flipped = step2, compare="sequential")
 
+# create an overview of differences compared to raw data
+out <- cells(raw = step0, imputed = step1, flipped = step2)
+out
+
+# Graphical overview of the changes
+plot(out)
+barplot(out)
+
+# transform data to data.frame (easy for use with ggplot)
+as.data.frame(out)
+
+
+}
+\references{
+The figure is reproduced from MPJ van der Loo and E. De Jonge (2018)
+\emph{Statistical Data Cleaning with applications in R} (John Wiley & Sons).
 }
 \seealso{
-\itemize{
- \item{\code{\link{compare}}} 
- \item{\code{\link{match_cells}}}
-}
+Other comparing: \code{\link{as.data.frame,cellComparison-method}},
+  \code{\link{as.data.frame,validatorComparison-method}},
+  \code{\link{barplot,cellComparison-method}},
+  \code{\link{barplot,validatorComparison-method}},
+  \code{\link{compare}}, \code{\link{match_cells}},
+  \code{\link{plot,cellComparison-method}},
+  \code{\link{plot,validatorComparison-method}}
 }

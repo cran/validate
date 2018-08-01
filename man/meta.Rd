@@ -36,8 +36,6 @@ meta(x, name) <- value
 \description{
 Rule metadata are key-value pairs where the value is a simple (atomic)
 string or number.
-
-Set metadata
 }
 \examples{
 
@@ -55,4 +53,14 @@ meta(v)
 # retrieve metadata as list
 meta(v,simplify=TRUE)
 
+}
+\seealso{
+Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
+  \code{\link{as.data.frame}}, \code{\link{created}},
+  \code{\link{description}}, \code{\link{label}},
+  \code{\link{names<-,rule,character-method}},
+  \code{\link{origin}},
+  \code{\link{plot,validator-method}},
+  \code{\link{summary}}, \code{\link{variables}},
+  \code{\link{voptions}}
 }

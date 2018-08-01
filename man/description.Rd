@@ -3,33 +3,68 @@
 \docType{methods}
 \name{description}
 \alias{description}
+\alias{description<-}
 \alias{description,rule-method}
+\alias{description<-,rule,character-method}
 \alias{description,expressionset-method}
-\title{description description}
+\alias{description<-,expressionset,character-method}
+\title{Rule description}
 \usage{
 description(x, ...)
 
+description(x) <- value
+
 \S4method{description}{rule}(x, ...)
 
+\S4method{description}{rule,character}(x) <- value
+
 \S4method{description}{expressionset}(x, ...)
+
+\S4method{description}{expressionset,character}(x) <- value
 }
 \arguments{
 \item{x}{and R object}
 
 \item{...}{Arguments to be passed to other methods}
+
+\item{value}{Value to set}
 }
 \value{
 A \code{character} vector.
 }
 \description{
-description description
+A longer (typically one-paragraph) description of a rule.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{expressionset}: description description of every rule in \code{x}
-}}
-
 \examples{
+
+# retrieve properties
+v <- validator(turnover > 0, staff.costs>0)
+
+# number of rules in v:
+length(v)
+
+# per-rule
+created(v)
+origin(v)
+names(v)
+
+# set properties
+names(v)[1] <- "p1"
+
+label(v)[1] <- "turnover positive"
+description(v)[1] <- "
+According to the official definition,
+only positive values can be considered
+valid turnovers.
+"
+
+# short description is also printed:
+v
+
+# print all info for first rule
+v[[1]]
+
+
 
 # retrieve properties
 v <- validator(turnover > 0, staff.costs>0)
@@ -61,8 +96,12 @@ v[[1]]
 
 }
 \seealso{
-\itemize{
-\item{\code{\link{names,expressionset-method}}, \code{\link{length,expressionset-method}}}
-\item{\code{\link{label}}, \code{\link{created}}, \code{\link{origin}}, \code{\link{variables}}}
-}
+Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
+  \code{\link{as.data.frame}}, \code{\link{created}},
+  \code{\link{label}}, \code{\link{meta}},
+  \code{\link{names<-,rule,character-method}},
+  \code{\link{origin}},
+  \code{\link{plot,validator-method}},
+  \code{\link{summary}}, \code{\link{variables}},
+  \code{\link{voptions}}
 }

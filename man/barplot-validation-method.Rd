@@ -7,8 +7,8 @@
 \usage{
 \S4method{barplot}{validation}(height, ..., order_by = c("fails", "passes",
   "nNA"), stack_by = c("fails", "passes", "nNA"), topn = Inf,
-  add_legend = TRUE, add_exprs = TRUE, colors = c(fails = "#FC8D59",
-  passes = "#91CF60", nNA = "#FFFFBF"))
+  add_legend = TRUE, add_exprs = TRUE, colors = c(fails = "#FB9A99",
+  passes = "#B2DF8A", nNA = "#FDBF6F"))
 }
 \arguments{
 \item{height}{an R object defining height of bars (here, a \code{validation} object)}
@@ -51,10 +51,13 @@ barplot(cf)
 
 }
 \seealso{
-\itemize{
- \item{\code{\link{summary,validation-method}}}
- \item{\code{\link{aggregate,validation-method}}}
- \item{\code{\link{sort,validation-method}}}
- \item{\code{\link{validation}}}
-}
+Other validation-methods: \code{\link{aggregate,validation-method}},
+  \code{\link{all,validation-method}},
+  \code{\link{any,validation-method}},
+  \code{\link{check_that}}, \code{\link{compare}},
+  \code{\link{confront}},
+  \code{\link{plot,validation-method}},
+  \code{\link{sort,validation-method}},
+  \code{\link{summary}}, \code{\link{validation-class}},
+  \code{\link{values}}
 }

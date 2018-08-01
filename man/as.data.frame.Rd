@@ -18,3 +18,14 @@ as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 \description{
 Coerce to \code{data.frame}
 }
+\seealso{
+Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
+  \code{\link{created}}, \code{\link{description}},
+  \code{\link{label}}, \code{\link{meta}},
+  \code{\link{names<-,rule,character-method}},
+  \code{\link{origin}},
+  \code{\link{plot,validator-method}},
+  \code{\link{summary}}, \code{\link{variables}},
+  \code{\link{voptions}}
+}
+\keyword{internal}

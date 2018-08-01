@@ -12,13 +12,21 @@ x \%vin\% table
 \item{table}{vector or \code{NULL}: the values to be matched against.}
 }
 \description{
-A membership operator like \code{\link[base:match]{\%in\%}} that handles
+A set membership operator like \code{\link[base:match]{\%in\%}} that handles
 \code{NA} more consistently with R's other logical comparison operators.
 }
-\note{
+\details{
 R's basic comparison operators (almost) always return \code{NA} when one 
 of the operands is \code{NA}. The \code{\%in\%} operator is an exception.
-Compare for example \code{NA \%in\% NA} with \code{NA == NA}.
+Compare for example \code{NA \%in\% NA} with \code{NA == NA}: the first
+results in \code{TRUE}, while the latter results in \code{NA} as expected.
+The \code{\%vin\%} operator acts consistent with operators such as \code{==}.
+Specifically, \code{NA} results in the following cases.
+\itemize{
+ \item{For each position where \code{x} is \code{NA}, the result is \code{NA}.}
+ \item{When \code{table} contains an \code{NA}, each non-matched value in 
+ \code{x} results in \code{NA}.}
+}
 }
 \examples{
 # we cannot be sure about the first element:

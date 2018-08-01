@@ -16,23 +16,14 @@ evaluating an \code{\link{validator}} in the context of data along with some
 metadata.
 }
 
-\section{Exported S4 methods for \code{validation}}{
-
-\itemize{
- \item{Methods exported for objects of class \code{\link{confrontation}}}
- \item{\code{\link{summary,validation-method}}}
- \item{\code{\link{values,validation-method}}}
- \item{\code{\link{barplot,validation-method}}}
- \item{\code{\link{aggregate,validation-method}}}
- \item{\code{\link{sort,validation-method}}}
+\seealso{
+Other validation-methods: \code{\link{aggregate,validation-method}},
+  \code{\link{all,validation-method}},
+  \code{\link{any,validation-method}},
+  \code{\link{barplot,validation-method}},
+  \code{\link{check_that}}, \code{\link{compare}},
+  \code{\link{confront}},
+  \code{\link{plot,validation-method}},
+  \code{\link{sort,validation-method}},
+  \code{\link{summary}}, \code{\link{values}}
 }
-}
-
-\section{See also}{
-
-\itemize{
-\item{\code{\link{confront}}}
-\item{\code{\link{validator}}}
-}
-}
-

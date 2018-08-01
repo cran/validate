@@ -23,3 +23,13 @@ Expressions are deparsed and combined in a \code{data.frame} with (some
 of) their metadata. Observe that some information may be lost (e.g. options
 local to the object).
 }
+\seealso{
+Other expressionset-methods: \code{\link{as.data.frame}},
+  \code{\link{created}}, \code{\link{description}},
+  \code{\link{label}}, \code{\link{meta}},
+  \code{\link{names<-,rule,character-method}},
+  \code{\link{origin}},
+  \code{\link{plot,validator-method}},
+  \code{\link{summary}}, \code{\link{variables}},
+  \code{\link{voptions}}
+}

@@ -31,22 +31,25 @@ Create a summary
 \section{Validator and indicator objects}{
 
 For these objects, the ruleset is split into subsets (blocks) that are disjunct in the
-sense that they do not share any variables. For each bloch the number of variables, the number 
-of rules and the number of rules that are linear are reported.
+sense that they do not share any variables. For each block the number of variables, 
+the number of rules and the number of rules that are linear are reported.
 }
 
 \section{Indication}{
 
-Some basic information per evaluated indicator is reported: the number of items to which the 
-indicator was applied, the output \code{class}, some statistics (min, max, mean , number of NA)
-and wether an exception occurred (warnings or errors). The evaluated expression is reported as well.
+Some basic information per evaluated indicator is reported: the number 
+of items to which the indicator was applied, the output \code{class}, 
+some statistics (min, max, mean , number of NA)
+and wether an exception occurred (warnings or errors). The evaluated 
+expression is reported as well.
 }
 
 \section{Validation}{
 
-Some basic information per evaluated validation rule is reported: the number of items to which the 
-rule was applied, the output \code{class}, some statistics (passes, fails, number of NA)
-and wether an exception occurred (warnings or errors). The evaluated expression is reported as well.
+Some basic information per evaluated validation rule is reported: the number of
+items to which the rule was applied, the output \code{class}, some statistics
+(passes, fails, number of NA) and wether an exception occurred (warnings or
+errors). The evaluated expression is reported as well.
 }
 
 \examples{
@@ -58,4 +61,29 @@ cf <- confront(retailers,v)
 summary(cf)
 
 
+}
+\seealso{
+\code{\link{plot,validator-method}}
+
+Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
+  \code{\link{as.data.frame}}, \code{\link{created}},
+  \code{\link{description}}, \code{\link{label}},
+  \code{\link{meta}},
+  \code{\link{names<-,rule,character-method}},
+  \code{\link{origin}},
+  \code{\link{plot,validator-method}},
+  \code{\link{variables}}, \code{\link{voptions}}
+
+Other indication-methods: \code{\link{confront}},
+  \code{\link{indication-class}}
+
+Other validation-methods: \code{\link{aggregate,validation-method}},
+  \code{\link{all,validation-method}},
+  \code{\link{any,validation-method}},
+  \code{\link{barplot,validation-method}},
+  \code{\link{check_that}}, \code{\link{compare}},
+  \code{\link{confront}},
+  \code{\link{plot,validation-method}},
+  \code{\link{sort,validation-method}},
+  \code{\link{validation-class}}, \code{\link{values}}
 }

@@ -37,4 +37,11 @@ Select a subset
 The \code{options} attribute will be cloned
 }
 
+\seealso{
+Other confrontation-methods: \code{\link{as.data.frame,confrontation-method}},
+  \code{\link{confrontation-class}},
+  \code{\link{confront}}, \code{\link{errors}},
+  \code{\link{length,expressionset-method}},
+  \code{\link{values}}
+}
 \keyword{internal}

@@ -24,34 +24,11 @@ this object directly, as we may change or remove them without notice. Use
 the exported methods listed below in stead.
 }
 
-\section{Exported S4 methods for \code{confrontation}}{
-
-
-\itemize{
- \item{\code{show}}
- \item{\code{\link{values}}}
- \item{\code{\link{warnings,confrontation-method}}}
- \item{\code{\link{errors}}}
- \item{\code{\link{aggregate}}}
- \item{\code{\link{sort}}}
- \item{\code{\link{length,confrontation-method}}}
- \item{\code{\link{[,confrontation-method}}}
+\seealso{
+Other confrontation-methods: \code{\link{[,expressionset-method}},
+  \code{\link{as.data.frame,confrontation-method}},
+  \code{\link{confront}}, \code{\link{errors}},
+  \code{\link{length,expressionset-method}},
+  \code{\link{values}}
 }
-}
-
-\section{Private S4 methods for \code{confrontation}}{
-
-
-Currently N/A
-}
-
-\section{See also}{
-
-\itemize{
- \item{\code{\link{validation}}}
- \item{\code{\link{indication}}}
- \item{\code{\link{expressionset}}}
-}
-}
-
 \keyword{internal}

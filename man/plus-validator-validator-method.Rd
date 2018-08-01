@@ -24,5 +24,8 @@ The \code{names} of the resulting object are made unique using \code{\link[base]
 
 \examples{
 validator(x>0) + validator(x<=1)
-
+}
+\seealso{
+Other validator-methods: \code{\link{plot,validator-method}},
+  \code{\link{validator}}
 }

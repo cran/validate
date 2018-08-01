@@ -26,6 +26,28 @@ test_that("validation object contents",{
   expect_equal(length(cf[1]),1)
 })
 
+
+test_that("validation logical quantifiers",{
+  expect_false(all(confront(women, validator(height < 60, weight>0))))
+  expect_true(all(confront(women, validator(height > 0, weight>0))))
+  w <- women
+  w[1,1] <- NA
+  # there is at least one FALSE aready, so the conlcusion is that not
+  # all are TRUE.
+  expect_false(all(confront(w, validator(height < 60, weight>0))))
+  expect_true(is.na(
+    all(confront(w, validator(height>height[1], weight>0)))
+  ))
+
+})
+
+test_that("validation objects can be plotted",{
+   v <- validator(x>0,y>0,if(x >0 ) y> 0)
+   Z <- plot(v)
+   expect_equal(ncol(Z), length(v))
+   expect_equal(nrow(Z), length(variables(v)))
+})
+
 test_that("indication object contents",{
   ind <- indicator(mean(height),sd(weight), sum(foo))
   cf <- confront(women, ind)
@@ -109,6 +131,7 @@ test_that("confrontations with transient variables",{
 test_that("check_that works with simple example",{
   dat <- data.frame(x=1:2, y=3:2)
   cf <- check_that(dat, x >= y)
+  expect_equal(length(cf),1)
 })
 
 test_that("Confrontations with slack on linear equalities",{

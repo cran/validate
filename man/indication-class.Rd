@@ -32,4 +32,8 @@ an \code{\link{indicator}} in the context of data along with some metadata.
 }
 }
 
+\seealso{
+Other indication-methods: \code{\link{confront}},
+  \code{\link{summary}}
+}
 \keyword{internal}

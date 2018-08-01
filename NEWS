@@ -1,3 +1,19 @@
+version 0.2.6
+- New methods 'all' and 'any' for 'validation' objects
+- New 'plot' method for 'validator' objects.
+- New 'plot' method for 'validation' objects.
+- New 'as.data.frame' methods for 'validatorComparison' and 'cellComparison' 
+  objects.
+- New 'plot' method for 'validatorComparison' and 'cellComparison' objects.
+- New 'barplot' method for 'validatorComparison' and 'cellComparison' objects.
+- Improved 'plot'/'barplot' method for objects of class 'validator'.
+- Bugfixes in 'cells' and 'compare'.
+- The row order of output in 'cells' has changed to be more consistent with 
+  row order in the output of 'compare'.
+- The row 'new_missing' is renamed 'removed' in 'cellComparison' objects.
+- Improved cross-references in reference manual
+
+
 version 0.2.5
 - Documentation updates (Thanks to Matthias Gomolka)
 - Removed deprecated functions 'number_missing', 'fraction_missing', 

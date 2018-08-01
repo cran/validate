@@ -8,7 +8,7 @@
 \alias{variables,data.frame-method}
 \alias{variables,environment-method}
 \alias{variables,expressionset-method}
-\title{Extract variable names}
+\title{Get variable names}
 \usage{
 variables(x, ...)
 
@@ -38,7 +38,8 @@ variables(x, ...)
 \item{dummy}{Also retrieve transient variables set with the \code{:=} operator.}
 }
 \description{
-Extract variable names
+Generic function that extracts names of variables ocurring
+in R objects.
 }
 \section{Methods (by class)}{
 \itemize{
@@ -68,8 +69,21 @@ variables(v,matrix=TRUE,dummy=TRUE)
 
 }
 \seealso{
-\itemize{
-\item{\code{\link{names,expressionset-method}}, \code{\link{length,expressionset-method}}}
-\item{\code{\link{description}}, \code{\link{label}}, \code{\link{created}}, \code{\link{origin}}}
-}
+Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
+  \code{\link{as.data.frame}}, \code{\link{created}},
+  \code{\link{description}}, \code{\link{label}},
+  \code{\link{meta}},
+  \code{\link{names<-,rule,character-method}},
+  \code{\link{origin}},
+  \code{\link{plot,validator-method}},
+  \code{\link{summary}}, \code{\link{voptions}}
+
+Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
+  \code{\link{as.data.frame}}, \code{\link{created}},
+  \code{\link{description}}, \code{\link{label}},
+  \code{\link{meta}},
+  \code{\link{names<-,rule,character-method}},
+  \code{\link{origin}},
+  \code{\link{plot,validator-method}},
+  \code{\link{summary}}, \code{\link{voptions}}
 }

@@ -38,7 +38,8 @@ implies Q) is implemented as \code{if ( P ) Q}. The latter is interpreted as
 \section{Type checking}{
 
 
-Any function starting with \code{is.} (e.g. \code{is.numeric}) is a validating expression.
+Any function starting with \code{is.} (e.g. \code{is.numeric}) is a
+validating expression.
 }
 
 \section{Text search}{
@@ -67,18 +68,19 @@ dataset at hand.
 
 \section{Local, transient assignment}{
 
-The operator `\code{:=}' can be used to set up local variables (during, for example, validation) to save
-time (the rhs of an assignment is computed only once) or to make your validation code more maintainable. 
-Assignments work more or less like common R assignments: they are only valid for statements coming after 
-the assignment and they may be overwritten. The result of computing the rhs is not part of a 
-\code{\link{confront}}ation with data.
+The operator `\code{:=}' can be used to set up local variables (during, for
+example, validation) to save time (the rhs of an assignment is computed only
+once) or to make your validation code more maintainable.  Assignments work more
+or less like common R assignments: they are only valid for statements coming
+after the assignment and they may be overwritten. The result of computing the
+rhs is not part of a \code{\link{confront}}ation with data.
 }
 
 \section{Groups}{
 
 Often the same constraints/rules are valid for groups of variables. 
-\code{validate} allows for compact notation. Variable groups can be used in-statement
-or by defining them with the \code{:=} operator.
+\code{validate} allows for compact notation. Variable groups can be used
+in-statement or by defining them with the \code{:=} operator.
 
 \code{validator( var_group(a,b) > 0 )}
 

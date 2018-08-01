@@ -28,13 +28,16 @@
 #' The vignette on \href{../doc/rule_files}{rule files} will get you
 #' started with that.
 #'
-#'    
+#' @references
+#' An overview of this package, its underlying ideas and many examples
+#' can be found in MPJ van der Loo and E. de Jonge (2018) \emph{Statistical
+#' data cleaning with applications in R} John Wiley & Sons.
 #' @docType package
 #' @name validate
 #' @useDynLib validate, .registration=TRUE
 #' @aliases package-validate validate
 #' @import methods
-#' @importFrom graphics legend par text
+#' @importFrom graphics legend par text axis abline lines strwidth
 #' @importFrom utils getFromNamespace
 #' @import settings
 #' @import yaml

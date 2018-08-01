@@ -26,10 +26,6 @@ Define validation rules for data
 
 Each validating expression should evaluate to a \code{logical}. Allowed syntax of
 the expression is described in \code{\link{syntax}}.
-
-
-A \emph{validating expression} is an expression whose evaluation results in \code{TRUE}, \code{FALSE}
-or \code{NA}.
 }
 
 \examples{
@@ -44,10 +40,6 @@ summary(cf)
 
 }
 \seealso{
-\itemize{
- \item{\code{\link{syntax}}} 
- \item{\code{\link{confront}}}, \code{\link{check_that}}
- \item{\code{\link{summary,expressionset-method}}}
- \item{\code{\link{validator-class}}}
-}
+Other validator-methods: \code{\link{+,validator,validator-method}},
+  \code{\link{plot,validator-method}}
 }

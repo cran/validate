@@ -352,7 +352,7 @@ extract_names <- function(L,prefix="V"){
   V <- variables(x,as="matrix")
   # all connections 
   A <- V %*% t(V) > 0
-  L <- lapply(1:nrow(A),function(i) which(A[i,]))
+  L <- lapply(seq_len(nrow(A)),function(i) which(A[i,]))
   
   blocks <- new.env()
   b <- 0
@@ -409,7 +409,7 @@ setGeneric("as_yaml", function(x,...) standardGeneric("as_yaml"))
 #' }
 #' @param dummy Also retrieve transient variables set with the \code{:=} operator.
 #'
-#'
+#' @family expressionset-methods
 #' @example ../examples/variables.R
 setMethod("variables", "expressionset",  function(x, as=c('vector','matrix','list'), dummy=FALSE, ...){ 
   as <- match.arg(as)
@@ -429,6 +429,7 @@ setMethod("variables", "expressionset",  function(x, as=c('vector','matrix','lis
 
 
 #' @rdname voptions
+#' @family expressionset-methods
 setMethod('voptions','expressionset',function(x=NULL,...){
   if (settings::is_setting(...)){
     x$._options <- clone_and_merge(x$._options,...)
@@ -438,22 +439,27 @@ setMethod('voptions','expressionset',function(x=NULL,...){
 })
 
 #' @rdname voptions
+#' @family expressionset-methods
 setMethod('reset','expressionset',function(x=NULL){
   settings::reset(x$._options)
 })
 
-#' @describeIn origin Origin of every rule in \code{x}
+#' @rdname origin
+#' @family expressionset-methods
 setMethod("origin", "expressionset", function(x,...) sapply(x$rules,origin))
 
 
-#' @describeIn  label label description of every rule in \code{x}
+#' @rdname label
+#' @family expressionset-methods
 setMethod("label","expressionset",function(x,...) unlist(sapply(x$rules, label)))
 
-#' @describeIn description description description of every rule in \code{x}
+#' @rdname description
+#' @family expressionset-methods
 setMethod("description", "expressionset", function(x,...) unlist(sapply(x$rules, description)))
 
 #' @rdname meta
 #' @param simplify Gather all metadata into a dataframe?
+#' @family expressionset-methods
 setMethod("meta","expressionset", function(x, simplify=TRUE,...){
   L <- lapply(x$rules, function(r){
     list(name=r@name
@@ -485,7 +491,8 @@ setMethod("meta","expressionset", function(x, simplify=TRUE,...){
 })
 
 
-#' @describeIn created Creation time of every rule in \code{x}
+#' @rdname created
+#' @family expressionset-methods
 setMethod("created", "expressionset", function(x,...){ 
   # obj. of class POSIXct; sapply strips the POSIXct class attribute
   cr <- rep(Sys.time(),length(x))
@@ -497,11 +504,13 @@ setMethod("created", "expressionset", function(x,...){
 
 
 
-#' Extract names
+#' Extract or set names
 #' 
 #' @param x An R object
 #'
-#' @return A \code{character} with names of rules occurring in \code{x}
+#' @return A \code{character} vector
+#' @rdname names
+#' @family expressionset-methods
 #' @export
 #' @example ../examples/properties.R
 setMethod("names","expressionset",function(x){
@@ -537,11 +546,12 @@ setReplaceMethod("meta",c("expressionset","character"),function(x,name,value){
 
 
 
-#' Set names
+#' 
 #'
-#' Names are recycled and made unique with \code{\link{make.names}}
+#' When setting names, \code{value}s are recycled and made unique with
+#' \code{\link{make.names}}
 #'
-#' @param x Object
+#' @rdname names
 #' @param value Value to set
 #' @example ../examples/properties.R
 #' @export 
@@ -553,12 +563,7 @@ setReplaceMethod("names",c("expressionset","character"),function(x,value){
   x
 })
 
-#' Set origins
-#'
-#' @param x Object
-#' @param value Value to set
-#' @example ../examples/properties.R
-#' @export 
+#' @rdname origin
 setReplaceMethod("origin",c("expressionset","character"), function(x,value){
   value <- recycle(value, x)
   for ( i in seq_len(length(x))){
@@ -567,11 +572,7 @@ setReplaceMethod("origin",c("expressionset","character"), function(x,value){
   x
 })
 
-#' Set labels
-#'
-#' @param x Object
-#' @param value Value to set
-#' @example ../examples/properties.R
+#' @rdname label
 #' @export 
 setReplaceMethod("label",c("expressionset","character"),function(x,value){
   value <- recycle(value,x)
@@ -581,12 +582,7 @@ setReplaceMethod("label",c("expressionset","character"),function(x,value){
   x
 })
 
-#' Set descriptions
-#' 
-#' 
-#' @param x Object
-#' @param value Value to set
-#' @example ../examples/properties.R
+#' @rdname description
 #' @export 
 setReplaceMethod("description",c("expressionset","character"),function(x,value){
   value <- recycle(value,x)
@@ -596,12 +592,8 @@ setReplaceMethod("description",c("expressionset","character"),function(x,value){
   x
 })
 
-#' Set timestamps
-#'
-#' @param x Object
-#' @param value Value to set
-#' @example ../examples/properties.R
-#' @export 
+#' @rdname created
+#' @export
 setReplaceMethod("created",c("expressionset","POSIXct"),function(x,value){
   value <- recycle(value, x)
   for ( i in seq_len(length(x))){
@@ -624,12 +616,14 @@ setMethod("linear","expressionset", function(x,...){
 
 #' @section Validator and indicator objects:
 #' For these objects, the ruleset is split into subsets (blocks) that are disjunct in the
-#' sense that they do not share any variables. For each bloch the number of variables, the number 
-#' of rules and the number of rules that are linear are reported.
+#' sense that they do not share any variables. For each block the number of variables, 
+#' the number of rules and the number of rules that are linear are reported.
 #' 
 #' @return A \code{data.frame} with the information mentioned below is returned.
 #' 
 #' @rdname validate-summary
+#' @seealso \code{\link{plot,validator-method}}
+#' @family expressionset-methods
 setMethod('summary',signature('expressionset'),function(object,...){
   b <- object$blocks()
   data.frame(
@@ -766,6 +760,8 @@ as.list.expressionset <- function(x, expr_as_text=TRUE, ...){
 #' @param row.names ignored
 #'
 #' @export
+#' @family expressionset-methods
+#' @keywords internal
 setGeneric("as.data.frame")
 
 
@@ -783,6 +779,7 @@ setGeneric("as.data.frame")
 #' @return A \code{data.frame} with elements \code{rule}, \code{name},
 #'  \code{label}, \code{origin}, \code{description}, and \code{created}.
 #' @export
+#' @family expressionset-methods
 setMethod("as.data.frame","expressionset", function(x, expand_assignments=TRUE, ...){
   rules <- sapply(x$exprs(expand_assignments=expand_assignments,...), call2text)
   cbind(meta(x,simplify=TRUE),rule=rules)
