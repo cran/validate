@@ -20,8 +20,8 @@ variables(x, ...)
 
 \S4method{variables}{environment}(x, ...)
 
-\S4method{variables}{expressionset}(x, as = c("vector", "matrix", "list"),
-  dummy = FALSE, ...)
+\S4method{variables}{expressionset}(x, as = c("vector", "matrix",
+  "list"), dummy = FALSE, ...)
 }
 \arguments{
 \item{x}{An R object}
@@ -87,3 +87,4 @@ Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
   \code{\link{plot,validator-method}},
   \code{\link{summary}}, \code{\link{voptions}}
 }
+\concept{expressionset-methods}

@@ -72,8 +72,6 @@ occurring variables are numeric in \code{dat}.}
 Functions exported silently to allow for cross-package inheritance 
 of the \code{\link{expressionset}} object. These functions are never
 needed in scripts or statistical production code.
-
-Service for filling an expressionset from commandline
 }
 \section{Details}{
 

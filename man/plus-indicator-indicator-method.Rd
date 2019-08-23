@@ -20,3 +20,4 @@ are ignored.
 \examples{
 indicator(mean(x)) + indicator(x/median(x))
 }
+\concept{indicator-methods}

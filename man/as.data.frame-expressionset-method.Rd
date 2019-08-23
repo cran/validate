@@ -5,7 +5,8 @@
 \alias{as.data.frame,expressionset-method}
 \title{Translate an expressionset to data.frame}
 \usage{
-\S4method{as.data.frame}{expressionset}(x, expand_assignments = TRUE, ...)
+\S4method{as.data.frame}{expressionset}(x, expand_assignments = TRUE,
+  ...)
 }
 \arguments{
 \item{x}{Object to coerce}
@@ -33,3 +34,4 @@ Other expressionset-methods: \code{\link{as.data.frame}},
   \code{\link{summary}}, \code{\link{variables}},
   \code{\link{voptions}}
 }
+\concept{expressionset-methods}

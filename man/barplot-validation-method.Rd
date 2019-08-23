@@ -5,8 +5,8 @@
 \alias{barplot,validation-method}
 \title{Plot number of violations}
 \usage{
-\S4method{barplot}{validation}(height, ..., order_by = c("fails", "passes",
-  "nNA"), stack_by = c("fails", "passes", "nNA"), topn = Inf,
+\S4method{barplot}{validation}(height, ..., order_by = c("fails",
+  "passes", "nNA"), stack_by = c("fails", "passes", "nNA"), topn = Inf,
   add_legend = TRUE, add_exprs = TRUE, colors = c(fails = "#FB9A99",
   passes = "#B2DF8A", nNA = "#FDBF6F"))
 }
@@ -55,9 +55,10 @@ Other validation-methods: \code{\link{aggregate,validation-method}},
   \code{\link{all,validation-method}},
   \code{\link{any,validation-method}},
   \code{\link{check_that}}, \code{\link{compare}},
-  \code{\link{confront}},
+  \code{\link{confront}}, \code{\link{event}},
   \code{\link{plot,validation-method}},
   \code{\link{sort,validation-method}},
   \code{\link{summary}}, \code{\link{validation-class}},
   \code{\link{values}}
 }
+\concept{validation-methods}

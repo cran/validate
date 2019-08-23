@@ -29,3 +29,4 @@ validator(x>0) + validator(x<=1)
 Other validator-methods: \code{\link{plot,validator-method}},
   \code{\link{validator}}
 }
+\concept{validator-methods}

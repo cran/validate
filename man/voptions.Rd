@@ -95,3 +95,4 @@ Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
   \code{\link{plot,validator-method}},
   \code{\link{summary}}, \code{\link{variables}}
 }
+\concept{expressionset-methods}

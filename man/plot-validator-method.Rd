@@ -60,3 +60,5 @@ Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
   \code{\link{origin}}, \code{\link{summary}},
   \code{\link{variables}}, \code{\link{voptions}}
 }
+\concept{expressionset-methods}
+\concept{validator-methods}

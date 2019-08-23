@@ -72,3 +72,4 @@ Other comparing: \code{\link{as.data.frame,cellComparison-method}},
   \code{\link{plot,cellComparison-method}},
   \code{\link{plot,validatorComparison-method}}
 }
+\concept{comparing}

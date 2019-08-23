@@ -11,14 +11,17 @@ Logging object to use with the lumberjack package
 \section{Methods}{
 
 \describe{
-\item{\code{dump(file = "lbj_rules.csv", ...)}}{Dump logging info to csv file. 
+\item{\code{dump(file = NULL, ...)}}{Dump logging info to csv file. 
 All arguments in '...' except row.names are passed to 'write.csv'}
 
-\item{\code{initialize(rules, verbose = TRUE)}}{Create object. Optionally toggle verbosity.}
+\item{\code{initialize(rules, verbose = TRUE, label = "")}}{Create object. Optionally toggle verbosity.}
 
 \item{\code{log_data()}}{Return logged data as a data.frame}
+
+\item{\code{plot()}}{plot rule comparisons}
 }}
 
 \seealso{
 Other loggers: \code{\link{lbj_cells-class}}
 }
+\concept{loggers}

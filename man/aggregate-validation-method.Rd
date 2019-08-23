@@ -5,8 +5,8 @@
 \alias{aggregate,validation-method}
 \title{Aggregate validation results}
 \usage{
-\S4method{aggregate}{validation}(x, by = c("rule", "record"), drop = TRUE,
-  ...)
+\S4method{aggregate}{validation}(x, by = c("rule", "record"),
+  drop = TRUE, ...)
 }
 \arguments{
 \item{x}{An object of class \code{\link{validation}}}
@@ -60,9 +60,10 @@ Other validation-methods: \code{\link{all,validation-method}},
   \code{\link{any,validation-method}},
   \code{\link{barplot,validation-method}},
   \code{\link{check_that}}, \code{\link{compare}},
-  \code{\link{confront}},
+  \code{\link{confront}}, \code{\link{event}},
   \code{\link{plot,validation-method}},
   \code{\link{sort,validation-method}},
   \code{\link{summary}}, \code{\link{validation-class}},
   \code{\link{values}}
 }
+\concept{validation-methods}

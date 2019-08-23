@@ -5,8 +5,8 @@
 \alias{sort,validation-method}
 \title{Aggregate and sort the results of a validation.}
 \usage{
-\S4method{sort}{validation}(x, decreasing = FALSE, by = c("rule", "record"),
-  drop = TRUE, ...)
+\S4method{sort}{validation}(x, decreasing = FALSE, by = c("rule",
+  "record"), drop = TRUE, ...)
 }
 \arguments{
 \item{x}{An object of class \code{\link{validation}}}
@@ -64,8 +64,9 @@ Other validation-methods: \code{\link{aggregate,validation-method}},
   \code{\link{any,validation-method}},
   \code{\link{barplot,validation-method}},
   \code{\link{check_that}}, \code{\link{compare}},
-  \code{\link{confront}},
+  \code{\link{confront}}, \code{\link{event}},
   \code{\link{plot,validation-method}},
   \code{\link{summary}}, \code{\link{validation-class}},
   \code{\link{values}}
 }
+\concept{validation-methods}

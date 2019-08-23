@@ -5,8 +5,8 @@
 \alias{barplot,validatorComparison-method}
 \title{Barplot of validatorComparison object}
 \usage{
-\S4method{barplot}{validatorComparison}(height, las = 1, cex.axis = 0.8,
-  cex.legend = cex.axis, wrap = TRUE, ...)
+\S4method{barplot}{validatorComparison}(height, las = 1,
+  cex.axis = 0.8, cex.legend = cex.axis, wrap = TRUE, ...)
 }
 \arguments{
 \item{height}{object of class \code{validatorComparison}}
@@ -76,3 +76,4 @@ Other comparing: \code{\link{as.data.frame,cellComparison-method}},
   \code{\link{plot,cellComparison-method}},
   \code{\link{plot,validatorComparison-method}}
 }
+\concept{comparing}

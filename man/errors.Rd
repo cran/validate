@@ -34,7 +34,9 @@ errors(cf)
 Other confrontation-methods: \code{\link{[,expressionset-method}},
   \code{\link{as.data.frame,confrontation-method}},
   \code{\link{confrontation-class}},
-  \code{\link{confront}},
+  \code{\link{confront}}, \code{\link{event}},
+  \code{\link{keyset}},
   \code{\link{length,expressionset-method}},
   \code{\link{values}}
 }
+\concept{confrontation-methods}

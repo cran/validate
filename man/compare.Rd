@@ -9,8 +9,8 @@
 \usage{
 compare(x, ...)
 
-\S4method{compare}{validator}(x, ..., .list = list(), how = c("to_first",
-  "sequential"))
+\S4method{compare}{validator}(x, ..., .list = list(),
+  how = c("to_first", "sequential"))
 
 \S4method{compare}{indicator}(x, ..., .list = NULL)
 }
@@ -112,6 +112,7 @@ Other validation-methods: \code{\link{aggregate,validation-method}},
   \code{\link{any,validation-method}},
   \code{\link{barplot,validation-method}},
   \code{\link{check_that}}, \code{\link{confront}},
+  \code{\link{event}},
   \code{\link{plot,validation-method}},
   \code{\link{sort,validation-method}},
   \code{\link{summary}}, \code{\link{validation-class}},
@@ -125,3 +126,5 @@ Other comparing: \code{\link{as.data.frame,cellComparison-method}},
   \code{\link{plot,cellComparison-method}},
   \code{\link{plot,validatorComparison-method}}
 }
+\concept{comparing}
+\concept{validation-methods}

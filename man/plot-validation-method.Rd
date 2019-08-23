@@ -37,8 +37,9 @@ Other validation-methods: \code{\link{aggregate,validation-method}},
   \code{\link{any,validation-method}},
   \code{\link{barplot,validation-method}},
   \code{\link{check_that}}, \code{\link{compare}},
-  \code{\link{confront}},
+  \code{\link{confront}}, \code{\link{event}},
   \code{\link{sort,validation-method}},
   \code{\link{summary}}, \code{\link{validation-class}},
   \code{\link{values}}
 }
+\concept{validation-methods}

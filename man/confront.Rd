@@ -15,29 +15,27 @@
 \usage{
 confront(dat, x, ref, ...)
 
-\S4method{confront}{data.frame,indicator,ANY}(dat, x, key = NA_character_,
-  ...)
+\S4method{confront}{data.frame,indicator,ANY}(dat, x, key = NULL, ...)
 
 \S4method{confront}{data.frame,indicator,environment}(dat, x, ref,
-  key = NA_character_, ...)
+  key = NULL, ...)
 
 \S4method{confront}{data.frame,indicator,data.frame}(dat, x, ref,
-  key = NA_character_, ...)
+  key = NULL, ...)
 
-\S4method{confront}{data.frame,indicator,list}(dat, x, ref,
-  key = NA_character_, ...)
-
-\S4method{confront}{data.frame,validator,ANY}(dat, x, key = NA_character_,
+\S4method{confront}{data.frame,indicator,list}(dat, x, ref, key = NULL,
   ...)
 
+\S4method{confront}{data.frame,validator,ANY}(dat, x, key = NULL, ...)
+
 \S4method{confront}{data.frame,validator,environment}(dat, x, ref,
-  key = NA_character_, ...)
+  key = NULL, ...)
 
 \S4method{confront}{data.frame,validator,data.frame}(dat, x, ref,
-  key = NA_character_, ...)
+  key = NULL, ...)
 
-\S4method{confront}{data.frame,validator,list}(dat, x, ref,
-  key = NA_character_, ...)
+\S4method{confront}{data.frame,validator,list}(dat, x, ref, key = NULL,
+  ...)
 }
 \arguments{
 \item{dat}{An R object carrying data}
@@ -60,20 +58,12 @@ indicators. The \code{confront} function evaluates the expressions one by one
 on a dataset while recording some process meta data. All results are stored in
 a (subclass of a) \code{confrontation} object.
 }
-\section{Using reference data}{
+\section{Reference data}{
 
-When reference data sets are given, it is assumed that rows in the reference data
-are ordered corresponding to the rows of \code{dat}, except when a \code{key}
-is specified.  In that case, all reference datasets are matched against the
-rows of \code{dat} using \code{key} Nonmatching records are removed from
-datasets in \code{ref}. If there are records in \code{dat} that are not in
-\code{ref}, then datasets in \code{ref} are extended with records containing
-only \code{NA}.  In particular, this means that wen reference data is passed in
-an environment, those reference data sets may altered by the call to
-\code{confront}.
 
-Technically, reference data will be stored in an environment that is the
-parent of a (created) environment that contains the columns of \code{dat}.
+Reference data is typically a \code{list} with a items such as
+a code list, or a data frame of which rows match the rows of the
+data under scrutiny.
 }
 
 \examples{
@@ -126,6 +116,7 @@ values(confront(w, v, w[1:10,],key='id'))
 Other confrontation-methods: \code{\link{[,expressionset-method}},
   \code{\link{as.data.frame,confrontation-method}},
   \code{\link{confrontation-class}}, \code{\link{errors}},
+  \code{\link{event}}, \code{\link{keyset}},
   \code{\link{length,expressionset-method}},
   \code{\link{values}}
 
@@ -134,11 +125,15 @@ Other validation-methods: \code{\link{aggregate,validation-method}},
   \code{\link{any,validation-method}},
   \code{\link{barplot,validation-method}},
   \code{\link{check_that}}, \code{\link{compare}},
+  \code{\link{event}},
   \code{\link{plot,validation-method}},
   \code{\link{sort,validation-method}},
   \code{\link{summary}}, \code{\link{validation-class}},
   \code{\link{values}}
 
-Other indication-methods: \code{\link{indication-class}},
-  \code{\link{summary}}
+Other indication-methods: \code{\link{event}},
+  \code{\link{indication-class}}, \code{\link{summary}}
 }
+\concept{confrontation-methods}
+\concept{indication-methods}
+\concept{validation-methods}

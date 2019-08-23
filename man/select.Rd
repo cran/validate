@@ -41,7 +41,9 @@ The \code{options} attribute will be cloned
 Other confrontation-methods: \code{\link{as.data.frame,confrontation-method}},
   \code{\link{confrontation-class}},
   \code{\link{confront}}, \code{\link{errors}},
+  \code{\link{event}}, \code{\link{keyset}},
   \code{\link{length,expressionset-method}},
   \code{\link{values}}
 }
+\concept{confrontation-methods}
 \keyword{internal}

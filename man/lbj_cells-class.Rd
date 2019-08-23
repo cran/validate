@@ -14,10 +14,10 @@ Logging object to use with the lumberjack package
 \describe{
 \item{\code{add(meta, input, output)}}{Add logging info based on in- and output}
 
-\item{\code{dump(file = "cells.csv", ...)}}{Dump logging info to csv file. 
+\item{\code{dump(file = NULL, verbose = TRUE, ...)}}{Dump logging info to csv file. 
 All arguments in '...' except row.names are passed to 'write.csv'}
 
-\item{\code{initialize(..., verbose = TRUE)}}{Create object. Optionally toggle verbosity.}
+\item{\code{initialize(..., verbose = TRUE, label = "")}}{Create object. Optionally toggle verbosity.}
 
 \item{\code{log_data()}}{Return logged data as a data.frame}
 }}
@@ -52,3 +52,4 @@ of the dataset.
 \seealso{
 Other loggers: \code{\link{lbj_rules-class}}
 }
+\concept{loggers}

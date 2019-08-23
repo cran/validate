@@ -5,8 +5,8 @@
 \alias{plot,validatorComparison-method}
 \title{Line graph of validatorComparison object}
 \usage{
-\S4method{plot}{validatorComparison}(x, xlab = "", ylab = "", las = 2,
-  cex.axis = 0.8, cex.legend = 0.8, ...)
+\S4method{plot}{validatorComparison}(x, xlab = "", ylab = "",
+  las = 2, cex.axis = 0.8, cex.legend = 0.8, ...)
 }
 \arguments{
 \item{x}{Object of class \code{validatorComparison}.}
@@ -41,3 +41,4 @@ Other comparing: \code{\link{as.data.frame,cellComparison-method}},
   \code{\link{match_cells}},
   \code{\link{plot,cellComparison-method}}
 }
+\concept{comparing}

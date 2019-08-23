@@ -75,15 +75,18 @@ Other expressionset-methods: \code{\link{as.data.frame,expressionset-method}},
   \code{\link{variables}}, \code{\link{voptions}}
 
 Other indication-methods: \code{\link{confront}},
-  \code{\link{indication-class}}
+  \code{\link{event}}, \code{\link{indication-class}}
 
 Other validation-methods: \code{\link{aggregate,validation-method}},
   \code{\link{all,validation-method}},
   \code{\link{any,validation-method}},
   \code{\link{barplot,validation-method}},
   \code{\link{check_that}}, \code{\link{compare}},
-  \code{\link{confront}},
+  \code{\link{confront}}, \code{\link{event}},
   \code{\link{plot,validation-method}},
   \code{\link{sort,validation-method}},
   \code{\link{validation-class}}, \code{\link{values}}
 }
+\concept{expressionset-methods}
+\concept{indication-methods}
+\concept{validation-methods}

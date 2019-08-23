@@ -10,11 +10,10 @@ validator(..., .file, .data)
 \item{...}{A comma-separated list of validating expressions}
 
 \item{.file}{(optional) A character vector of file locations (see also the
-section on file parsing in the}
+section on file parsing in the \code{\link{syntax}} help file).}
 
 \item{.data}{(optional) A \code{data.frame} with columns \code{"rule"},
-  \code{"name"}, and \code{"description"}
-\code{\link{syntax}} help file).}
+\code{"name"}, and \code{"description"}}
 }
 \value{
 An object of class \code{validator} (see \code{\link{validator-class}}).
@@ -43,3 +42,4 @@ summary(cf)
 Other validator-methods: \code{\link{+,validator,validator-method}},
   \code{\link{plot,validator-method}}
 }
+\concept{validator-methods}
