@@ -1,6 +1,6 @@
-8f9e9576af45be8339f960985ab0c432 *DESCRIPTION
+045a7a8499b680a710e7f51f427aa9ef *DESCRIPTION
 860eec816a79903f16a284307b41b352 *NAMESPACE
-8c213900e6c04bce09a0ecc6292de76f *NEWS
+87eb41a4b561b51ce0827eb29977a70f *NEWS
 a45efff8c88d793b168771b862fb8a99 *R/barplot.R
 777fbc6540b3847288d648221516c931 *R/compare.R
 9fe97993d404d9d3755556dcdf4bf6e9 *R/confrontation.R
@@ -23,13 +23,13 @@ eccc81b86845f8ebbb7af003da62ec95 *data/SBS2000.csv.gz
 701f652617864bfb021839be0f493a35 *data/retailers.csv.gz
 d3cb7a98662f38970df762e23679111c *inst/doc/indicators.R
 d3357d6c484cb3e959451659f2a2db87 *inst/doc/indicators.Rmd
-92335ce1806aa12b75fecf20ccb9ff14 *inst/doc/indicators.html
+ff6899dc870f890e1b66b5309c732e36 *inst/doc/indicators.html
 93776d8e5e3734af7f6e69c8f0751843 *inst/doc/introduction.R
 ef4b0d3cbc27929e47ede71b5a5877eb *inst/doc/introduction.Rmd
-f80d3277afcfa5a16d4f63af88f4dd96 *inst/doc/introduction.html
+7c826b20f7ff3210fb878af87a44095f *inst/doc/introduction.html
 fd9483ff8ecb9e58088db012b655be8b *inst/doc/rule_files.R
 0554524e9153ef9f0c8ad8b12400fb23 *inst/doc/rule_files.Rmd
-92f5bdf4260b9fdcb38d133e67e260a7 *inst/doc/rule_files.html
+92d0574b3b3b2205f20648eb4138a1cb *inst/doc/rule_files.html
 6da6b54e0a9bf6bc30c0ffba7108ca53 *inst/tinytest/pocdata/Rule_01.csv
 d635a5dfcd85335d354bbef670ebd0be *inst/tinytest/pocdata/Rule_02.csv
 b9dc5a0b884b23042cc5445682669d3c *inst/tinytest/pocdata/Rule_03_invalid.csv
@@ -103,7 +103,7 @@ ddb21190105ac965e35c846931ae52de *inst/tinytest/test_poc.R
 92808ef8896a26b6b8033b2d874b8be9 *inst/tinytest/test_run_validation.R
 41cb1588c8235b56a4b1630d8ae05eda *inst/tinytest/test_syntax.R
 aadb1d040c1d2ce71b379c52df81a914 *inst/tinytest/test_utils.R
-7a317d8072e1ce2ae9d9f3bba201c681 *inst/tinytest/test_validator.R
+50dbaec8d268cb84ece96f52de5d40fe *inst/tinytest/test_validator.R
 085f78e9ab5e2733a2384ae87e18298b *inst/tinytest/yamltests/child1.yaml
 5f7baa179eb02b0596a0f67e50af5720 *inst/tinytest/yamltests/child2.yaml
 958a5ee8f2b62869287b4b0b0077767a *inst/tinytest/yamltests/child3.yaml
@@ -185,7 +185,7 @@ b49d41434de964625318cc60d19e83be *man/values.Rd
 c8602392882dc58820f16f66aebdee8f *src/R_register_native.c
 f7902ab1714d6053a6fd5658cf750fb5 *src/sfh.c
 5e56fb74fb8b87dc092882515493f96b *src/sfh.h
-bda06c02f5b4856ca07fa1d5f650df69 *tests/tinytest.R
+f8e78727ed542b48f9a6014fa407ab71 *tests/tinytest.R
 d3357d6c484cb3e959451659f2a2db87 *vignettes/indicators.Rmd
 ef4b0d3cbc27929e47ede71b5a5877eb *vignettes/introduction.Rmd
 0554524e9153ef9f0c8ad8b12400fb23 *vignettes/rule_files.Rmd
