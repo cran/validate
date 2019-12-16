@@ -50,6 +50,7 @@ of the dataset.
 }
 
 \seealso{
-Other loggers: \code{\link{lbj_rules-class}}
+Other loggers: 
+\code{\link{lbj_rules-class}}
 }
 \concept{loggers}

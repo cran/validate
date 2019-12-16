@@ -81,12 +81,14 @@ The figure is reproduced from MPJ van der Loo and E. De Jonge (2018)
 \emph{Statistical Data Cleaning with applications in R} (John Wiley & Sons).
 }
 \seealso{
-Other comparing: \code{\link{as.data.frame,cellComparison-method}},
-  \code{\link{as.data.frame,validatorComparison-method}},
-  \code{\link{barplot,cellComparison-method}},
-  \code{\link{barplot,validatorComparison-method}},
-  \code{\link{compare}}, \code{\link{match_cells}},
-  \code{\link{plot,cellComparison-method}},
-  \code{\link{plot,validatorComparison-method}}
+Other comparing: 
+\code{\link{as.data.frame,cellComparison-method}},
+\code{\link{as.data.frame,validatorComparison-method}},
+\code{\link{barplot,cellComparison-method}},
+\code{\link{barplot,validatorComparison-method}},
+\code{\link{compare}()},
+\code{\link{match_cells}()},
+\code{\link{plot,cellComparison-method}},
+\code{\link{plot,validatorComparison-method}}
 }
 \concept{comparing}

@@ -23,9 +23,15 @@ For \code{all_unique} a single \code{TRUE} or \code{FALSE}.
 Utility function to make common tests easier.
 }
 \examples{
-# check that height-weight combinations are unique
+
 d <- data.frame(X = c('a','b','c','b'), Y = c('banana','apple','banana','apple'), Z=1:4)
 v <- validator(is_unique(X, Y))
 values(confront(d, v))
 
 }
+\seealso{
+Other cross-record-helpers: 
+\code{\link{exists_any}()},
+\code{\link{is_complete}()}
+}
+\concept{cross-record-helpers}

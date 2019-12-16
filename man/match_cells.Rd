@@ -20,12 +20,14 @@ A list of \code{data.frames}, subsetted and sorted so that all cells correspond.
 Create matching subsets of a sequence of data
 }
 \seealso{
-Other comparing: \code{\link{as.data.frame,cellComparison-method}},
-  \code{\link{as.data.frame,validatorComparison-method}},
-  \code{\link{barplot,cellComparison-method}},
-  \code{\link{barplot,validatorComparison-method}},
-  \code{\link{cells}}, \code{\link{compare}},
-  \code{\link{plot,cellComparison-method}},
-  \code{\link{plot,validatorComparison-method}}
+Other comparing: 
+\code{\link{as.data.frame,cellComparison-method}},
+\code{\link{as.data.frame,validatorComparison-method}},
+\code{\link{barplot,cellComparison-method}},
+\code{\link{barplot,validatorComparison-method}},
+\code{\link{cells}()},
+\code{\link{compare}()},
+\code{\link{plot,cellComparison-method}},
+\code{\link{plot,validatorComparison-method}}
 }
 \concept{comparing}

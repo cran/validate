@@ -39,7 +39,8 @@ summary(cf)
 
 }
 \seealso{
-Other validator-methods: \code{\link{+,validator,validator-method}},
-  \code{\link{plot,validator-method}}
+Other validator-methods: 
+\code{\link{+,validator,validator-method}},
+\code{\link{plot,validator-method}}
 }
 \concept{validator-methods}

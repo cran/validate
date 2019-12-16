@@ -25,12 +25,15 @@ the exported methods listed below in stead.
 }
 
 \seealso{
-Other confrontation-methods: \code{\link{[,expressionset-method}},
-  \code{\link{as.data.frame,confrontation-method}},
-  \code{\link{confront}}, \code{\link{errors}},
-  \code{\link{event}}, \code{\link{keyset}},
-  \code{\link{length,expressionset-method}},
-  \code{\link{values}}
+Other confrontation-methods: 
+\code{\link{[,expressionset-method}},
+\code{\link{as.data.frame,confrontation-method}},
+\code{\link{confront}()},
+\code{\link{errors}()},
+\code{\link{event}()},
+\code{\link{keyset}()},
+\code{\link{length,expressionset-method}},
+\code{\link{values}()}
 }
 \concept{confrontation-methods}
 \keyword{internal}

@@ -33,8 +33,10 @@ an \code{\link{indicator}} in the context of data along with some metadata.
 }
 
 \seealso{
-Other indication-methods: \code{\link{confront}},
-  \code{\link{event}}, \code{\link{summary}}
+Other indication-methods: 
+\code{\link{confront}()},
+\code{\link{event}()},
+\code{\link{summary}()}
 }
 \concept{indication-methods}
 \keyword{internal}

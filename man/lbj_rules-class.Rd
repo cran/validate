@@ -22,6 +22,7 @@ All arguments in '...' except row.names are passed to 'write.csv'}
 }}
 
 \seealso{
-Other loggers: \code{\link{lbj_cells-class}}
+Other loggers: 
+\code{\link{lbj_cells-class}}
 }
 \concept{loggers}

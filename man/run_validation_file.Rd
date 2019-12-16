@@ -9,8 +9,7 @@
 \usage{
 run_validation_file(file, verbose = TRUE)
 
-run_validation_dir(dir = "./", pattern = "^validate.+[rR]",
-  verbose = TRUE)
+run_validation_dir(dir = "./", pattern = "^validate.+[rR]", verbose = TRUE)
 
 \method{print}{validations}(x, ...)
 

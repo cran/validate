@@ -4,7 +4,6 @@
 \name{validate}
 \alias{validate}
 \alias{package-validate}
-\alias{validate-package}
 \title{Data Validation Infrastructure}
 \description{
 Data Validation Infrastructure

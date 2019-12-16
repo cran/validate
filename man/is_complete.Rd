@@ -28,3 +28,9 @@ v <- validator(is_complete(X, Y))
 values(confront(d, v))
 
 }
+\seealso{
+Other cross-record-helpers: 
+\code{\link{exists_any}()},
+\code{\link{is_unique}()}
+}
+\concept{cross-record-helpers}
