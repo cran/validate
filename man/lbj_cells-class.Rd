@@ -5,7 +5,9 @@
 \alias{lbj_cells-class}
 \alias{lbj_cells}
 \title{Logging object to use with the lumberjack package}
-\format{A reference class object}
+\format{
+A reference class object
+}
 \description{
 Logging object to use with the lumberjack package
 }

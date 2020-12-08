@@ -113,6 +113,6 @@ is equivalent to
 
 Please see the vignette on how to read rules from and write rules to file:
 
-\code{vignette("rule-files",package="validate")}
+\code{vignette("rule_files",package="validate")}
 }
 

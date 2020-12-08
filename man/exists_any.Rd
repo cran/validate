@@ -5,14 +5,15 @@
 \alias{exists_one}
 \title{Test for (unique) existence}
 \usage{
-exists_any(rule, ..., na.rm = FALSE)
+exists_any(rule, by = NULL, na.rm = FALSE)
 
-exists_one(rule, ..., na.rm = FALSE)
+exists_one(rule, by = NULL, na.rm = FALSE)
 }
 \arguments{
 \item{rule}{\code{[expression]} A validation rule}
 
-\item{...}{A comma-separated list of variables used to group the data.}
+\item{by}{A bare (unquoted) variable name or a list of bare variable
+names, that will be used to group the data.}
 
 \item{na.rm}{\code{[logical]} Toggle to ignore results that yield \code{NA}.}
 }
@@ -52,7 +53,12 @@ values(confront(dd, v))
 }
 \seealso{
 Other cross-record-helpers: 
+\code{\link{contains_exactly}()},
+\code{\link{do_by}()},
+\code{\link{hb}()},
+\code{\link{hierarchy}()},
 \code{\link{is_complete}()},
+\code{\link{is_linear_sequence}()},
 \code{\link{is_unique}()}
 }
 \concept{cross-record-helpers}

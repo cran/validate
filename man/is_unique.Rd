@@ -20,7 +20,7 @@ For \code{is_unique} A logical vector that is \code{FALSE} for each record
 For \code{all_unique} a single \code{TRUE} or \code{FALSE}.
 }
 \description{
-Utility function to make common tests easier.
+Test for uniqueness of columns or combinations of columns.
 }
 \examples{
 
@@ -28,10 +28,20 @@ d <- data.frame(X = c('a','b','c','b'), Y = c('banana','apple','banana','apple')
 v <- validator(is_unique(X, Y))
 values(confront(d, v))
 
+# example with groupwise test
+df <- data.frame(x=c(rep("a",3), rep("b",3)),y=c(1,1,2,1:3))
+v <- validator(is_unique(y, by=x))
+values(confront(d,v))
+
 }
 \seealso{
 Other cross-record-helpers: 
+\code{\link{contains_exactly}()},
+\code{\link{do_by}()},
 \code{\link{exists_any}()},
-\code{\link{is_complete}()}
+\code{\link{hb}()},
+\code{\link{hierarchy}()},
+\code{\link{is_complete}()},
+\code{\link{is_linear_sequence}()}
 }
 \concept{cross-record-helpers}

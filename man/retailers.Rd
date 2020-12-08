@@ -5,7 +5,9 @@
 \alias{retailers}
 \alias{SBS2000}
 \title{data on Dutch supermarkets}
-\format{A csv file, one retailer per row.}
+\format{
+A csv file, one retailer per row.
+}
 \description{
 Anonymized and distorted data on revenue and cost structure for
   60 retailers. Currency is in thousands of Euros. There are two
@@ -26,3 +28,9 @@ Anonymized and distorted data on revenue and cost structure for
  \item vat: Turnover reported for Value Added Tax
 }
 }
+\seealso{
+Other datasets: 
+\code{\link{nace_rev2}},
+\code{\link{samplonomy}}
+}
+\concept{datasets}

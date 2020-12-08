@@ -2,20 +2,48 @@
 % Please edit documentation in R/confrontation.R
 \name{plot,validation-method}
 \alias{plot,validation-method}
-\title{Plot a validation object}
+\title{Plot validaiton results}
 \usage{
-\S4method{plot}{validation}(x, y, ...)
+\S4method{plot}{validation}(
+  x,
+  y,
+  fill = c("#FE2712", "#66B032", "#dddddd"),
+  col = fill,
+  rulenames = names(x),
+  labels = c("Fails", "Passing", "Missing", "Total"),
+  title = NULL,
+  xlab = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{a confrontation object.}
 
 \item{y}{not used}
 
-\item{...}{passed to \code{barplot}}
+\item{fill}{\code{[character]} vector of length 3. Colors representing fails, passes, and missings}
+
+\item{col}{Edge colors for the bars.}
+
+\item{rulenames}{\code{[character]} vector of size \code{length(x)}. If not specified, names
+are taken from \code{x}.}
+
+\item{labels}{\code{[character]} vector of length 4. Replace legend annotation.}
+
+\item{title}{\code{[character]} Change the default title.}
+
+\item{xlab}{\code{[character]} Change the title}
+
+\item{...}{not used}
 }
 \description{
-The plot function for the confrontation object is identical to the \code{\link{barplot}} 
-method.
+Creates a barplot of validation result. For each validation rule, a stacked bar
+is plotted with percentages of failing, passing, and missing results.
+}
+\details{
+The plot function tries to be smart about placing labels on the y axis. When 
+the number of bars becomes too large, no y axis annotation will be shown and the 
+bars will become space-filling.
 }
 \examples{
 rules <- validator( r1 = staff.costs < total.costs
@@ -40,6 +68,7 @@ Other validation-methods:
 \code{\link{compare}()},
 \code{\link{confront}()},
 \code{\link{event}()},
+\code{\link{names<-,rule,character-method}},
 \code{\link{sort,validation-method}},
 \code{\link{summary}()},
 \code{\link{validation-class}},

@@ -189,10 +189,10 @@ replace_dollar <- function(x){
   L <- which.call(x,'$')
   for ( I in L ){
     if (length(I)==1){
-      x <- parse(text=paste0(left(x),'[,',deparse(right(x)),']'))[[1]]
+      x <- parse(text=paste0(left(x),'[[ "',deparse(right(x)),'" ]]'))[[1]]
     } else {
       I <- I[-length(I)]
-      p <- paste0(left(x[[I]]),'[, "',deparse(right(x[[I]])),'" ]')
+      p <- paste0(left(x[[I]]),'[[ "',deparse(right(x[[I]])),'" ]]')
       x[[I]] <- parse(text=p)[[1]]
     }
   }
@@ -321,12 +321,19 @@ linear_call <- function(x){
 validating_call <- function(cl){
   pure <- c("<", "<=", "==", "!=", ">=", ">", "%in%", "%vin%", "identical", "~" ,"%->%"
           , "grepl" , "is_unique", "all_unique", "is_complete", "all_complete"
-          , "exists_any", "exists_one", "var_group")
+          , "exists_any", "exists_one", "is_linear_sequence","in_linear_sequence" 
+          , "part_whole_relation","hierarchy"
+          , "field_length", "number_format", "field_format"
+          , "contains_exactly", "contains_at_least", "contains_at_most", "does_not_contain"
+          , "in_range", "var_group")
   unary <- c("!", "(", "all", "any" )
   binary <- c("|","||","&","&&","if","xor")
 
+  variables_ok <- !is.null(var_from_call(cl)) ||   # validating call must have variables 
+        grepl("contain", deparse(cl[[1]]))         # or be one of the 'contains' functions
+
   # push-button semantic changer. See issue #41
-  assume_logical = FALSE
+  assume_logical <- FALSE
   
   vc <- function(x){
     if (is.symbol(x)) return(assume_logical) 
@@ -337,7 +344,7 @@ validating_call <- function(cl){
     FALSE
   }
   
-  vc(cl)
+  variables_ok && vc(cl) 
   
 }
 

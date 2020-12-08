@@ -97,7 +97,7 @@
 #' @section File parsing:
 #' Please see the vignette on how to read rules from and write rules to file:
 #' 
-#' \code{vignette("rule-files",package="validate")}
+#' \code{vignette("rule_files",package="validate")}
 #' 
 #'   
 NULL
@@ -192,27 +192,33 @@ matchvars <- function(L,env){
 
 #' Test for uniquenes of records
 #' 
-#' Utility function to make common tests easier.
+#' Test for uniqueness of columns or combinations of columns. 
+#'
 #'
 #' @param ... When used in a validation rule: a bare (unquoted) list of variable names.
 #'     When used directly, a comma-separated list of vectors of equal length.
-#'
 #'
 #' @return 
 #'   For \code{is_unique} A logical vector that is \code{FALSE} for each record
 #'   that has a duplicate.
 #'
 #' @family cross-record-helpers
+#' 
 #' @examples
 #' 
 #' d <- data.frame(X = c('a','b','c','b'), Y = c('banana','apple','banana','apple'), Z=1:4)
 #' v <- validator(is_unique(X, Y))
 #' values(confront(d, v))
 #' 
+#' # example with groupwise test
+#' df <- data.frame(x=c(rep("a",3), rep("b",3)),y=c(1,1,2,1:3))
+#' v <- validator(is_unique(y, by=x))
+#' values(confront(d,v))
+#'
 #' @export
 is_unique <- function(...){
   d <- data.frame(...)
-  !duplicated(d) & !duplicated(d, fromLast=TRUE)
+ !duplicated(d) & !duplicated(d, fromLast=TRUE)
 }
 
 
@@ -233,7 +239,7 @@ all_unique <- function(...){
 #' @inheritParams is_unique
 #' @return 
 #'   For \code{is_complete} A logical vector that is \code{FALSE} for each record
-#'   that has a duplicate.
+#'   that has at least one missing value.
 #'
 #' @family cross-record-helpers
 #' @examples
@@ -264,7 +270,8 @@ all_complete <- function(...){
 #' (\code{exists_one}) record satisfies a condition.
 #'
 #' @param rule  \code{[expression]} A validation rule
-#' @param ...   A comma-separated list of variables used to group the data.
+#' @param by    A bare (unquoted) variable name or a list of bare variable
+#'              names, that will be used to group the data.
 #' @param na.rm \code{[logical]} Toggle to ignore results that yield \code{NA}.
 #' 
 #' @return A \code{logical} vector, with the same number of entries as there
@@ -297,37 +304,38 @@ all_complete <- function(...){
 #' values(confront(dd, v))
 #' 
 #' @export
-exists_any <- function(rule, ..., na.rm=FALSE){
-  spvr <- data.frame(...)
-  if (length(spvr) == 0) spvr <- character(nrow(.))
+exists_any <- function(rule, by = NULL, na.rm=FALSE){
+
   parent <- parent.frame()
   # get the whole data set from the environment provided
   # by 'confront
   . <- get(".", parent)
+  
+  if (is.null(by)) by <- character(nrow(.))  
+
   rule <- as.expression(substitute(rule))
-  unsplit(lapply(split(., f=spvr), function(d){
+  unsplit(lapply(split(., f=by), function(d){
     res <- eval(rule, envir=d, enclos=parent)
     ntrue <- sum(res, na.rm=na.rm)
     rep(ntrue >= 1, nrow(d))
-  }), spvr)
+  }), by)
 }
 
 
 #' @rdname exists_any
 #' @export
-exists_one <- function(rule, ..., na.rm=FALSE){
-  spvr <- data.frame(...)
-  if (length(spvr) == 0) spvr <- character(nrow(.))
+exists_one <- function(rule, by=NULL, na.rm=FALSE){
   parent <- parent.frame()
   # get the whole data set from the environment provided
   # by 'confront
   . <- get(".", parent)
+  if (is.null(by)) by <- character(nrow(.))  
   rule <- as.expression(substitute(rule))
-  unsplit(lapply(split(., f=spvr), function(d){
+  unsplit(lapply(split(., f=by), function(d){
     res <- eval(rule, envir=d, enclos=parent)
     ntrue <- sum(res, na.rm=na.rm)
     rep(ntrue == 1, nrow(d))
-  }), spvr)
+  }), by)
 }
 
 

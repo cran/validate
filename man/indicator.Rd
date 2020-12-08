@@ -12,10 +12,9 @@ indicator(..., .file, .data)
 \item{.file}{(optional) A character vector of file locations}
 }
 \description{
-\bold{This feature is currently experimental and may change in future versions}
-}
-\details{
-\code{\link{indicator}}
+An indicator maps a data frame, or each record in a data frame to a number.
+The purpose of this class is to store and apply expressions that define
+indicators.
 }
 \examples{
 # create an indicator for the number of missing x in data set
@@ -34,6 +33,6 @@ C <- confront(dat, I)
 values(C)
 }
 \seealso{
-\code{\link{syntax}}
+\code{\link{syntax}}, \code{\link{add_indicators}}
 }
 \keyword{internal}

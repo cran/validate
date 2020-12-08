@@ -16,10 +16,10 @@ can be constructed with  \code{\link{indicator}}.
 
 \section{Exported S4 methods for \code{validator}}{
 
-  \itemize{
+ \itemize{
  \item{Methods inherited from \code{\link{expressionset}}}
- \item{\code{\link{confront}}}
- \item{\code{\link{compare}}}
+   \item{\code{\link{confront}}}
+   \item{\code{\link{compare}}}
 }
 }
 

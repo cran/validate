@@ -15,7 +15,7 @@ When used directly, a comma-separated list of vectors of equal length.}
 }
 \value{
 For \code{is_complete} A logical vector that is \code{FALSE} for each record
-  that has a duplicate.
+  that has at least one missing value.
 
 For \code{all_unique} a single \code{TRUE} or \code{FALSE}.
 }
@@ -30,7 +30,12 @@ values(confront(d, v))
 }
 \seealso{
 Other cross-record-helpers: 
+\code{\link{contains_exactly}()},
+\code{\link{do_by}()},
 \code{\link{exists_any}()},
+\code{\link{hb}()},
+\code{\link{hierarchy}()},
+\code{\link{is_linear_sequence}()},
 \code{\link{is_unique}()}
 }
 \concept{cross-record-helpers}

@@ -30,6 +30,7 @@ Other validation-methods:
 \code{\link{compare}()},
 \code{\link{confront}()},
 \code{\link{event}()},
+\code{\link{names<-,rule,character-method}},
 \code{\link{plot,validation-method}},
 \code{\link{sort,validation-method}},
 \code{\link{summary}()},

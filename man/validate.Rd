@@ -6,15 +6,10 @@
 \alias{package-validate}
 \title{Data Validation Infrastructure}
 \description{
-Data Validation Infrastructure
-}
-\section{Introduction}{
-
-Data often contain errors and missing data. A necessary step before data
+Data often suffer from errors and missing values. A necessary step before data
 analysis is verifying and validating your data. Package \code{validate} is a
 toolbox for creating validation rules and checking data against these rules.
 }
-
 \section{Getting started}{
 
 
