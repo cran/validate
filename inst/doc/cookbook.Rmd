@@ -80,12 +80,26 @@ To cite this cookbook, please use the following citation.
 This work was partially funded by European Grant Agreement 88287--NL-VALIDATION
 of the European Statistcal System.
 
+I am greatly indebted by [dr Olav ten Bosch](https://github.com/donthebike) for
+carefully reviewing the manuscript of version 1.0.1. Any mistakes are of course
+entirely the author's fault. 
+
+
+## Contributing {-}
+
+If you find a mistake, or have some suggestions, please file an issue or a pull
+request on the github page of the package:
+[https://github.com/data-cleaning/validate](https://github.com/data-cleaning/validate).
+If you do not have or want a github account, you can contact the author via the
+e-mail address that is listed with the package.
+
+
 ## License {-}
 
 ```{r, echo=FALSE, include=!knitr::is_latex_output()}
-knitr::asis_output("
-[![Creative Commons License](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
-")
+#knitr::asis_output("
+#[![Creative Commons License](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
+#")
 ```
 
 This work is licensed under [Creative Commons Attribution BY-NC 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/).
@@ -261,7 +275,7 @@ is satisfied.
 
 ## Missingness {#sect:missingness}
 
-Use R's standard `is.na()` to check missin items in individual variables. Negate
+Use R's standard `is.na()` to check missing items in individual variables. Negate
 it to check that values are available.
 
 ```{r}
@@ -854,7 +868,7 @@ blocks <- rep(c("a","b"), each = 4)
 is_linear_sequence(series, by = blocks)
 ```
 Now, this result is not very useful since now it is unknown which block 
-is not a linear series. This is where the function `in_linear_series` comes in.
+is not a linear series. This is where the function `in_linear_sequence` comes in.
 ```{r}
 in_linear_sequence(series, by = blocks)
 ```
@@ -1126,7 +1140,7 @@ Here we check the mean profit and correlation coefficient between profit and
 turnover.
 ```{r}
 rule <- validator(
-    mean(profit, na.rm=TRUIE) >= 1
+    mean(profit, na.rm=TRUE) >= 1
   , cor(turnover, staff, use="pairwise.complete.obs") > 0
 )
 out <- confront(SBS2000, rule)

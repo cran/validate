@@ -11,7 +11,7 @@
 
 <meta name="author" content="Mark P.J. van der Loo" />
 
-<meta name="date" content="2020-12-08" />
+<meta name="date" content="2021-03-30" />
 
 <title>The Data Validation Cookbook</title>
 
@@ -1315,7 +1315,7 @@ color: #d14;
   div.column{display: inline-block; vertical-align: top; width: 50%;}
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
-      </style>
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -1361,6 +1361,7 @@ h6 {
   text-align: left;
 }
 </style>
+
 
 
 
@@ -1551,7 +1552,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">The Data Validation Cookbook</h1>
 <h4 class="author">Mark P.J. van der Loo</h4>
-<h4 class="date">2020-12-08</h4>
+<h4 class="date">2021-03-30</h4>
 
 </div>
 
@@ -1562,7 +1563,7 @@ div.tocify {
 <a href="https://cran.r-project.org/package=validate">validate</a> package for
 <a href="https://www.r-project.org">R</a>.</p>
 <p>This version of the book was rendered with <code>validate</code> version
-1.0.1. The latest release of <code>validate</code> can be installed
+1.0.2. The latest release of <code>validate</code> can be installed
 from <a href="https://cran.r-project.org">CRAN</a> as follows.</p>
 <pre class="r"><code>install.packages(&quot;validate&quot;)</code></pre>
 <p>The purposes of this book include demonstrating the main tools and workflows of
@@ -1596,18 +1597,28 @@ R. <em>Journal of Statistical Software</em>, Accepted for publication.
 </blockquote>
 <p>To cite this cookbook, please use the following citation.</p>
 <blockquote>
-<p>MPJ van der Loo (2020) <em>The Data Validation Cookbook</em>
-version 1.0.1. <a href="http://data-cleaning.github.io/validate/">https://data-cleaning.github.io/validate</a></p>
+<p>MPJ van der Loo (2021) <em>The Data Validation Cookbook</em>
+version 1.0.2. <a href="http://data-cleaning.github.io/validate/">https://data-cleaning.github.io/validate</a></p>
 </blockquote>
 </div>
 <div id="acknowledgements" class="section level2 unnumbered">
 <h2>Acknowledgements</h2>
 <p>This work was partially funded by European Grant Agreement 88287–NL-VALIDATION
 of the European Statistcal System.</p>
+<p>I am greatly indebted by <a href="https://github.com/donthebike">dr Olav ten Bosch</a> for
+carefully reviewing the manuscript of version 1.0.1. Any mistakes are of course
+entirely the author’s fault.</p>
+</div>
+<div id="contributing" class="section level2 unnumbered">
+<h2>Contributing</h2>
+<p>If you find a mistake, or have some suggestions, please file an issue or a pull
+request on the github page of the package:
+<a href="https://github.com/data-cleaning/validate">https://github.com/data-cleaning/validate</a>.
+If you do not have or want a github account, you can contact the author via the
+e-mail address that is listed with the package.</p>
 </div>
 <div id="license" class="section level2 unnumbered">
 <h2>License</h2>
-<p><a href="https://creativecommons.org/licenses/by/4.0/"><img src="data:image/png;base64,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" alt="Creative Commons License" /></a></p>
 <p>This work is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution BY-NC 4.0 International License</a>.</p>
 </div>
 </div>
@@ -1754,7 +1765,7 @@ is satisfied.</p>
 </div>
 <div id="sect:missingness" class="section level2">
 <h2><span class="header-section-number">2.2</span> Missingness</h2>
-<p>Use R’s standard <code>is.na()</code> to check missin items in individual variables. Negate
+<p>Use R’s standard <code>is.na()</code> to check missing items in individual variables. Negate
 it to check that values are available.</p>
 <pre class="r"><code>rule &lt;- validator(
    !is.na(turnover)
@@ -2306,7 +2317,7 @@ blocks &lt;- rep(c(&quot;a&quot;,&quot;b&quot;), each = 4)
 is_linear_sequence(series, by = blocks)</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>Now, this result is not very useful since now it is unknown which block
-is not a linear series. This is where the function <code>in_linear_series</code> comes in.</p>
+is not a linear series. This is where the function <code>in_linear_sequence</code> comes in.</p>
 <pre class="r"><code>in_linear_sequence(series, by = blocks)</code></pre>
 <pre><code>## [1]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE</code></pre>
 <p>There are some subtleties. A single element is also a linear sequence (of length 1).</p>
@@ -2504,7 +2515,7 @@ patterns.</p>
 <p>The records containing forbidden keys can be selected as follows.</p>
 <pre class="r"><code>violating(transactions, out)</code></pre>
 <pre><code>##   sender receiver value
-## 1    S21      FG0    79</code></pre>
+## 1    S21      FG0    95</code></pre>
 <p>It is also possible to use regular expression patterns, by labeling the
 forbidden key set with <code>rx()</code>. If no labeling is used, the key sets are
 interpreted as string literals.</p>
@@ -2550,14 +2561,14 @@ calculation can be input to a rule.</p>
 <p>Here we check the mean profit and correlation coefficient between profit and
 turnover.</p>
 <pre class="r"><code>rule &lt;- validator(
-    mean(profit, na.rm=TRUIE) &gt;= 1
+    mean(profit, na.rm=TRUE) &gt;= 1
   , cor(turnover, staff, use=&quot;pairwise.complete.obs&quot;) &gt; 0
 )
 out &lt;- confront(SBS2000, rule)
 # suppress some columns for brevity
 summary(out)[1:7]</code></pre>
 <pre><code>##   name items passes fails nNA error warning
-## 1   V1     0      0     0   0  TRUE   FALSE
+## 1   V1     1      1     0   0 FALSE   FALSE
 ## 2   V2     1      1     0   0 FALSE   FALSE</code></pre>
 <p>There are a few helper functions to compute group-wise statistics, and to make
 comparing values with group aggregates possible.</p>
@@ -3000,9 +3011,10 @@ an object of class <code>indication</code>. It prints as follows.</p>
 ## Call:
 ##     confront(dat = women, x = ii)
 ## 
-## Confrontations: 3
-## Warnings      : 0
-## Errors        : 0</code></pre>
+## Rules confronted: 3
+##    With missings: 0
+##    Threw warning: 0
+##    Threw errors : 0</code></pre>
 <p>To study the results, the object can be summarized.</p>
 <pre class="r"><code>summary(out)</code></pre>
 <pre><code>##   name items      min      mean       max nNA error warning
@@ -3018,10 +3030,10 @@ while the second and third indicators (<code>mh</code>, <code>mw</code>) each re
 value. The single values are repeated when indicator values are added
 to the data.</p>
 <pre class="r"><code>head(add_indicators(women, out), 3)</code></pre>
-<pre><code>##   height weight      BMI       mh       mw
-## 1     58    115 24.03503  65.0000 136.7333
-## 2     59    117 23.63114 136.7333  65.0000
-## 3     60    120 23.43589  65.0000 136.7333</code></pre>
+<pre><code>##   height weight      BMI mh       mw
+## 1     58    115 24.03503 65 136.7333
+## 2     59    117 23.63114 65 136.7333
+## 3     60    120 23.43589 65 136.7333</code></pre>
 <p>The result is a data frame with indicators attached.</p>
 <p>The columns <code>error</code> and <code>warning</code> indicate whether calculation of the
 indicators was problematic. For example because the output of an indicator rule
@@ -3108,7 +3120,7 @@ is returned. This is the validating expression entered by the user, plus some
 ##  label      :  
 ##  description:  
 ##  origin     : command-line 
-##  created    : 2020-12-08 11:53:26
+##  created    : 2021-03-30 13:01:30
 ##  meta       : language&lt;chr&gt;, severity&lt;chr&gt;</code></pre>
 <p>Users never need to manipulate rule objects, but it can be convenient to
 inspect them. As you see, the rules have some automatically created metadata.
@@ -3155,14 +3167,14 @@ meta(rules,&quot;bar&quot;) &lt;- &quot;baz&quot;</code></pre>
 ##  label      :  
 ##  description:  
 ##  origin     : command-line 
-##  created    : 2020-12-08 11:53:26
+##  created    : 2021-03-30 13:01:30
 ##  meta       : language&lt;chr&gt;, severity&lt;chr&gt;</code></pre>
 <p>Or by extracting it to a <code>data.frame</code></p>
 <pre class="r"><code>meta(v)</code></pre>
 <pre><code>##   name label description       origin             created       language
-## 1   V1                   command-line 2020-12-08 11:53:26 validate 1.0.1
-## 2   V2                   command-line 2020-12-08 11:53:26 validate 1.0.1
-## 3   V3                   command-line 2020-12-08 11:53:26 validate 1.0.1
+## 1   V1                   command-line 2021-03-30 13:01:30 validate 1.0.2
+## 2   V2                   command-line 2021-03-30 13:01:30 validate 1.0.2
+## 3   V3                   command-line 2021-03-30 13:01:30 validate 1.0.2
 ##   severity
 ## 1    error
 ## 2    error
@@ -3796,7 +3808,7 @@ after each step. To make sure this happens, run this file using <code>run_file()
 from the <code>lumberjack</code> package.</p>
 <pre class="r"><code>library(lumberjack)
 run_file(&#39;clean_supermarkets.R&#39;)</code></pre>
-<pre><code>## Dumped a log at /tmp/Rtmp7a8Aod/Rbuild6c204b60019a/validate/vignettes/spm_lbj_cells.csv</code></pre>
+<pre><code>## Dumped a log at /tmp/Rtmp8wqxCE/Rbuild54b251969694/validate/vignettes/spm_lbj_cells.csv</code></pre>
 <p>This command executed all code in <code>clean_supermarkets.R</code>, but <code>run_file()</code> also ensured
 that all changes in the <code>spm</code> variable were recorded and logged using <code>lbj_cells()</code>.
 The output is written to a <code>csv</code> file which we can read.</p>
@@ -3804,8 +3816,8 @@ The output is written to a <code>csv</code> file which we can read.</p>
 <p>The logfile variable has quite a lot of columns, so here show just two rows.</p>
 <pre class="r"><code>logfile[3:4,]</code></pre>
 <pre><code>##   step                time
-## 3    2 2020-12-08 11:53:26
-## 4    3 2020-12-08 11:53:26
+## 3    2 2021-03-30 13:01:31
+## 4    3 2021-03-30 13:01:31
 ##                                                                expression cells
 ## 3 spm &lt;- transform(spm, other.rev = ifelse(is.na(other.rev),0,other.rev))   300
 ## 4                       spm &lt;- transform(spm, other.rev = abs(other.rev))   300
@@ -3846,13 +3858,13 @@ start_log(spm, logger=lbj_rules(rules))
 ## The rest is the same as above ...</code></pre>
 <p>Running the file again using lumberjack, we now get two log files.</p>
 <pre class="r"><code>run_file(&quot;clean_supermarkets2.R&quot;)</code></pre>
-<pre><code>## Dumped a log at /tmp/Rtmp7a8Aod/Rbuild6c204b60019a/validate/vignettes/spm_lbj_cells.csv</code></pre>
-<pre><code>## Dumped a log at /tmp/Rtmp7a8Aod/Rbuild6c204b60019a/validate/vignettes/spm_lbj_rules.csv</code></pre>
+<pre><code>## Dumped a log at /tmp/Rtmp8wqxCE/Rbuild54b251969694/validate/vignettes/spm_lbj_cells.csv</code></pre>
+<pre><code>## Dumped a log at /tmp/Rtmp8wqxCE/Rbuild54b251969694/validate/vignettes/spm_lbj_rules.csv</code></pre>
 <p>Let’s read the log file from <code>spm_lbj_rules.csv</code> and print row three and four.</p>
 <pre class="r"><code>read.csv(&quot;spm_lbj_rules.csv&quot;)[3:4,]</code></pre>
 <pre><code>##   step                time
-## 3    2 2020-12-08 11:53:27
-## 4    3 2020-12-08 11:53:27
+## 3    2 2021-03-30 13:01:32
+## 4    3 2021-03-30 13:01:32
 ##                                                                expression
 ## 3 spm &lt;- transform(spm, other.rev = ifelse(is.na(other.rev),0,other.rev))
 ## 4                       spm &lt;- transform(spm, other.rev = abs(other.rev))
@@ -3924,7 +3936,7 @@ paper.</p>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();

@@ -3,11 +3,14 @@
 \name{is_unique}
 \alias{is_unique}
 \alias{all_unique}
+\alias{n_unique}
 \title{Test for uniquenes of records}
 \usage{
 is_unique(...)
 
 all_unique(...)
+
+n_unique(...)
 }
 \arguments{
 \item{...}{When used in a validation rule: a bare (unquoted) list of variable names.
@@ -18,6 +21,9 @@ For \code{is_unique} A logical vector that is \code{FALSE} for each record
   that has a duplicate.
 
 For \code{all_unique} a single \code{TRUE} or \code{FALSE}.
+
+For \code{number_unique} a single number representing the number
+        of unique values or value combinations in the arguments.
 }
 \description{
 Test for uniqueness of columns or combinations of columns.

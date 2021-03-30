@@ -5,9 +5,9 @@ source("chunk_opts.R")
 #  install.packages("validate")
 
 ## ---- echo=FALSE, include=!knitr::is_latex_output()---------------------------
-knitr::asis_output("
-[![Creative Commons License](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
-")
+#knitr::asis_output("
+#[![Creative Commons License](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
+#")
 
 ## ---- include=FALSE-----------------------------------------------------------
 source("chunk_opts.R")
@@ -386,7 +386,7 @@ head(samplonomy, 3)
 
 ## -----------------------------------------------------------------------------
 rule <- validator(
-    mean(profit, na.rm=TRUIE) >= 1
+    mean(profit, na.rm=TRUE) >= 1
   , cor(turnover, staff, use="pairwise.complete.obs") > 0
 )
 out <- confront(SBS2000, rule)
