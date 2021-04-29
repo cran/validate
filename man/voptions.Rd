@@ -64,8 +64,6 @@ Currently the following options are supported.
 }
 
 \examples{
-# the default allowed validation symbols.
-voptions('validator_symbols')
 
 # set an option, local to a validator object:
 v <- validator(x + y > z)

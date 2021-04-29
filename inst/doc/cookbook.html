@@ -11,7 +11,7 @@
 
 <meta name="author" content="Mark P.J. van der Loo" />
 
-<meta name="date" content="2021-03-30" />
+<meta name="date" content="2021-04-29" />
 
 <title>The Data Validation Cookbook</title>
 
@@ -1552,7 +1552,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">The Data Validation Cookbook</h1>
 <h4 class="author">Mark P.J. van der Loo</h4>
-<h4 class="date">2021-03-30</h4>
+<h4 class="date">2021-04-29</h4>
 
 </div>
 
@@ -1563,7 +1563,7 @@ div.tocify {
 <a href="https://cran.r-project.org/package=validate">validate</a> package for
 <a href="https://www.r-project.org">R</a>.</p>
 <p>This version of the book was rendered with <code>validate</code> version
-1.0.2. The latest release of <code>validate</code> can be installed
+1.0.4. The latest release of <code>validate</code> can be installed
 from <a href="https://cran.r-project.org">CRAN</a> as follows.</p>
 <pre class="r"><code>install.packages(&quot;validate&quot;)</code></pre>
 <p>The purposes of this book include demonstrating the main tools and workflows of
@@ -1598,7 +1598,7 @@ R. <em>Journal of Statistical Software</em>, Accepted for publication.
 <p>To cite this cookbook, please use the following citation.</p>
 <blockquote>
 <p>MPJ van der Loo (2021) <em>The Data Validation Cookbook</em>
-version 1.0.2. <a href="http://data-cleaning.github.io/validate/">https://data-cleaning.github.io/validate</a></p>
+version 1.0.4. <a href="http://data-cleaning.github.io/validate/">https://data-cleaning.github.io/validate</a></p>
 </blockquote>
 </div>
 <div id="acknowledgements" class="section level2 unnumbered">
@@ -2515,7 +2515,7 @@ patterns.</p>
 <p>The records containing forbidden keys can be selected as follows.</p>
 <pre class="r"><code>violating(transactions, out)</code></pre>
 <pre><code>##   sender receiver value
-## 1    S21      FG0    95</code></pre>
+## 1    S21      FG0    92</code></pre>
 <p>It is also possible to use regular expression patterns, by labeling the
 forbidden key set with <code>rx()</code>. If no labeling is used, the key sets are
 interpreted as string literals.</p>
@@ -3120,7 +3120,7 @@ is returned. This is the validating expression entered by the user, plus some
 ##  label      :  
 ##  description:  
 ##  origin     : command-line 
-##  created    : 2021-03-30 13:01:30
+##  created    : 2021-04-29 17:28:14
 ##  meta       : language&lt;chr&gt;, severity&lt;chr&gt;</code></pre>
 <p>Users never need to manipulate rule objects, but it can be convenient to
 inspect them. As you see, the rules have some automatically created metadata.
@@ -3167,14 +3167,14 @@ meta(rules,&quot;bar&quot;) &lt;- &quot;baz&quot;</code></pre>
 ##  label      :  
 ##  description:  
 ##  origin     : command-line 
-##  created    : 2021-03-30 13:01:30
+##  created    : 2021-04-29 17:28:14
 ##  meta       : language&lt;chr&gt;, severity&lt;chr&gt;</code></pre>
 <p>Or by extracting it to a <code>data.frame</code></p>
 <pre class="r"><code>meta(v)</code></pre>
 <pre><code>##   name label description       origin             created       language
-## 1   V1                   command-line 2021-03-30 13:01:30 validate 1.0.2
-## 2   V2                   command-line 2021-03-30 13:01:30 validate 1.0.2
-## 3   V3                   command-line 2021-03-30 13:01:30 validate 1.0.2
+## 1   V1                   command-line 2021-04-29 17:28:14 validate 1.0.4
+## 2   V2                   command-line 2021-04-29 17:28:14 validate 1.0.4
+## 3   V3                   command-line 2021-04-29 17:28:14 validate 1.0.4
 ##   severity
 ## 1    error
 ## 2    error
@@ -3808,7 +3808,7 @@ after each step. To make sure this happens, run this file using <code>run_file()
 from the <code>lumberjack</code> package.</p>
 <pre class="r"><code>library(lumberjack)
 run_file(&#39;clean_supermarkets.R&#39;)</code></pre>
-<pre><code>## Dumped a log at /tmp/Rtmp8wqxCE/Rbuild54b251969694/validate/vignettes/spm_lbj_cells.csv</code></pre>
+<pre><code>## Dumped a log at /tmp/Rtmp03xZsa/Rbuild1acfbba0c67f/validate/vignettes/spm_lbj_cells.csv</code></pre>
 <p>This command executed all code in <code>clean_supermarkets.R</code>, but <code>run_file()</code> also ensured
 that all changes in the <code>spm</code> variable were recorded and logged using <code>lbj_cells()</code>.
 The output is written to a <code>csv</code> file which we can read.</p>
@@ -3816,8 +3816,8 @@ The output is written to a <code>csv</code> file which we can read.</p>
 <p>The logfile variable has quite a lot of columns, so here show just two rows.</p>
 <pre class="r"><code>logfile[3:4,]</code></pre>
 <pre><code>##   step                time
-## 3    2 2021-03-30 13:01:31
-## 4    3 2021-03-30 13:01:31
+## 3    2 2021-04-29 17:28:15
+## 4    3 2021-04-29 17:28:15
 ##                                                                expression cells
 ## 3 spm &lt;- transform(spm, other.rev = ifelse(is.na(other.rev),0,other.rev))   300
 ## 4                       spm &lt;- transform(spm, other.rev = abs(other.rev))   300
@@ -3858,13 +3858,13 @@ start_log(spm, logger=lbj_rules(rules))
 ## The rest is the same as above ...</code></pre>
 <p>Running the file again using lumberjack, we now get two log files.</p>
 <pre class="r"><code>run_file(&quot;clean_supermarkets2.R&quot;)</code></pre>
-<pre><code>## Dumped a log at /tmp/Rtmp8wqxCE/Rbuild54b251969694/validate/vignettes/spm_lbj_cells.csv</code></pre>
-<pre><code>## Dumped a log at /tmp/Rtmp8wqxCE/Rbuild54b251969694/validate/vignettes/spm_lbj_rules.csv</code></pre>
+<pre><code>## Dumped a log at /tmp/Rtmp03xZsa/Rbuild1acfbba0c67f/validate/vignettes/spm_lbj_cells.csv</code></pre>
+<pre><code>## Dumped a log at /tmp/Rtmp03xZsa/Rbuild1acfbba0c67f/validate/vignettes/spm_lbj_rules.csv</code></pre>
 <p>Let’s read the log file from <code>spm_lbj_rules.csv</code> and print row three and four.</p>
 <pre class="r"><code>read.csv(&quot;spm_lbj_rules.csv&quot;)[3:4,]</code></pre>
 <pre><code>##   step                time
-## 3    2 2021-03-30 13:01:32
-## 4    3 2021-03-30 13:01:32
+## 3    2 2021-04-29 17:28:15
+## 4    3 2021-04-29 17:28:15
 ##                                                                expression
 ## 3 spm &lt;- transform(spm, other.rev = ifelse(is.na(other.rev),0,other.rev))
 ## 4                       spm &lt;- transform(spm, other.rev = abs(other.rev))
