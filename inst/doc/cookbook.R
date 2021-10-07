@@ -701,6 +701,42 @@ source("chunk_opts.R")
 
 ## ---- include=FALSE-----------------------------------------------------------
 source("chunk_opts.R")
+library(validate)
+
+## ----eval=FALSE---------------------------------------------------------------
+#  sdmx_endpoint()
+
+## ---- eval=TRUE---------------------------------------------------------------
+sdmx_endpoint(registry="global")
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  codelist <- sdmx_codelist(
+#    endpoint = sdmx_endpoint("global")
+#    , agency_id = "ESTAT"
+#    , resource_id = "CL_ACTIVITY")
+#  
+#  head(codelist)
+#  [1] "_T"  "_X"  "_Z"  "A"   "A_B" "A01"
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  Activity %in% global_codelist(agency_id="ESTAT", resource_id="CL_ACTIVITY")
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  rules <- validator_from_dsd(endpoint = sdmx_endpoint("ESTAT")
+#     , agency_id = "ESTAT", resource_id = "STSALL", version="latest")
+#  
+#  length(rules)
+#  [1] 13
+#  rules[1]
+#  Object of class 'validator' with 1 elements:
+#   CL_FREQ: FREQ %in% sdmx_codelist(endpoint = "https://ec.europa.eu/tools/cspa_services_global/sdmxregistry/rest", agency_id = "SDMX", resource_id = "CL_FREQ", version = "2.0")
+#  Rules are evaluated using locally defined options
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  rule[[1]]
+
+## ---- include=FALSE-----------------------------------------------------------
+source("chunk_opts.R")
 
 ## ---- echo=FALSE--------------------------------------------------------------
 library(validate)

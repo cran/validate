@@ -635,7 +635,7 @@ setMethod("names", "confrontation", function(x){
 })
 
 
-#' Plot validaiton results
+#' Plot validation results
 #' 
 #' Creates a barplot of validation result. For each validation rule, a stacked bar
 #' is plotted with percentages of failing, passing, and missing results.
@@ -669,7 +669,15 @@ setMethod("plot","validation", function(x, y
                     , xlab = NULL
                     , ...)
 {
+  if(length(errors(x)>=1)){
+    msgf("%d rules gave a runtime error on execution so those results are not plotted. See ?errors"
+        , length(errors(x)))
+  }
   m <- aggregate(x, by="rule")
+  if (is.null(m)){
+    msgf("Noting to plot")
+    return(NULL)
+  }
   plot_validation(as.matrix(m[, c("nfail","npass","nNA"), drop=FALSE]) 
                  , fill      = fill
                  , col       = col
@@ -717,10 +725,10 @@ setMethod('aggregate',signature('validation'), function(x,by=c('rule','record'),
   aggr <- if ( by == 'rule') colSums else rowSums
   ntot <- if ( by == 'rule') nrow else ncol
   L <- lapply(v, function(y){
-    s <- aggr(y,na.rm=TRUE)
+    s <- if(is.null(dim(y))) 0 else aggr(y,na.rm=TRUE)
     s <- s
-    na <- aggr(is.na(y))
-    N <- ntot(y)
+    na <- if(is.null(dim(y))) 0 else aggr(is.na(y))
+    N <- if (is.null(dim(y))) 0 else ntot(y)
     nfail = N - s - na
     out <- data.frame( 
       npass = s

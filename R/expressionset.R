@@ -124,9 +124,10 @@ expressionset <- setRefClass("expressionset"
   if (is.null(dat[["rule"]])){
     stop("No column called 'rule' found")
   }
-  dat$name <- as.character(dat$name)
+  L <- setNames(vector(mode="list", length=nrow(dat)), dat$name)
+  dat$name  <- extract_names(L)
   dat$label <- as.character(dat$label)
-  dat$rule <- as.character(dat$rule)
+  dat$rule  <- as.character(dat$rule)
   dat$description <- as.character(dat$description)
   for ( i in seq_len(n)){
     R[[i]] <- rule(
@@ -138,7 +139,11 @@ expressionset <- setRefClass("expressionset"
       , created = cr
     )
   }
+  names(R) <- names(R)
   obj$rules <- R
+  
+  # make names unique (in the identical way as the other creation methods)
+  names(obj) <- names(obj)
 }
 
 
@@ -155,6 +160,9 @@ expressionset <- setRefClass("expressionset"
   for ( fl in S )
     R <- c(R, rules_from_yrf_file(fl,prefix=.prefix))
   obj$rules <- R
+  # make names unique (in the identical way as the other creation methods)
+  names(obj) <- names(obj)
+  
   obj$._options <- .PKGOPT
   # options only from the 'including' file (not from included)
   local_opt <- options_from_yml(file)
@@ -340,9 +348,12 @@ extract_names <- function(L,prefix="V"){
   if ( vectorize ) exprs <- lapply(exprs, vectorize)
   if ( replace_dollar ) exprs <- lapply(exprs, replace_dollar)
   if ( replace_in ) exprs <- lapply(exprs, replace_in)
-  if (lin_eq_eps > 0)   exprs <- lapply(exprs, replace_linear_restriction, eps=lin_eq_eps, dat=dat, op="==")
-  if (lin_ineq_eps > 0) exprs <- lapply(exprs, replace_linear_restriction, eps=lin_ineq_eps, dat=dat, op="<=")
-  if (lin_ineq_eps > 0) exprs <- lapply(exprs, replace_linear_restriction, eps=lin_ineq_eps, dat=dat, op=">=")
+  
+  exprs <- lapply(exprs, dat=dat, replace_lin, eps_eq = lin_eq_eps, eps_ineq = lin_ineq_eps)
+  # if (lin_eq_eps > 0)   exprs <- lapply(exprs, replace_linear_restriction, eps=lin_eq_eps, dat=dat, op="==")
+  # if (lin_ineq_eps > 0) exprs <- lapply(exprs, replace_linear_restriction, eps=lin_ineq_eps, dat=dat, op="<=")
+  # if (lin_ineq_eps > 0) exprs <- lapply(exprs, replace_linear_restriction, eps=lin_ineq_eps, dat=dat, op=">=")
+  # 
   set_ref(exprs, ref)
 }
 

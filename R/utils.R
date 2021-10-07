@@ -4,9 +4,13 @@ setNames <- function(x,nm){
   x
 }
 
-# a reasonable warning
+# a reasonable warning and message
 warnf <- function(fmt,...){
   warning(sprintf(fmt,...),call.=FALSE)
+}
+
+msgf <- function(fmt, ...){
+  message(sprintf(fmt, ...))
 }
 
 
@@ -72,7 +76,7 @@ violating <- function(x, y, include_missing=FALSE, ...){
     stop("Not all rules have record-wise output")
   }
   if (include_missing){
-    x[apply(A,1, function(d) any(!d | is.na(d)) )   ] 
+    x[apply(A, 1, function(d) any(!d | is.na(d))), , drop = FALSE] 
   } else {
     x[apply(A,1,function(d) any(!d &!is.na(d))),,drop=FALSE]
   }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/confrontation.R
 \name{plot,validation-method}
 \alias{plot,validation-method}
-\title{Plot validaiton results}
+\title{Plot validation results}
 \usage{
 \S4method{plot}{validation}(
   x,
