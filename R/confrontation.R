@@ -669,11 +669,14 @@ setMethod("plot","validation", function(x, y
                     , xlab = NULL
                     , ...)
 {
-  if(length(errors(x)>=1)){
-    msgf("%d rules gave a runtime error on execution so those results are not plotted. See ?errors"
-        , length(errors(x)))
+  stopifnot(length(rulenames) == length(x))
+  if(length(errors(x))>=1){
+    errs <- paste(names(errors(x)), sep=", ")
+    msgf("Rules %s not included in plot since they could not be executed. See ?errors"
+        , errs)
   }
   m <- aggregate(x, by="rule")
+  rulenames <- rulenames[!( names(x) %in% names(errors(x)) )]
   if (is.null(m)){
     msgf("Noting to plot")
     return(NULL)
@@ -726,7 +729,6 @@ setMethod('aggregate',signature('validation'), function(x,by=c('rule','record'),
   ntot <- if ( by == 'rule') nrow else ncol
   L <- lapply(v, function(y){
     s <- if(is.null(dim(y))) 0 else aggr(y,na.rm=TRUE)
-    s <- s
     na <- if(is.null(dim(y))) 0 else aggr(is.na(y))
     N <- if (is.null(dim(y))) 0 else ntot(y)
     nfail = N - s - na
@@ -738,11 +740,18 @@ setMethod('aggregate',signature('validation'), function(x,by=c('rule','record'),
       , rel.fail  = nfail/N
       , rel.NA = na/N
     )
+  
     keys <- x$._keys$keyset
     if (by=="record" && nrow(out)==nrow(keys)) cbind(keys,out) else out
   })
   if ( length(L) == 1 && drop ) L <- L[[1]]
-  if ( by== 'rule' && !is.data.frame(L) ) L <- do.call(rbind,L)
+  if ( by == 'rule' && !is.data.frame(L) ){ 
+    L <- do.call(rbind,L)
+    # values are not errors, and such rules are not included by 'values'
+    # we also put rules in the same order as in the 'validator' object.
+    ii <- match(names(x)[!names(x) %in% names(errors(x))], rownames(L))
+    L <- L[ii,, drop=FALSE]
+  }
   L
 })
 

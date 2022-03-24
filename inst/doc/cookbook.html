@@ -11,7 +11,7 @@
 
 <meta name="author" content="Mark P.J. van der Loo" />
 
-<meta name="date" content="2021-09-29" />
+<meta name="date" content="2022-03-24" />
 
 <title>The Data Validation Cookbook</title>
 
@@ -1528,7 +1528,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">The Data Validation Cookbook</h1>
 <h4 class="author">Mark P.J. van der Loo</h4>
-<h4 class="date">2021-09-29</h4>
+<h4 class="date">2022-03-24</h4>
 
 </div>
 
@@ -1539,7 +1539,7 @@ div.tocify {
 <a href="https://cran.r-project.org/package=validate">validate</a> package for
 <a href="https://www.r-project.org">R</a>.</p>
 <p>This version of the book was rendered with <code>validate</code> version
-1.1.0. The latest release of <code>validate</code> can be installed
+1.1.1. The latest release of <code>validate</code> can be installed
 from <a href="https://cran.r-project.org">CRAN</a> as follows.</p>
 <pre class="r"><code>install.packages(&quot;validate&quot;)</code></pre>
 <p>The purposes of this book include demonstrating the main tools and workflows of
@@ -1573,8 +1573,8 @@ R. <em>Journal of Statistical Software</em>, Accepted for publication.
 </blockquote>
 <p>To cite this cookbook, please use the following citation.</p>
 <blockquote>
-<p>MPJ van der Loo (2021) <em>The Data Validation Cookbook</em>
-version 1.1.0. <a href="http://data-cleaning.github.io/validate/">https://data-cleaning.github.io/validate</a></p>
+<p>MPJ van der Loo (2022) <em>The Data Validation Cookbook</em>
+version 1.1.1. <a href="http://data-cleaning.github.io/validate/">https://data-cleaning.github.io/validate</a></p>
 </blockquote>
 </div>
 <div id="acknowledgements" class="section level2 unnumbered">
@@ -2423,7 +2423,7 @@ summary(out)</code></pre>
 ## 1 abs(total.rev - profit - total.costs) &lt;= 0.01
 ## 2 abs(turnover + other.rev - total.rev) &lt;= 0.01
 ## 3                     profit &lt;= 0.6 * total.rev</code></pre>
-<p>See <a href="#sect:options">7.8</a> for more information on setting and resetting options.</p>
+<p>See <a href="#sect:options">7.6</a> for more information on setting and resetting options.</p>
 </div>
 <div id="conditional-restrictions" class="section level2">
 <h2><span class="header-section-number">4.3</span> Conditional restrictions</h2>
@@ -2490,7 +2490,7 @@ patterns.</p>
 <p>The records containing forbidden keys can be selected as follows.</p>
 <pre class="r"><code>violating(transactions, out)</code></pre>
 <pre><code>##   sender receiver value
-## 1    S21      FG0    97</code></pre>
+## 1    S21      FG0    71</code></pre>
 <p>It is also possible to use regular expression patterns, by labeling the
 forbidden key set with <code>rx()</code>. If no labeling is used, the key sets are
 interpreted as string literals.</p>
@@ -3038,25 +3038,11 @@ constructed from multiple records.</p>
 </div>
 <div id="sect:work" class="section level1">
 <h1><span class="header-section-number">7</span> Working with validate</h1>
-<div id="sect:readfromfile" class="section level2">
-<h2><span class="header-section-number">7.1</span> Reading rules from file</h2>
-<p>It is a very good idea to store and maintain rule sets outside of your R
-script. Validate supports two file formats: simple text files and <code>yaml</code> files.
-Here we only discuss simple text files, yaml files are treated in <a href="#sect:yamlfiles">7.4</a>.</p>
-<p>To try this, copy the following rules into a new text file and store it in a
-file called <code>myrules.R</code>, in the current working directory of your R session.</p>
-<pre class="r"><code># basic range checks
-speed &gt;= 0
-dist  &gt;= 0
-
-# ratio check
-speed / dist &lt;= 1.5</code></pre>
-<p>Note that you are allowed to annotate the rules as you would with
-regular R code. Reading these rules can be done as follows.</p>
-<pre class="r"><code>rules &lt;- validator(.file=&quot;myrules.R&quot;)</code></pre>
-</div>
+<p>In this section we dive deeper into the the central object types used in the
+package: the <code>validator</code> object type for storing lists of rules, and the
+<code>confrontatation</code> object type for storing the results of a validation.</p>
 <div id="manipulating-rule-sets" class="section level2">
-<h2><span class="header-section-number">7.2</span> Manipulating rule sets</h2>
+<h2><span class="header-section-number">7.1</span> Manipulating rule sets</h2>
 <p>Validate stores rulesets into something called a <code>validator</code> object. The
 <code>validator()</code> function creates such an object.</p>
 <pre class="r"><code>v &lt;- validator(speed &gt;= 0, dist&gt;=0, speed/dist &lt;= 1.5)
@@ -3078,7 +3064,7 @@ to get a new <code>validator</code>. Here, we select the first and third element
 object as <code>v</code>. To make an actual copy, you can select everything.</p>
 <pre><code>w &lt;- v[]</code></pre>
 <p>It is also possible to concatenate two validator objects. For example when you
-read two rule sets from two files (See <a href="#sect:readfromfile">7.1</a>). This is done
+read two rule sets from two files (See <a href="#sect:readfromfile">8.1</a>). This is done
 by adding them together with <code>+</code>.</p>
 <pre class="r"><code>rules1 &lt;- validator(speed&gt;=0)
 rules2 &lt;- validator(dist &gt;= 0)
@@ -3095,14 +3081,14 @@ is returned. This is the validating expression entered by the user, plus some
 ##  label      :  
 ##  description:  
 ##  origin     : command-line 
-##  created    : 2021-09-29 12:41:08
+##  created    : 2022-03-24 10:35:49
 ##  meta       : language&lt;chr&gt;, severity&lt;chr&gt;</code></pre>
 <p>Users never need to manipulate rule objects, but it can be convenient to
 inspect them. As you see, the rules have some automatically created metadata.
 In the next section we demonstrate how to retrieve and set the metadata.</p>
 </div>
 <div id="rule-metadata" class="section level2">
-<h2><span class="header-section-number">7.3</span> Rule metadata</h2>
+<h2><span class="header-section-number">7.2</span> Rule metadata</h2>
 <p>Validator objects behave a lot like lists. The only metadata in an R
 list are the <code>names</code> of its elements. You can get and set names of a list
 using the <code>names&lt;-</code> function. Similarly, there are getter/setter functions
@@ -3142,14 +3128,14 @@ meta(rules,&quot;bar&quot;) &lt;- &quot;baz&quot;</code></pre>
 ##  label      :  
 ##  description:  
 ##  origin     : command-line 
-##  created    : 2021-09-29 12:41:08
+##  created    : 2022-03-24 10:35:49
 ##  meta       : language&lt;chr&gt;, severity&lt;chr&gt;</code></pre>
 <p>Or by extracting it to a <code>data.frame</code></p>
 <pre class="r"><code>meta(v)</code></pre>
 <pre><code>##   name label description       origin             created       language
-## 1   V1                   command-line 2021-09-29 12:41:08 validate 1.1.0
-## 2   V2                   command-line 2021-09-29 12:41:08 validate 1.1.0
-## 3   V3                   command-line 2021-09-29 12:41:08 validate 1.1.0
+## 1   V1                   command-line 2022-03-24 10:35:49 validate 1.1.1
+## 2   V2                   command-line 2022-03-24 10:35:49 validate 1.1.1
+## 3   V3                   command-line 2022-03-24 10:35:49 validate 1.1.1
 ##   severity
 ## 1    error
 ## 2    error
@@ -3174,73 +3160,8 @@ block.</p>
 ##   V2 FALSE  TRUE
 ##   V3  TRUE  TRUE</code></pre>
 </div>
-<div id="sect:yamlfiles" class="section level2">
-<h2><span class="header-section-number">7.4</span> Metadata in text files: <code>YAML</code></h2>
-<p><a href="https://yaml.org">YAML</a> is a data format that aims to be easy to learn and
-human-readable. The name ‘YAML’ is a <a href="https://en.wikipedia.org/wiki/Recursive_acronym">recursive
-acronym</a> that stands for</p>
-<blockquote>
-<p>YAML Ain’t Markup Language.</p>
-</blockquote>
-<p>Validate can read and write rule sets from and to YAML files. For example,
-paste the following code into a file called <code>myrules.yaml</code>.</p>
-<pre><code>rules:
-- expr: speed &gt;= 0
-  name: &#39;speed&#39;
-  label: &#39;speed positivity&#39;
-  description: |
-    speed can not be negative
-  created: 2020-11-02 11:15:11
-  meta:
-    language: validate 0.9.3.36
-    severity: error
-- expr: dist &gt;= 0
-  name: &#39;dist&#39;
-  label: &#39;distance positivity&#39;
-  description: |
-    distance cannot be negative.
-  created: 2020-11-02 11:15:11
-  meta:
-    language: validate 0.9.3.36
-    severity: error
-- expr: speed/dist &lt;= 1.5
-  name: &#39;ratio&#39;
-  label: &#39;ratio limit&#39;
-  description: | 
-    The speed to distance ratio can
-    not exceed 1.5.
-  created: 2020-11-02 11:15:11
-  meta:
-    language: validate 0.9.3.36
-    severity: error
-</code></pre>
-<p>We can read this file using <code>validator(.file=)</code> as before.</p>
-<pre class="r"><code>rules &lt;- validator(.file=&quot;myrules.yaml&quot;)
-rules</code></pre>
-<pre><code>## Object of class &#39;validator&#39; with 3 elements:
-##  speed [speed positivity]  : speed &gt;= 0
-##  dist [distance positivity]: dist &gt;= 0
-##  ratio [ratio limit]       : speed/dist &lt;= 1.5</code></pre>
-<p>Observe that the labels are printed between brackets. There are a few things
-to note about these YAML files.</p>
-<ol style="list-style-type: decimal">
-<li><code>rules:</code> starts a list of rules.</li>
-<li>Each new rule starts with a dash (<code>-</code>)</li>
-<li>Each element of a rule is denoted <code>name: &lt;content&gt;</code>. The only obligated
-element is <code>expr</code>: the rule expression.</li>
-<li>Spaces matter. Each element of a rule must be preceded by a newline and two spaces.
-Subelements (as in <code>meta</code>) are indented again.</li>
-</ol>
-<p>A full tutorial on YAML can be found at
-<a href="https://www.w3schools.io/file/yaml-introduction/">W3Cschools.io</a>.</p>
-<p>To export a rule set to yaml, use the <code>export_yaml()</code> function.</p>
-<pre class="r"><code>rules1 &lt;- rules[c(1,3)]
-export_yaml(rules1, file=&quot;myrules2.yaml&quot;)</code></pre>
-<p>We will return extensively to reading rules from YAML or other text files
-in Chapter <a href="#sect:rulefiles">8</a>.</p>
-</div>
 <div id="rules-in-data-frames" class="section level2">
-<h2><span class="header-section-number">7.5</span> Rules in data frames</h2>
+<h2><span class="header-section-number">7.3</span> Rules in data frames</h2>
 <p>You can read and write rules and their metadata from and to data frames. This
 is convenient, for example in cases where rules are retrieved from a central
 rule repository in a data base.</p>
@@ -3254,7 +3175,7 @@ sufficient to have three character columns, named <code>rule</code>, <code>name<
 <code>description</code> in any order.</p>
 </div>
 <div id="sect:syntax" class="section level2">
-<h2><span class="header-section-number">7.6</span> Validation rule syntax</h2>
+<h2><span class="header-section-number">7.4</span> Validation rule syntax</h2>
 <p>Conceptually, any R statement that will evaluate to a <code>logical</code> is considered a
 validating statement. The validate package checks this when the user defines a
 rule set, so for example calling <code>validator( mean(height) )</code> will result in a
@@ -3403,7 +3324,7 @@ here is a quick overview.</p>
 </table>
 </div>
 <div id="confrontation-objects" class="section level2">
-<h2><span class="header-section-number">7.7</span> Confrontation objects</h2>
+<h2><span class="header-section-number">7.5</span> Confrontation objects</h2>
 <p>The outcome of confronting a validator object with a data set is an object of
 class <code>confrontation</code>. There are several ways to extract information from a
 <code>confrontation</code> object.</p>
@@ -3433,7 +3354,7 @@ vectors), to obtain a sub-object pertaining only to the selected rules.</p>
 <pre><code>summary(cf[c(1,3)])</code></pre>
 </div>
 <div id="sect:options" class="section level2">
-<h2><span class="header-section-number">7.8</span> Confrontation options</h2>
+<h2><span class="header-section-number">7.6</span> Confrontation options</h2>
 <p>By default, all errors and warnings are caught when validation rules are confronted with data. This can be switched off by setting the <code>raise</code> option to <code>&quot;errors&quot;</code> or <code>&quot;all&quot;</code>. The following
 example contains a specification error: <code>hite</code> should be <code>height</code> and therefore the rule errors
 on the <code>women</code> data.frame because it does not contain a column <code>hite</code>. The error is caught
@@ -3456,7 +3377,7 @@ satisfied to within one or two units of measurement, it is cleaner to define
 two inequalities for that.</p>
 </div>
 <div id="using-reference-data" class="section level2">
-<h2><span class="header-section-number">7.9</span> Using reference data</h2>
+<h2><span class="header-section-number">7.7</span> Using reference data</h2>
 <p>For some checks it is convenient to compare the data under scrutiny with
 other data artifacts. Two common examples include:</p>
 <ul>
@@ -3492,12 +3413,90 @@ summary(cf)</code></pre>
 <p>This Chapter is about importing and exporting rules from and to file, both in
 free-form text and in YAML. We also discuss some more advanced features like
 how to have one rule file include another file.</p>
-<ul>
-<li>Importing from free-form text files was discussed in @ref{sect:readfromfile}</li>
-<li>Importing from simple YAML files was discussed in @ref{sect:yamlfiles}</li>
-</ul>
+<div id="sect:readfromfile" class="section level2">
+<h2><span class="header-section-number">8.1</span> Reading rules from file</h2>
+<p>It is a very good idea to store and maintain rule sets outside of your R
+script. Validate supports two file formats: simple text files and <code>yaml</code> files.
+Here we only discuss simple text files, yaml files are treated in <a href="#sect:yamlfiles">8.2</a>.</p>
+<p>To try this, copy the following rules into a new text file and store it in a
+file called <code>myrules.R</code>, in the current working directory of your R session.</p>
+<pre class="r"><code># basic range checks
+speed &gt;= 0
+dist  &gt;= 0
+
+# ratio check
+speed / dist &lt;= 1.5</code></pre>
+<p>Note that you are allowed to annotate the rules as you would with
+regular R code. Reading these rules can be done as follows.</p>
+<pre class="r"><code>rules &lt;- validator(.file=&quot;myrules.R&quot;)</code></pre>
+</div>
+<div id="sect:yamlfiles" class="section level2">
+<h2><span class="header-section-number">8.2</span> Metadata in text files: <code>YAML</code></h2>
+<p><a href="https://yaml.org">YAML</a> is a data format that aims to be easy to learn and
+human-readable. The name ‘YAML’ is a <a href="https://en.wikipedia.org/wiki/Recursive_acronym">recursive
+acronym</a> that stands for</p>
+<blockquote>
+<p>YAML Ain’t Markup Language.</p>
+</blockquote>
+<p>Validate can read and write rule sets from and to YAML files. For example,
+paste the following code into a file called <code>myrules.yaml</code>.</p>
+<pre><code>rules:
+- expr: speed &gt;= 0
+  name: &#39;speed&#39;
+  label: &#39;speed positivity&#39;
+  description: |
+    speed can not be negative
+  created: 2020-11-02 11:15:11
+  meta:
+    language: validate 0.9.3.36
+    severity: error
+- expr: dist &gt;= 0
+  name: &#39;dist&#39;
+  label: &#39;distance positivity&#39;
+  description: |
+    distance cannot be negative.
+  created: 2020-11-02 11:15:11
+  meta:
+    language: validate 0.9.3.36
+    severity: error
+- expr: speed/dist &lt;= 1.5
+  name: &#39;ratio&#39;
+  label: &#39;ratio limit&#39;
+  description: | 
+    The speed to distance ratio can
+    not exceed 1.5.
+  created: 2020-11-02 11:15:11
+  meta:
+    language: validate 0.9.3.36
+    severity: error
+</code></pre>
+<p>We can read this file using <code>validator(.file=)</code> as before.</p>
+<pre class="r"><code>rules &lt;- validator(.file=&quot;myrules.yaml&quot;)
+rules</code></pre>
+<pre><code>## Object of class &#39;validator&#39; with 3 elements:
+##  speed [speed positivity]  : speed &gt;= 0
+##  dist [distance positivity]: dist &gt;= 0
+##  ratio [ratio limit]       : speed/dist &lt;= 1.5</code></pre>
+<p>Observe that the labels are printed between brackets. There are a few things
+to note about these YAML files.</p>
+<ol style="list-style-type: decimal">
+<li><code>rules:</code> starts a list of rules.</li>
+<li>Each new rule starts with a dash (<code>-</code>)</li>
+<li>Each element of a rule is denoted <code>name: &lt;content&gt;</code>. The only obligated
+element is <code>expr</code>: the rule expression.</li>
+<li>Spaces matter. Each element of a rule must be preceded by a newline and two spaces.
+Subelements (as in <code>meta</code>) are indented again.</li>
+</ol>
+<p>A full tutorial on YAML can be found at
+<a href="https://www.w3schools.io/file/yaml-introduction/">W3Cschools.io</a>.</p>
+<p>To export a rule set to yaml, use the <code>export_yaml()</code> function.</p>
+<pre class="r"><code>rules1 &lt;- rules[c(1,3)]
+export_yaml(rules1, file=&quot;myrules2.yaml&quot;)</code></pre>
+<p>We will return extensively to reading rules from YAML or other text files
+in Chapter <a href="#sect:rulefiles">8</a>.</p>
+</div>
 <div id="setting-options" class="section level2">
-<h2><span class="header-section-number">8.1</span> Setting options</h2>
+<h2><span class="header-section-number">8.3</span> Setting options</h2>
 <p>Both free-form and YAML files can optionally start with a header section where
 options or file inclusions can be set. The header section is enclosed by lines
 that contain three dashes (<code>---</code>) at the beginning of the line.</p>
@@ -3525,7 +3524,7 @@ the call to <code>confront()</code>.</p>
 inclusions must be specified in that format.</p>
 </div>
 <div id="including-other-rule-files" class="section level2">
-<h2><span class="header-section-number">8.2</span> Including other rule files</h2>
+<h2><span class="header-section-number">8.4</span> Including other rule files</h2>
 <p>In validate, rule files can include each other recursively. So file A can
 include file B, which may inclide file C. This is useful for example in surveys
 where the first part of the questionnaire goes to all respondents, and for the
@@ -3546,7 +3545,7 @@ options:
 # start rule definitions here</code></pre>
 </div>
 <div id="exporting-validator-objects" class="section level2">
-<h2><span class="header-section-number">8.3</span> Exporting validator objects</h2>
+<h2><span class="header-section-number">8.5</span> Exporting validator objects</h2>
 <p>There are three ways to do that. You can either write to a <code>yaml</code> file
 immediately as follows</p>
 <pre class="r"><code>v &lt;- validator(height&gt;0, weight&gt; 0)
@@ -3745,8 +3744,7 @@ not all those links appear to be active.</p>
 that a client looking for SDMX metadata to validate its data before sending
 could query the respective sources using one and the same API. The latest
 version of the REST API is 2.1 which is described very well in the easy to use
-<a href="https://raw.githubusercontent.com/sdmx-twg/sdmx-rest/master/v2_1/ws/rest/docs/rest_cheat_sheet.pdf">SDMX API cheet
-sheet</a>.
+<a href="https://github.com/sdmx-twg/sdmx-rest/raw/master/doc/rest_cheat_sheet.pdf">SDMX API cheat sheet</a>
 Inspecting the endpoints shows that not all providers implement all same
 resource values. Depending on the provider an organization may decide which
 elements of the API are exposed. For example, the API standard defines methods
@@ -3985,7 +3983,7 @@ after each step. To make sure this happens, run this file using <code>run_file()
 from the <code>lumberjack</code> package.</p>
 <pre class="r"><code>library(lumberjack)
 run_file(&#39;clean_supermarkets.R&#39;)</code></pre>
-<pre><code>## Dumped a log at /tmp/Rtmpgl2T7H/Rbuild8228513d2c36/validate/vignettes/spm_lbj_cells.csv</code></pre>
+<pre><code>## Dumped a log at /tmp/Rtmp0Qx8mP/Rbuild52964309c9c9/validate/vignettes/spm_lbj_cells.csv</code></pre>
 <p>This command executed all code in <code>clean_supermarkets.R</code>, but <code>run_file()</code> also ensured
 that all changes in the <code>spm</code> variable were recorded and logged using <code>lbj_cells()</code>.
 The output is written to a <code>csv</code> file which we can read.</p>
@@ -3993,8 +3991,8 @@ The output is written to a <code>csv</code> file which we can read.</p>
 <p>The logfile variable has quite a lot of columns, so here show just two rows.</p>
 <pre class="r"><code>logfile[3:4,]</code></pre>
 <pre><code>##   step                time
-## 3    2 2021-09-29 12:41:08
-## 4    3 2021-09-29 12:41:08
+## 3    2 2022-03-24 10:35:49
+## 4    3 2022-03-24 10:35:49
 ##                                                                expression cells
 ## 3 spm &lt;- transform(spm, other.rev = ifelse(is.na(other.rev),0,other.rev))   300
 ## 4                       spm &lt;- transform(spm, other.rev = abs(other.rev))   300
@@ -4035,13 +4033,13 @@ start_log(spm, logger=lbj_rules(rules))
 ## The rest is the same as above ...</code></pre>
 <p>Running the file again using lumberjack, we now get two log files.</p>
 <pre class="r"><code>run_file(&quot;clean_supermarkets2.R&quot;)</code></pre>
-<pre><code>## Dumped a log at /tmp/Rtmpgl2T7H/Rbuild8228513d2c36/validate/vignettes/spm_lbj_cells.csv</code></pre>
-<pre><code>## Dumped a log at /tmp/Rtmpgl2T7H/Rbuild8228513d2c36/validate/vignettes/spm_lbj_rules.csv</code></pre>
+<pre><code>## Dumped a log at /tmp/Rtmp0Qx8mP/Rbuild52964309c9c9/validate/vignettes/spm_lbj_cells.csv</code></pre>
+<pre><code>## Dumped a log at /tmp/Rtmp0Qx8mP/Rbuild52964309c9c9/validate/vignettes/spm_lbj_rules.csv</code></pre>
 <p>Let’s read the log file from <code>spm_lbj_rules.csv</code> and print row three and four.</p>
 <pre class="r"><code>read.csv(&quot;spm_lbj_rules.csv&quot;)[3:4,]</code></pre>
 <pre><code>##   step                time
-## 3    2 2021-09-29 12:41:09
-## 4    3 2021-09-29 12:41:09
+## 3    2 2022-03-24 10:35:49
+## 4    3 2022-03-24 10:35:49
 ##                                                                expression
 ## 3 spm &lt;- transform(spm, other.rev = ifelse(is.na(other.rev),0,other.rev))
 ## 4                       spm &lt;- transform(spm, other.rev = abs(other.rev))

@@ -19,10 +19,10 @@ Description: Declare data validation rules and data quality indicators;
         The package supports rules that are per-field, in-record,
         cross-record or cross-dataset. Rules can be automatically
         analyzed for rule type and connectivity. Supports checks implied
-        by an SDMS DSD file as well. See also Van der Loo
+        by an SDMX DSD file as well. See also Van der Loo
         and De Jonge (2018) <doi:10.1002/9781118897126>, Chapter 6
         and the JSS paper (2021) <doi:10.18637/jss.v097.i10>.
-Version: 1.1.0
+Version: 1.1.1
 Depends: R (>= 3.5.0), methods
 URL: https://github.com/data-cleaning/validate
 BugReports: https://github.com/data-cleaning/validate/issues
@@ -38,9 +38,9 @@ Collate: 'rule.R' 'sugar.R' 'validate_pkg.R' 'parse.R'
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2021-09-29 10:41:13 UTC; mark
+Packaged: 2022-03-24 09:35:54 UTC; mark
 Author: Mark van der Loo [cre, aut] (<https://orcid.org/0000-0002-9807-4686>),
   Edwin de Jonge [aut] (<https://orcid.org/0000-0002-6580-4718>),
   Paul Hsieh [ctb]
 Repository: CRAN
-Date/Publication: 2021-10-07 08:00:02 UTC
+Date/Publication: 2022-03-24 10:40:02 UTC
