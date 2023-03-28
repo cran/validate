@@ -41,17 +41,17 @@ in R objects.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{rule}: Retrieve unique variable names
+\item \code{variables(rule)}: Retrieve unique variable names
 
-\item \code{list}: Alias to \code{names.list}
+\item \code{variables(list)}: Alias to \code{names.list}
 
-\item \code{data.frame}: Alias to \code{names.data.frame}
+\item \code{variables(data.frame)}: Alias to \code{names.data.frame}
 
-\item \code{environment}: Alias to \code{ls}
+\item \code{variables(environment)}: Alias to \code{ls}
 
-\item \code{expressionset}: Variables occuring in \code{x} either as a single list, or per rule.
+\item \code{variables(expressionset)}: Variables occuring in \code{x} either as a single list, or per rule.
+
 }}
-
 \examples{
 
 v <- validator(

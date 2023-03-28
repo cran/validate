@@ -251,7 +251,7 @@ keyset <- expand.grid(
    ,"Newbay"
    ,"Oakdale"
    ,"Samplonia"
-   ,"Smokeley"
+   ,"Smokely"
    ,"Wheaton"
   )
  ,period = c(years, sapply(years, paste0, quarters))
