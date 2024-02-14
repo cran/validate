@@ -47,15 +47,15 @@ event(cf)
 }
 \references{
 Mark van der Loo and Olav ten Bosch (2017) 
-\href{https://goo.gl/hEGdbo}{Design of a generic machine-readable validation report structure}, 
+\href{https://markvanderloo.eu/files/share/loo2017design.pdf}{Design of a generic machine-readable validation report structure}, 
 version 1.0.0.
 }
 \seealso{
 Other confrontation-methods: 
 \code{\link{[,expressionset-method}},
 \code{\link{as.data.frame,confrontation-method}},
-\code{\link{confrontation-class}},
 \code{\link{confront}()},
+\code{\link{confrontation-class}},
 \code{\link{errors}()},
 \code{\link{keyset}()},
 \code{\link{length,expressionset-method}},

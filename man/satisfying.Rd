@@ -3,12 +3,15 @@
 \name{satisfying}
 \alias{satisfying}
 \alias{violating}
+\alias{violating.default}
 \alias{lacking}
 \title{Select records (not) satisfying rules}
 \usage{
 satisfying(x, y, include_missing = FALSE, ...)
 
 violating(x, y, include_missing = FALSE, ...)
+
+\method{violating}{default}(x, y, include_missing = FALSE, ...)
 
 lacking(x, y, ...)
 }

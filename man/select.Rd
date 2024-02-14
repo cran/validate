@@ -39,8 +39,8 @@ The \code{options} attribute will be cloned
 \seealso{
 Other confrontation-methods: 
 \code{\link{as.data.frame,confrontation-method}},
-\code{\link{confrontation-class}},
 \code{\link{confront}()},
+\code{\link{confrontation-class}},
 \code{\link{errors}()},
 \code{\link{event}()},
 \code{\link{keyset}()},

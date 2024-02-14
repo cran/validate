@@ -3,6 +3,7 @@
 \docType{package}
 \name{validate}
 \alias{validate}
+\alias{validate-package}
 \alias{package-validate}
 \title{Data Validation Infrastructure}
 \description{
@@ -35,4 +36,26 @@ data cleaning with applications in R} John Wiley & Sons.
 
 Please use \code{citation("validate")} to get a citation for (scientific)
 publications.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/data-cleaning/validate}
+  \item Report bugs at \url{https://github.com/data-cleaning/validate/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Mark van der Loo \email{mark.vanderloo@gmail.com} (\href{https://orcid.org/0000-0002-9807-4686}{ORCID})
+
+Authors:
+\itemize{
+  \item Edwin de Jonge (\href{https://orcid.org/0000-0002-6580-4718}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Paul Hsieh [contributor]
+}
+
 }

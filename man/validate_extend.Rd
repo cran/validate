@@ -62,9 +62,6 @@ occurring variables are numeric in \code{dat}.}
 \item{vectorize}{Vectorize if-statements?}
 
 \item{replace_dollar}{Replace dollar with bracket index?}
-
-\item{varlist:}{a character vector of variables to search through 
-when groups are defined with regexps.}
 }
 \description{
 Functions exported silently to allow for cross-package inheritance 

@@ -60,8 +60,8 @@ Other validator-methods:
 \code{\link{validator}}
 
 Other expressionset-methods: 
-\code{\link{as.data.frame,expressionset-method}},
 \code{\link{as.data.frame}()},
+\code{\link{as.data.frame,expressionset-method}},
 \code{\link{created}()},
 \code{\link{description}()},
 \code{\link{label}()},

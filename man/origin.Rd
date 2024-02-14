@@ -97,8 +97,8 @@ v[[1]]
 }
 \seealso{
 Other expressionset-methods: 
-\code{\link{as.data.frame,expressionset-method}},
 \code{\link{as.data.frame}()},
+\code{\link{as.data.frame,expressionset-method}},
 \code{\link{created}()},
 \code{\link{description}()},
 \code{\link{label}()},

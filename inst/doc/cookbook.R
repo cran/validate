@@ -1,18 +1,18 @@
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 
-## ---- echo=TRUE, eval=FALSE---------------------------------------------------
+## ----echo=TRUE, eval=FALSE----------------------------------------------------
 #  install.packages("validate")
 
-## ---- echo=FALSE, include=!knitr::is_latex_output()---------------------------
+## ----echo=FALSE, include=!knitr::is_latex_output()----------------------------
 #knitr::asis_output("
 #[![Creative Commons License](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
 #")
 
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 
-## ---- include=FALSE, eval=knitr::is_latex_output()----------------------------
+## ----include=FALSE, eval=knitr::is_latex_output()-----------------------------
 #  knitr::opts_chunk$set(comment=NA)
 
 ## -----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ summary(out)
 ## ----fig.height=7, fig.width=7, echo=!knitr::is_latex_output(), eval=!knitr::is_latex_output()----
 plot(out)
 
-## ---- label="validateplot", fig.height=5, fig.width=5, out.width="0.7\\textwidth", fig.align="center", echo=knitr::is_latex_output(), eval=knitr::is_latex_output(), fig.env="figure",fig.pos="!t", fig.cap="Plot of validation output."----
+## ----label="validateplot", fig.height=5, fig.width=5, out.width="0.7\\textwidth", fig.align="center", echo=knitr::is_latex_output(), eval=knitr::is_latex_output(), fig.env="figure",fig.pos="!t", fig.cap="Plot of validation output."----
 #  plot(out)
 
 ## -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ violating(cars, out[1:3])
 df_out <- as.data.frame(out)
 head(df_out, 3)
 
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 
 ## -----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ out <- confront(SBS2000, rule
               , ref=list(valid_codes=codelist))
 summary(out)
 
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 
 ## -----------------------------------------------------------------------------
@@ -311,10 +311,10 @@ rule <- validator(
 out  <- confront(samplonomy, rule)
 summary(out)[1:7]
 
-## ---- results='hide'----------------------------------------------------------
+## ----results='hide'-----------------------------------------------------------
 violating(samplonomy, out)
 
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 
 ## -----------------------------------------------------------------------------
@@ -372,7 +372,7 @@ summary(out)[1:7]
 ## -----------------------------------------------------------------------------
 violating(transactions, out)
 
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 
 ## -----------------------------------------------------------------------------
@@ -543,7 +543,7 @@ lacking(samplonomy, out)
 ## -----------------------------------------------------------------------------
 violating(samplonomy, out)
 
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 
 ## -----------------------------------------------------------------------------
@@ -570,10 +570,10 @@ women$id <- letters[1:15]
 out <- confront(women, ii,key="id")
 tail( as.data.frame(out) )
 
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
 library(validate)
 
 ## -----------------------------------------------------------------------------
@@ -670,11 +670,11 @@ dat <- data.frame(fruit = c("apple","broccoli","orange","banana"))
 cf <- confront(dat, rules, ref = list(codelist = fruits))
 summary(cf)
 
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 library(validate)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  # basic range checks
 #  speed >= 0
 #  dist  >= 0
@@ -693,24 +693,24 @@ rules
 rules1 <- rules[c(1,3)]
 export_yaml(rules1, file="myrules2.yaml")
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  v <- validator(height>0, weight> 0)
 #  export_yaml(v,file="my_rules.yaml")
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  df <- as.data.frame(v)
 
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 library(validate)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  sdmx_endpoint()
 
-## ---- eval=TRUE---------------------------------------------------------------
+## ----eval=TRUE----------------------------------------------------------------
 sdmx_endpoint(registry="global")
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  codelist <- sdmx_codelist(
 #    endpoint = sdmx_endpoint("global")
 #    , agency_id = "ESTAT"
@@ -719,10 +719,10 @@ sdmx_endpoint(registry="global")
 #  head(codelist)
 #  [1] "_T"  "_X"  "_Z"  "A"   "A_B" "A01"
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  Activity %in% global_codelist(agency_id="ESTAT", resource_id="CL_ACTIVITY")
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  rules <- validator_from_dsd(endpoint = sdmx_endpoint("ESTAT")
 #     , agency_id = "ESTAT", resource_id = "STSALL", version="latest")
 #  
@@ -733,13 +733,13 @@ sdmx_endpoint(registry="global")
 #   CL_FREQ: FREQ %in% sdmx_codelist(endpoint = "https://ec.europa.eu/tools/cspa_services_global/sdmxregistry/rest", agency_id = "SDMX", resource_id = "CL_FREQ", version = "2.0")
 #  Rules are evaluated using locally defined options
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  rule[[1]]
 
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
 library(validate)
 
 ## -----------------------------------------------------------------------------
@@ -795,7 +795,7 @@ par(mfrow=c(2,1))
 barplot(comparison)
 plot(comparison)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  ## Contents of clean_supermarkets.R
 #  library(validate)
 #  
@@ -831,7 +831,7 @@ logfile <- read.csv("spm_lbj_cells.csv")
 ## -----------------------------------------------------------------------------
 logfile[3:4,]
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  ## Contents of clean_supermarkets2.R
 #  library(validate)
 #  
@@ -856,9 +856,9 @@ run_file("clean_supermarkets2.R")
 ## -----------------------------------------------------------------------------
 read.csv("spm_lbj_rules.csv")[3:4,]
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  stop_log(spm, logger="lbj_rules",file="my_output.csv")
 
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 

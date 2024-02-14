@@ -43,8 +43,8 @@ as.data.frame(confront(women, i, key="id"))
 \seealso{
 Other confrontation-methods: 
 \code{\link{[,expressionset-method}},
-\code{\link{confrontation-class}},
 \code{\link{confront}()},
+\code{\link{confrontation-class}},
 \code{\link{errors}()},
 \code{\link{event}()},
 \code{\link{keyset}()},

@@ -19,8 +19,8 @@ Determine the number of elements in an object.
 Other confrontation-methods: 
 \code{\link{[,expressionset-method}},
 \code{\link{as.data.frame,confrontation-method}},
-\code{\link{confrontation-class}},
 \code{\link{confront}()},
+\code{\link{confrontation-class}},
 \code{\link{errors}()},
 \code{\link{event}()},
 \code{\link{keyset}()},
