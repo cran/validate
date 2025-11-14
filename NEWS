@@ -1,3 +1,10 @@
+version 1.1.6
+- Added nzchar(), startsWith(), endsWith() as pure validating function
+- Fix: rules in YAML that included a literal "---" would not be parsed
+  correctly (thanks to Paul Horikx for the fix)
+- updated the Eurostat SDMX REST API endpoint
+
+
 version 1.1.5
 - Fixed several (possibly) invalid URLs pointing to the ESS CROS website
   by replacing them to versions of documents on markvanderloo.eu.

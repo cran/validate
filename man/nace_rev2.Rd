@@ -25,10 +25,6 @@ Statistical Classification of Economic Activities.
  \item Reference_to_ISIC_Rev._4 \code{[character]}
 }
 }
-\references{
-This codelist was downloaded on 2020-10-21 from 
-\href{https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_CLS_DLD&StrNom=NACE_REV2&StrLanguageCode=EN&StrLayoutCode=HIERARCHIC#}{Eurostat}
-}
 \seealso{
 \code{\link{hierarchy}}
 

@@ -31,7 +31,7 @@ Cell counts and differences for a series of datasets
 When comparing the contents of two data sets, the total number of cells
 in the current data set can be partitioned as in the following figure.
 
-\if{html}{\figure{cellsplit.png}{options: width=80\% alt="rulewise splitting"}}
+\if{html}{\figure{cellsplit.png}{options: width=400 alt="rulewise splitting"}}
 \if{latex}{\figure{cellsplit.pdf}{options: width=13cm}}
 
 This function computes the partition for two or more

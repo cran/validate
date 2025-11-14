@@ -61,7 +61,7 @@ Suppose we have a current and a previous version of a data set. Both
 can be inspected by \code{\link{confront}}ing them with a rule set.
 The status changes in rule violations can be partitioned as shown in the 
 following figure.
-\if{html}{\figure{rulesplit.png}{options: width=80\% alt="cellwise splitting"}}
+\if{html}{\figure{rulesplit.png}{options: width=400 alt="cellwise splitting"}}
 \if{latex}{\figure{rulesplit.pdf}{options: width=13cm}}
 This function computes the partition for two or more
 datasets, comparing the current set to the first (default) or to the 

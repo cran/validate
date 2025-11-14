@@ -2,7 +2,7 @@
 source("chunk_opts.R")
 
 ## ----echo=TRUE, eval=FALSE----------------------------------------------------
-#  install.packages("validate")
+# install.packages("validate")
 
 ## ----echo=FALSE, include=!knitr::is_latex_output()----------------------------
 #knitr::asis_output("
@@ -13,7 +13,7 @@ source("chunk_opts.R")
 source("chunk_opts.R")
 
 ## ----include=FALSE, eval=knitr::is_latex_output()-----------------------------
-#  knitr::opts_chunk$set(comment=NA)
+# knitr::opts_chunk$set(comment=NA)
 
 ## -----------------------------------------------------------------------------
 data(cars)
@@ -36,7 +36,7 @@ summary(out)
 plot(out)
 
 ## ----label="validateplot", fig.height=5, fig.width=5, out.width="0.7\\textwidth", fig.align="center", echo=knitr::is_latex_output(), eval=knitr::is_latex_output(), fig.env="figure",fig.pos="!t", fig.cap="Plot of validation output."----
-#  plot(out)
+# plot(out)
 
 ## -----------------------------------------------------------------------------
 violating(cars, out[1:3])
@@ -632,7 +632,7 @@ df <- as.data.frame(rules)
 rules <- validator(.data=df)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  ?syntax
+# ?syntax
 
 ## -----------------------------------------------------------------------------
 sum_by(1:10, by = rep(c("a","b"), each=5) )
@@ -654,8 +654,10 @@ v <- validator(hite > 0, weight>0)
 summary(confront(women, v))
 
 ## ----eval=TRUE, error=TRUE----------------------------------------------------
+try({
 # this gives an error
 confront(women, v, raise='all')
+})
 
 ## -----------------------------------------------------------------------------
 women1 <- women
@@ -675,12 +677,12 @@ source("chunk_opts.R")
 library(validate)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # basic range checks
-#  speed >= 0
-#  dist  >= 0
-#  
-#  # ratio check
-#  speed / dist <= 1.5
+# # basic range checks
+# speed >= 0
+# dist  >= 0
+# 
+# # ratio check
+# speed / dist <= 1.5
 
 ## -----------------------------------------------------------------------------
 rules <- validator(.file="myrules.R")
@@ -694,47 +696,47 @@ rules1 <- rules[c(1,3)]
 export_yaml(rules1, file="myrules2.yaml")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  v <- validator(height>0, weight> 0)
-#  export_yaml(v,file="my_rules.yaml")
+# v <- validator(height>0, weight> 0)
+# export_yaml(v,file="my_rules.yaml")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  df <- as.data.frame(v)
+# df <- as.data.frame(v)
 
 ## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
 library(validate)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  sdmx_endpoint()
+# sdmx_endpoint()
 
 ## ----eval=TRUE----------------------------------------------------------------
 sdmx_endpoint(registry="global")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  codelist <- sdmx_codelist(
-#    endpoint = sdmx_endpoint("global")
-#    , agency_id = "ESTAT"
-#    , resource_id = "CL_ACTIVITY")
-#  
-#  head(codelist)
-#  [1] "_T"  "_X"  "_Z"  "A"   "A_B" "A01"
+# codelist <- sdmx_codelist(
+#   endpoint = sdmx_endpoint("global")
+#   , agency_id = "ESTAT"
+#   , resource_id = "CL_ACTIVITY")
+# 
+# head(codelist)
+# [1] "_T"  "_X"  "_Z"  "A"   "A_B" "A01"
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  Activity %in% global_codelist(agency_id="ESTAT", resource_id="CL_ACTIVITY")
+# Activity %in% global_codelist(agency_id="ESTAT", resource_id="CL_ACTIVITY")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  rules <- validator_from_dsd(endpoint = sdmx_endpoint("ESTAT")
-#     , agency_id = "ESTAT", resource_id = "STSALL", version="latest")
-#  
-#  length(rules)
-#  [1] 13
-#  rules[1]
-#  Object of class 'validator' with 1 elements:
-#   CL_FREQ: FREQ %in% sdmx_codelist(endpoint = "https://ec.europa.eu/tools/cspa_services_global/sdmxregistry/rest", agency_id = "SDMX", resource_id = "CL_FREQ", version = "2.0")
-#  Rules are evaluated using locally defined options
+# rules <- validator_from_dsd(endpoint = sdmx_endpoint("ESTAT")
+#    , agency_id = "ESTAT", resource_id = "STSALL", version="latest")
+# 
+# length(rules)
+# [1] 13
+# rules[1]
+# Object of class 'validator' with 1 elements:
+#  CL_FREQ: FREQ %in% sdmx_codelist(endpoint = "https://ec.europa.eu/tools/cspa_services_global/sdmxregistry/rest", agency_id = "SDMX", resource_id = "CL_FREQ", version = "2.0")
+# Rules are evaluated using locally defined options
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  rule[[1]]
+# rule[[1]]
 
 ## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
@@ -796,30 +798,30 @@ barplot(comparison)
 plot(comparison)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  ## Contents of clean_supermarkets.R
-#  library(validate)
-#  
-#  # 1. simulate reading data
-#  data(SBS2000)
-#  spm <- SBS2000[c("id","staff","turnover","other.rev","total.rev")]
-#  
-#  # 2. add a logger from 'validate'
-#  start_log(spm, logger=lbj_cells())
-#  
-#  # 3. assume empty values should be filled with 0
-#  spm <- transform(spm, other.rev = ifelse(is.na(other.rev),0,other.rev))
-#  
-#  # 4. assume that negative amounts have only a sign error
-#  spm <- transform(spm, other.rev = abs(other.rev))
-#  
-#  # 5a. ratio estimator for staff conditional on turnover
-#  Rhat <- with(spm, mean(staff,na.rm=TRUE)/mean(turnover,na.rm=TRUE))
-#  
-#  # 5b. impute 'staff' variable where possible using ratio estimator
-#  spm <- transform(spm, staff = ifelse(is.na(staff), Rhat * turnover, staff))
-#  
-#  # 6. write output
-#  write.csv(spm, "supermarkets_treated.csv", row.names = FALSE)
+# ## Contents of clean_supermarkets.R
+# library(validate)
+# 
+# # 1. simulate reading data
+# data(SBS2000)
+# spm <- SBS2000[c("id","staff","turnover","other.rev","total.rev")]
+# 
+# # 2. add a logger from 'validate'
+# start_log(spm, logger=lbj_cells())
+# 
+# # 3. assume empty values should be filled with 0
+# spm <- transform(spm, other.rev = ifelse(is.na(other.rev),0,other.rev))
+# 
+# # 4. assume that negative amounts have only a sign error
+# spm <- transform(spm, other.rev = abs(other.rev))
+# 
+# # 5a. ratio estimator for staff conditional on turnover
+# Rhat <- with(spm, mean(staff,na.rm=TRUE)/mean(turnover,na.rm=TRUE))
+# 
+# # 5b. impute 'staff' variable where possible using ratio estimator
+# spm <- transform(spm, staff = ifelse(is.na(staff), Rhat * turnover, staff))
+# 
+# # 6. write output
+# write.csv(spm, "supermarkets_treated.csv", row.names = FALSE)
 
 ## -----------------------------------------------------------------------------
 library(lumberjack)
@@ -832,23 +834,23 @@ logfile <- read.csv("spm_lbj_cells.csv")
 logfile[3:4,]
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  ## Contents of clean_supermarkets2.R
-#  library(validate)
-#  
-#  #1.a simulate reading data
-#  data(SBS2000, package="validate")
-#  spm <- SBS2000[c("id","staff","other.rev","turnover","total.rev")]
-#  
-#  # 1.b Create rule set
-#  rules <- validator(staff >= 0, other.rev>=0, turnover>=0
-#                   , other.rev + turnover == total.rev)
-#  
-#  
-#  # 2. add two loggers
-#  start_log(spm, logger=lbj_cells())
-#  start_log(spm, logger=lbj_rules(rules))
-#  
-#  ## The rest is the same as above ...
+# ## Contents of clean_supermarkets2.R
+# library(validate)
+# 
+# #1.a simulate reading data
+# data(SBS2000, package="validate")
+# spm <- SBS2000[c("id","staff","other.rev","turnover","total.rev")]
+# 
+# # 1.b Create rule set
+# rules <- validator(staff >= 0, other.rev>=0, turnover>=0
+#                  , other.rev + turnover == total.rev)
+# 
+# 
+# # 2. add two loggers
+# start_log(spm, logger=lbj_cells())
+# start_log(spm, logger=lbj_rules(rules))
+# 
+# ## The rest is the same as above ...
 
 ## -----------------------------------------------------------------------------
 run_file("clean_supermarkets2.R")
@@ -857,7 +859,7 @@ run_file("clean_supermarkets2.R")
 read.csv("spm_lbj_rules.csv")[3:4,]
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  stop_log(spm, logger="lbj_rules",file="my_output.csv")
+# stop_log(spm, logger="lbj_rules",file="my_output.csv")
 
 ## ----include=FALSE------------------------------------------------------------
 source("chunk_opts.R")
