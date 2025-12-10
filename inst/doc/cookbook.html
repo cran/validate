@@ -11,7 +11,7 @@
 
 <meta name="author" content="Mark P.J. van der Loo" />
 
-<meta name="date" content="2025-11-14" />
+<meta name="date" content="2025-12-10" />
 
 <title>The Data Validation Cookbook</title>
 
@@ -1498,7 +1498,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">The Data Validation Cookbook</h1>
 <h4 class="author">Mark P.J. van der Loo</h4>
-<h4 class="date">2025-11-14</h4>
+<h4 class="date">2025-12-10</h4>
 
 </div>
 
@@ -1509,7 +1509,7 @@ font-size: 0.95em;
 <a href="https://cran.r-project.org/package=validate">validate</a> package for
 <a href="https://www.r-project.org">R</a>.</p>
 <p>This version of the book was rendered with <code>validate</code> version
-1.1.6. The latest release of <code>validate</code> can be installed
+1.1.7. The latest release of <code>validate</code> can be installed
 from <a href="https://cran.r-project.org">CRAN</a> as follows.</p>
 <pre class="r"><code>install.packages(&quot;validate&quot;)</code></pre>
 <p>The purposes of this book include demonstrating the main tools and workflows of
@@ -1543,7 +1543,7 @@ R. <em>Journal of Statistical Software</em>, 97(10) <a href="https://www.jstatso
 <p>To cite this cookbook, please use the following citation.</p>
 <blockquote>
 <p>MPJ van der Loo (2025) <em>The Data Validation Cookbook</em>
-version 1.1.6. <a href="http://data-cleaning.github.io/validate/">https://data-cleaning.github.io/validate</a></p>
+version 1.1.7. <a href="http://data-cleaning.github.io/validate/">https://data-cleaning.github.io/validate</a></p>
 </blockquote>
 </div>
 <div id="acknowledgements" class="section level2 unnumbered">
@@ -2464,7 +2464,7 @@ patterns.</p>
 <p>The records containing forbidden keys can be selected as follows.</p>
 <pre class="r"><code>violating(transactions, out)</code></pre>
 <pre><code>##   sender receiver value
-## 1    S21      FG0    92</code></pre>
+## 1    S21      FG0    97</code></pre>
 <p>It is also possible to use regular expression patterns, by labeling the
 forbidden key set with <code>rx()</code>. If no labeling is used, the key sets are
 interpreted as string literals.</p>
@@ -3054,7 +3054,7 @@ is returned. This is the validating expression entered by the user, plus some
 ##  label      :  
 ##  description:  
 ##  origin     : command-line 
-##  created    : 2025-11-14 13:09:10
+##  created    : 2025-12-10 16:28:04
 ##  meta       : language&lt;chr&gt;, severity&lt;chr&gt;</code></pre>
 <p>Users never need to manipulate rule objects, but it can be convenient to
 inspect them. As you see, the rules have some automatically created metadata.
@@ -3101,14 +3101,14 @@ meta(rules,&quot;bar&quot;) &lt;- &quot;baz&quot;</code></pre>
 ##  label      :  
 ##  description:  
 ##  origin     : command-line 
-##  created    : 2025-11-14 13:09:10
+##  created    : 2025-12-10 16:28:04
 ##  meta       : language&lt;chr&gt;, severity&lt;chr&gt;</code></pre>
 <p>Or by extracting it to a <code>data.frame</code></p>
 <pre class="r"><code>meta(v)</code></pre>
 <pre><code>##   name label description       origin             created       language
-## 1   V1                   command-line 2025-11-14 13:09:10 validate 1.1.6
-## 2   V2                   command-line 2025-11-14 13:09:10 validate 1.1.6
-## 3   V3                   command-line 2025-11-14 13:09:10 validate 1.1.6
+## 1   V1                   command-line 2025-12-10 16:28:04 validate 1.1.7
+## 2   V2                   command-line 2025-12-10 16:28:04 validate 1.1.7
+## 3   V3                   command-line 2025-12-10 16:28:04 validate 1.1.7
 ##   severity
 ## 1    error
 ## 2    error
@@ -3705,9 +3705,7 @@ the IMF.</li>
 automated access to their data (not just metadata) via an SDMX API include (but
 not limited to) the European Central Bank
 (<a href="https://data.ecb.europa.eu/help/api/overview">ECB</a>),
-the <a href="https://data.oecd.org/api/">OECD</a> (in
-<a href="https://data.oecd.org/api/sdmx-json-documentation/">SDMX-JSON</a> or
-<a href="https://data.oecd.org/api/sdmx-ml-documentation/">SDMX-ML</a> format),
+the <a href="https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html">OECD</a> (in SDMX-JSON or SDMX-ML format),
 <a href="https://ec.europa.eu/eurostat/web/sdmx-infospace">Eurostat</a>,
 the International Labour Organisation [ILO (<code>https://www.ilo.org/sdmx/index.html</code>)],
 the <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/1886701-sdmx-api-queries">World Bank</a>,
@@ -3961,7 +3959,7 @@ after each step. To make sure this happens, run this file using <code>run_file()
 from the <code>lumberjack</code> package.</p>
 <pre class="r"><code>library(lumberjack)
 run_file(&#39;clean_supermarkets.R&#39;)</code></pre>
-<pre><code>## Dumped a log at /tmp/RtmpvTnIhF/Rbuild716b45151d1b/validate/vignettes/spm_lbj_cells.csv</code></pre>
+<pre><code>## Dumped a log at /tmp/RtmpsuGBc5/Rbuild3a1c390c3b28/validate/vignettes/spm_lbj_cells.csv</code></pre>
 <p>This command executed all code in <code>clean_supermarkets.R</code>, but <code>run_file()</code> also ensured
 that all changes in the <code>spm</code> variable were recorded and logged using <code>lbj_cells()</code>.
 The output is written to a <code>csv</code> file which we can read.</p>
@@ -3969,8 +3967,8 @@ The output is written to a <code>csv</code> file which we can read.</p>
 <p>The logfile variable has quite a lot of columns, so here we show just two rows.</p>
 <pre class="r"><code>logfile[3:4,]</code></pre>
 <pre><code>##   step                       time
-## 3    2 2025-11-14 13:09:11.701896
-## 4    3  2025-11-14 13:09:11.70394
+## 3    2 2025-12-10 16:28:06.019623
+## 4    3 2025-12-10 16:28:06.021258
 ##                                                                expression cells
 ## 3 spm &lt;- transform(spm, other.rev = ifelse(is.na(other.rev),0,other.rev))   300
 ## 4                       spm &lt;- transform(spm, other.rev = abs(other.rev))   300
@@ -4011,13 +4009,13 @@ start_log(spm, logger=lbj_rules(rules))
 ## The rest is the same as above ...</code></pre>
 <p>Running the file again using lumberjack, we now get two log files.</p>
 <pre class="r"><code>run_file(&quot;clean_supermarkets2.R&quot;)</code></pre>
-<pre><code>## Dumped a log at /tmp/RtmpvTnIhF/Rbuild716b45151d1b/validate/vignettes/spm_lbj_cells.csv</code></pre>
-<pre><code>## Dumped a log at /tmp/RtmpvTnIhF/Rbuild716b45151d1b/validate/vignettes/spm_lbj_rules.csv</code></pre>
+<pre><code>## Dumped a log at /tmp/RtmpsuGBc5/Rbuild3a1c390c3b28/validate/vignettes/spm_lbj_cells.csv</code></pre>
+<pre><code>## Dumped a log at /tmp/RtmpsuGBc5/Rbuild3a1c390c3b28/validate/vignettes/spm_lbj_rules.csv</code></pre>
 <p>Let’s read the log file from <code>spm_lbj_rules.csv</code> and print row three and four.</p>
 <pre class="r"><code>read.csv(&quot;spm_lbj_rules.csv&quot;)[3:4,]</code></pre>
 <pre><code>##   step                       time
-## 3    2 2025-11-14 13:09:11.872367
-## 4    3  2025-11-14 13:09:11.89128
+## 3    2 2025-12-10 16:28:06.161631
+## 4    3 2025-12-10 16:28:06.176775
 ##                                                                expression
 ## 3 spm &lt;- transform(spm, other.rev = ifelse(is.na(other.rev),0,other.rev))
 ## 4                       spm &lt;- transform(spm, other.rev = abs(other.rev))

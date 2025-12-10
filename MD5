@@ -1,7 +1,7 @@
-7dce45861e921e17e8b0282421c3068a *DESCRIPTION
+c103e6a455d925a04e9822f8d0262fd2 *DESCRIPTION
 ba469a2ba07e8066bf996029b994b876 *NAMESPACE
-1073ec1faa2c324dd1ffbd81143951de *NEWS
-63b96c13941181d9f567e4a1578c879d *R/compare.R
+68ec162879fb72d1e601c3340f7271d4 *NEWS
+3ef902be738ad49957180291cb64f51b *R/compare.R
 f6c9ad9170e52aeb3278c0f2070596c7 *R/confrontation.R
 85e6e32aa9727c38cc56128953b1b985 *R/expressionset.R
 5cb669a177586150a954b670baacad39 *R/factory.R
@@ -27,10 +27,10 @@ eccc81b86845f8ebbb7af003da62ec95 *data/SBS2000.csv.gz
 b51c402f59dc2ccfb71d62ecae5ed0d9 *data/samplonomy.RData
 41239d11107a62efa809fc250b1c03e9 *inst/CITATION
 4df70b1b00c45ee9f9ce989eafbd2b5b *inst/doc/JSS_3483.Rnw
-9b91da0d09dea2c09b72ab55fd8b7b07 *inst/doc/JSS_3483.pdf
+deefbcf80f8af7b76890f28eb90c1fc6 *inst/doc/JSS_3483.pdf
 565039edcc3151030b92d891ecb50048 *inst/doc/cookbook.R
-a1ef5f797f13fcc6be41d4f8f58f44ff *inst/doc/cookbook.Rmd
-9873043fd92fb690850510b7b96448e3 *inst/doc/cookbook.html
+8110119f64592f6e0ba9ddfe4f3e107c *inst/doc/cookbook.Rmd
+46683f34d7ca84c9921b2fe4278f8f98 *inst/doc/cookbook.html
 6da6b54e0a9bf6bc30c0ffba7108ca53 *inst/tinytest/pocdata/Rule_01.csv
 d635a5dfcd85335d354bbef670ebd0be *inst/tinytest/pocdata/Rule_02.csv
 b9dc5a0b884b23042cc5445682669d3c *inst/tinytest/pocdata/Rule_03_invalid.csv
@@ -113,7 +113,7 @@ ddb21190105ac965e35c846931ae52de *inst/tinytest/test_poc.R
 f379c1a3665c86bdadc5c69c6d8748ea *inst/tinytest/test_sdmx.R
 37d2af7944d8e21a4c4b5e1414d7fd53 *inst/tinytest/test_syntax.R
 daf9fe7b16cb159a7dd944e60ef5dcc4 *inst/tinytest/test_utils.R
-22f9126432307e4121c02ac2d2cdc791 *inst/tinytest/test_validator.R
+4fa2f8ca8236f062aa881f842e3b63b3 *inst/tinytest/test_validator.R
 eb6e20d5a7f98360aeda609c7e355dd6 *inst/tinytest/txttests/rules.R
 085f78e9ab5e2733a2384ae87e18298b *inst/tinytest/yamltests/child1.yaml
 5f7baa179eb02b0596a0f67e50af5720 *inst/tinytest/yamltests/child2.yaml
@@ -140,9 +140,9 @@ cbcdd03b691cc5a018456883255dced5 *man/as.data.frame-validatorComparison-method.R
 2cd9180730eb8dfebf5eb12d354ed736 *man/barplot-cellComparison-method.Rd
 ecdab44aaeede9e451052f6f0f83a587 *man/barplot-validation-method.Rd
 6dbb64bee87f5056cc5e7655d4fb7e08 *man/barplot-validatorComparison-method.Rd
-9b3a3b095a7c3d64e9cc1211f17b390b *man/cells.Rd
+bf798c4a69da5b3989552bb440b1834c *man/cells.Rd
 9fc058f66dfbff1f934aeb3baf9e8c8a *man/check_that.Rd
-12561d2cbf4e1433e4f7dd879ded65a3 *man/compare.Rd
+5e7c63a637ef8be3e1b4f62a6f517334 *man/compare.Rd
 5a2b1ff0cbaa0cc4e426d8ac33004dbe *man/confront.Rd
 812f52edce488403f56bd6a947807a98 *man/confrontation-class.Rd
 e9b10c1344ccdc9249a5fc6987536e1a *man/contains_exactly.Rd
@@ -222,7 +222,7 @@ f8e78727ed542b48f9a6014fa407ab71 *tests/tinytest.R
 d0215b4f694e00fc839c75d2f90c61e8 *vignettes/chunk_opts.R
 5948f07d4add5a027335ac86e839dfd2 *vignettes/clean_supermarkets.R
 7ea43526fa37a70c611a869a34a40789 *vignettes/clean_supermarkets2.R
-a1ef5f797f13fcc6be41d4f8f58f44ff *vignettes/cookbook.Rmd
+8110119f64592f6e0ba9ddfe4f3e107c *vignettes/cookbook.Rmd
 88b044b4dc6602b4aff726084204e9ef *vignettes/fig/cellwise.png
 bf50e7ee937acb0ea1a82129bf5916cc *vignettes/fig/datastep.png
 3e54156b983a7b778ce524771f041ef4 *vignettes/fig/rulewise.png
